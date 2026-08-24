@@ -1,0 +1,1071 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[hidelinks,pdfencoding=auto]{hyperref}
+\hypersetup{
+  pdftitle={An Erd\H os--Kac law for palindromes and for reversed primes},
+  pdfauthor={Anonymous},
+  pdfsubject={Analytic number theory},
+  pdfkeywords={Erd\H os--Kac theorem; palindromes; reversed primes; sieve methods;
+    level of distribution}}
+\ifdefined\pdfgentounicode
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+\fi
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\DeclareMathOperator{\Gal}{Gal}
+\newcommand{\eps}{\varepsilon}
+\numberwithin{equation}{section}
+
+\title{An Erd\H os--Kac law for palindromes and for reversed primes}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}\noindent
+For every integer $b\ge2$ we determine the distribution of the number of prime factors, counted with
+or without multiplicity, of the base-$b$ palindromes with $\lambda$ digits and of the base-$b$
+reversals of the primes with $\lambda$ digits: both obey an Erd\H os--Kac law with the classical
+centring $\log\log b^{\lambda}$ and scaling $\sqrt{\log\log b^{\lambda}}$. For the number of distinct
+prime factors we obtain in addition all moments of order up to $\tfrac12(\log\log b^{\lambda})^{1/3}$,
+uniformly in the order. For reversed primes the law persists when the leading digit of the
+prime is prescribed. The arithmetic inputs are a theorem of Col for palindromes and the
+Bombieri--Vinogradov theorem of Dartyge, Rivat and Swaenepoel for reversed primes; in both cases the
+excluded primes are those dividing $b(b^{2}-1)$. The deduction rests on the sieve-theoretic moment
+estimate of Granville and Soundararajan, cast as a general criterion in the manner of Murty, Murty and
+Pujahari and modified to allow a finite set of primes at which the local densities are arbitrary.
+\end{abstract}
+
+\medskip
+\noindent{\small\emph{2020 Mathematics Subject Classification.} Primary 11N60; Secondary 11N36, 11A63.\\
+\emph{Keywords.} Erd\H os--Kac theorem; palindromes; reversed primes; sieve methods; level of
+distribution.}
+
+\section{Introduction}
+
+Let $\omega(n)$ be the number of distinct prime factors of $n$ and $\Omega(n)$ the number of prime
+factors of $n$ counted with multiplicity. The theorem of Erd\H os and Kac \cite{EK} states that,
+uniformly for $t\in\mathbb R$,
+\begin{equation}\label{eq:EK}
+\frac1x\,\#\Bigl\{n\le x:\ \omega(n)\le \log\log x+t\sqrt{\log\log x}\Bigr\}\ \longrightarrow\ \Phi(t)
+\qquad(x\to\infty),
+\end{equation}
+where $\Phi$ is the standard normal distribution function. For sequences defined by conditions on the
+digits, laws of this kind are known in several cases. Mauduit and S\'ark\"ozy proved an
+Erd\H os--Kac theorem for the integers whose digit sum lies in a fixed residue class \cite{MS1}, and
+for those whose digit sum is fixed \cite[Thm.~4]{MS2}. Erd\H os, Mauduit and S\'ark\"ozy
+\cite[Thm.~1]{EMS} obtained an Erd\H os--Kac law for $\omega$ on the integers whose base-$b$ digits
+are confined to a set $\mathcal D=\{0,d_2,\dots,d_s\}$ with $\gcd(d_2,\dots,d_s)=1$ and $s>\sqrt b$.
+Konyagin, Mauduit and S\'ark\"ozy \cite{KMS} studied the normal order and the large values of $\omega$
+on missing-digit sets, together with the large values of $\Omega$ on the integers with a fixed digit
+sum. For palindromes and for reversals of primes we are not aware of such a law.
+
+Fix an integer $b\ge2$. Every integer $n\ge0$ has a unique base-$b$ expansion
+$n=\sum_{j\ge0}\eps_j(n)b^{j}$ with digits $\eps_j(n)\in\{0,1,\dots,b-1\}$, and we write
+\begin{equation}\label{eq:defR}
+R_\lambda(n)\ :=\ \sum_{j=0}^{\lambda-1}\eps_j(n)\,b^{\lambda-1-j}
+\end{equation}
+for the reversal of the $\lambda$ least significant digits of $n$. Let
+\[
+\mathcal T_\lambda\ :=\ \bigl\{n:\ b^{\lambda-1}\le n<b^{\lambda},\ \ n=R_\lambda(n)\bigr\}
+\]
+be the set of base-$b$ palindromes with exactly $\lambda$ digits, so that
+$\#\mathcal T_\lambda=(b-1)b^{\lceil\lambda/2\rceil-1}$; and let
+\[
+\mathcal P_\lambda:=\bigl\{p\ \text{prime}:\ b^{\lambda-1}\le p<b^{\lambda}\bigr\},\qquad
+\pi_\lambda:=\#\mathcal P_\lambda,
+\]
+so that the integers $R_\lambda(p)$ with $p\in\mathcal P_\lambda$ are the \emph{reversed primes}. The
+term refers to the reversals themselves, which are in general composite; it is not to be confused with
+the \emph{reversible primes} of \cite{DMRSS}, the primes whose reversal is again prime. This note
+determines the distribution of $\omega$ and of $\Omega$ on both families, the palindromes and the
+reversed primes.
+
+For palindromes the question is old. Banks and Shparlinski \cite{BSh}, in their work on prime divisors
+of palindromes, showed that for every large $\lambda$ some $n\in\mathcal T_\lambda$ has at least
+$(\log\log n)^{1+o(1)}$ distinct prime factors. Their result concerns the largest value of $\omega$ on
+$\mathcal T_\lambda$, and it does not address the typical value. We show in Theorem~\ref{thm:pal} below
+that almost all palindromes, and not merely one, have $(1+o(1))\log\log n$ distinct prime factors, the
+fluctuation around $\log\log n$ being of order $\sqrt{\log\log n}$. Concerning the typical order of
+$\omega$ on $\mathcal T_\lambda$ nothing seems to be known, although the factorisation of palindromes
+has been studied from other directions: Col \cite{Col} and Tuxanidy and Panario \cite{TP} produce palindromes
+with boundedly many prime factors, Johnston and Kerr \cite{JK} show that infinitely many palindromes are
+squarefree in every base, with an asymptotic count, and Chourasiya and Johnston \cite{CJ} obtain
+cubefree palindromes in every base, and squarefree reversals of primes for $b\ge26000$.
+
+Reversed primes have become accessible only recently. Bhowmik and
+Suzuki \cite{BS1,BS2} established an effective Siegel--Walfisz theorem for the reversals $R_\lambda(p)$ in
+arithmetic progressions, first for $b\ge31699$ and then for every $b\ge2$; Harm and Johnston \cite{HJ}
+have since given a version in which the number of digits is not fixed. Dartyge, Rivat and
+Swaenepoel \cite{DRS} obtained a Bombieri--Vinogradov theorem for reversals whose moduli range up to a
+fixed power of $b^{\lambda}$; it is quoted below as Theorem~\ref{thm:drs}. Their own application is to a
+sieve problem: they produce an explicit $\kappa_b$ such that $\Omega(R_\lambda(p))\le\kappa_b$ for
+$\gg b^{\lambda}\lambda^{-2}$ primes $p\in\mathcal P_\lambda$, with $\kappa_{10}=1378$. It is not known
+whether $R_\lambda(p)$ is prime for infinitely many primes $p$, nor whether there are infinitely many
+palindromic primes.
+
+\subsection{Notation}\label{sec:notation}
+
+The letters $p$ and $\ell$ always denote primes, $b\ge2$ is fixed, and $\lambda\ge2$ is an integer
+parameter, which is understood throughout to tend to infinity. We set $\omega(1)=\Omega(1)=0$, write
+$v_\ell(n)$ for the exponent of $\ell$ in the factorisation of $n$, and put
+\[
+\Phi(t)\ :=\ \frac1{\sqrt{2\pi}}\int_{-\infty}^{t}e^{-u^{2}/2}\,du .
+\]
+Implied constants in the Landau and Vinogradov symbols $O(\cdot)$, $o(\cdot)$, $\ll$ and $\asymp$ may
+depend on $b$ and on the level-of-distribution exponent $\xi$ of Proposition~\ref{prop:criterion}, and
+in Section~\ref{sec:criterion} also on $\delta$, $\#\mathcal E$ and the implied constant in
+\eqref{eq:regular} (all introduced in \S\ref{sec:results} below); they depend on other parameters only
+where these are displayed as subscripts. In particular no implied constant depends on $k$.
+
+\subsection{Statement of results}\label{sec:results}
+
+Throughout we abbreviate
+\begin{equation}\label{eq:defCk}
+L:=\log\log b^{\lambda},\qquad C_k:=\frac{\Gamma(k+1)}{2^{k/2}\,\Gamma(k/2+1)},
+\end{equation}
+so that $C_k$ is the $k$-th moment of the standard normal law when $k$ is even. Every $n$ occurring in
+Theorems~\ref{thm:pal}--\ref{thm:moments} lies in $[b^{\lambda-1},b^{\lambda})$ for $\lambda\ge3$, as
+the proof of Corollary~\ref{cor:normalorder} records, so that $L=\log\log n+O(\lambda^{-1})$; the
+reader may therefore read $L$ as $\log\log n$ throughout.
+
+\begin{theorem}\label{thm:pal}
+Let $b\ge2$ be an integer. Then, uniformly for $t\in\mathbb R$,
+\[
+\frac1{\#\mathcal T_\lambda}\#\Bigl\{n\in\mathcal T_\lambda:\ \omega(n)\le L+t\sqrt L\Bigr\}
+\ =\ \Phi(t)+o(1)\qquad(\lambda\to\infty),
+\]
+and the same asymptotic holds with $\omega$ replaced by $\Omega$.
+\end{theorem}
+
+
+For $1\le i\le b-1$ put
+\[
+\mathcal P_{\lambda,i}:=\bigl\{p\in\mathcal P_\lambda:\ \eps_{\lambda-1}(p)=i\bigr\}
+=\bigl\{p\ \text{prime}:\ ib^{\lambda-1}\le p<(i+1)b^{\lambda-1}\bigr\},
+\qquad \pi_{\lambda,i}:=\#\mathcal P_{\lambda,i},
+\]
+so that $\mathcal P_\lambda$ is the disjoint union of the $\mathcal P_{\lambda,i}$, and write
+\begin{equation}\label{eq:defA}
+\mathcal A_\lambda:=\bigl\{R_\lambda(p):\ p\in\mathcal P_\lambda\bigr\},\qquad
+\mathcal A_{\lambda,i}:=\bigl\{R_\lambda(p):\ p\in\mathcal P_{\lambda,i}\bigr\}.
+\end{equation}
+By \eqref{eq:defR}, $i$ is the last digit of $R_\lambda(p)$ for $p\in\mathcal P_{\lambda,i}$.
+Reversal of a block of $\lambda$ digits is an involution, so that $R_\lambda$ is injective on
+$\mathcal P_\lambda$ (see the start of Section~\ref{sec:local}); hence
+$\#\mathcal A_\lambda=\pi_\lambda$ and $\#\mathcal A_{\lambda,i}=\pi_{\lambda,i}$, and averages over
+$\mathcal A_\lambda$ coincide with averages over $\mathcal P_\lambda$.
+
+\begin{theorem}\label{thm:main}
+Let $b\ge2$ be an integer and let $f$ denote either $\omega$ or $\Omega$. Then, uniformly for
+$t\in\mathbb R$,
+\[
+\frac{1}{\pi_\lambda}\,
+\#\Bigl\{p\in\mathcal P_\lambda:\ f\bigl(R_\lambda(p)\bigr)\le L+t\sqrt L\Bigr\}\ =\ \Phi(t)+o(1)
+\qquad(\lambda\to\infty),
+\]
+and the same asymptotic holds for each fixed $i\in\{1,\dots,b-1\}$ with $\mathcal P_\lambda$ and
+$\pi_\lambda$ replaced throughout by $\mathcal P_{\lambda,i}$ and $\pi_{\lambda,i}$.
+\end{theorem}
+
+The localised form of Theorem~\ref{thm:main} is the Erd\H os--Kac law for the reversals of the primes
+whose leading digit is prescribed. The unlocalised form follows by summing over $i$.
+
+The statements for $\omega$ in Theorems~\ref{thm:pal} and \ref{thm:main} both follow from a moment
+estimate that is uniform in the order of the moment.
+
+\begin{theorem}\label{thm:moments}
+Let $b\ge2$ and let $\mathcal B_\lambda$ be $\mathcal T_\lambda$, or $\mathcal A_\lambda$, or
+$\mathcal A_{\lambda,i}$ for a fixed $i\in\{1,\dots,b-1\}$. Then, uniformly for positive integers
+$k\le\tfrac12L^{1/3}$, one has
+\[
+\begin{aligned}
+\frac1{\#\mathcal B_\lambda}\sum_{n\in\mathcal B_\lambda}\bigl(\omega(n)-L\bigr)^{k}
+  &\ =\ C_k\,L^{k/2}\Bigl(1+O\bigl(k^{3/2}L^{-1/2}\bigr)\Bigr) && (k\ \text{even}),\\
+\frac1{\#\mathcal B_\lambda}\sum_{n\in\mathcal B_\lambda}\bigl(\omega(n)-L\bigr)^{k}
+  &\ \ll\ C_kL^{k/2}k^{3/2}L^{-1/2}                            && (k\ \text{odd}).
+\end{aligned}
+\]
+\end{theorem}
+
+For $\mathcal B_\lambda$ the set of all integers below $b^{\lambda}$, Theorem~\ref{thm:moments} is
+contained in Theorem 1 of Granville and Soundararajan \cite{GS}, from which the form of the error term
+is taken. The exponent $1/3$ is the one imposed by their moment estimate (Proposition~\ref{prop:gs}
+below); the explicit factor $\frac12$ is a convenience, absorbing the difference between $L$ and the
+variance of the sieve model constructed in Section~\ref{sec:criterion}. Theorems~\ref{thm:pal} and
+\ref{thm:main} use only the case of fixed $k$; the uniformity is recorded with a view to
+Remark~\ref{rem:rate}. Theorem~\ref{thm:moments} is stated for $\omega$ only: the corresponding
+statements for $\Omega$ in Theorems~\ref{thm:pal} and \ref{thm:main} come from hypothesis (iii) of
+Proposition~\ref{prop:criterion} below and are not quantitative.
+
+\begin{corollary}\label{cor:normalorder}
+For every $\theta>0$ the number of $n\in\mathcal T_\lambda$ with $|\omega(n)-L|>\theta L$ is
+$o(\#\mathcal T_\lambda)$, and the number of $p\in\mathcal P_\lambda$ with
+$|\omega(R_\lambda(p))-L|>\theta L$ is $o(\pi_\lambda)$; likewise for $\Omega$. In particular,
+$\omega$ and $\Omega$ have normal order $\log\log n$ on both families.
+\end{corollary}
+
+In particular, for each fixed $K$, all but $o(\pi_\lambda)$ primes $p\in\mathcal P_\lambda$ have
+$\omega(R_\lambda(p))>K$; so the set of $p\in\mathcal P_\lambda$ with $\Omega(R_\lambda(p))\le\kappa_b$
+has density zero in $\mathcal P_\lambda$. This is consistent with the lower bound
+$\gg b^{\lambda}\lambda^{-2}$ for the cardinality of that set obtained in \cite{DRS}, since
+$\pi_\lambda\asymp b^{\lambda}\lambda^{-1}$.
+The constant $\kappa_b$ invites comparison with the normal order, though the comparison is one of
+sizes only, Corollary~\ref{cor:normalorder} being asymptotic and carrying no information for a
+bounded range of $\lambda$. (For $b=10$ one has $L>\kappa_{10}=1378$ only when
+$\lambda>e^{1378}/\log10$.) What makes the count of \cite{DRS} a statement about reversals with
+atypically few prime factors is that it holds for every large $\lambda$ with $\kappa_b$ held fixed.
+
+Theorems~\ref{thm:pal}, \ref{thm:main} and \ref{thm:moments} are all deduced from the following
+criterion. Let $(\mathcal B_\lambda)_{\lambda\ge2}$ be
+non-empty finite sets of positive integers, put $N_\lambda:=\#\mathcal B_\lambda$, and for $d\ge1$ set
+\begin{equation}\label{eq:defr}
+r_d(\lambda)\ :=\ \#\bigl\{n\in\mathcal B_\lambda:\ d\mid n\bigr\}-\frac{N_\lambda}{d}.
+\end{equation}
+For a finite set of primes $\mathcal E$ let
+\begin{equation}\label{eq:defD}
+\mathcal D(\mathcal E)\ :=\ \bigl\{d\ge1:\ \ell\mid d\ \Rightarrow\ \ell\notin\mathcal E\bigr\}.
+\end{equation}
+Finally, call a set $S$ of primes \emph{regular of density $\delta$}, where $0<\delta\le1$, if
+\begin{equation}\label{eq:regular}
+\sum_{\substack{\ell\le y\\ \ell\in S}}\frac1\ell\ =\ \delta\log\log y+O(1)\qquad(y\ge3),
+\end{equation}
+and put
+\[
+\omega_S(n):=\#\{\ell\in S:\ \ell\mid n\},\qquad \Omega_S(n):=\sum_{\ell\in S}v_\ell(n),
+\]
+so that $\omega_S=\omega$ and $\Omega_S=\Omega$ when $S$ is the set of all primes, which is regular of
+density $1$ by Mertens' theorem.
+
+\begin{proposition}[cf.\ {\cite[Prop.~3]{GS}}, {\cite[Thm.~3]{MMP}}]\label{prop:criterion}
+Let $(\mathcal B_\lambda)_{\lambda\ge2}$, $N_\lambda$, $r_d(\lambda)$ and $\mathcal D(\mathcal E)$ be as
+above. Suppose that there exist a constant $\xi>0$ and a finite set of primes $\mathcal E$, both
+independent of $\lambda$, such that
+\begin{enumerate}
+\item[\textup{(i)}] $n\le b^{\lambda}$ for every $n\in\mathcal B_\lambda$, and
+\item[\textup{(ii)}] for every $A>0$,
+\[
+\sum_{\substack{d\le b^{\xi\lambda},\ d\ \text{squarefree}\\ d\in\mathcal D(\mathcal E)}}
+\bigl|r_d(\lambda)\bigr|\ \ll_A\ N_\lambda\,\lambda^{-A}.
+\]
+\end{enumerate}
+Let $S$ be regular of density $\delta$. Then, uniformly for positive integers
+$k\le\frac12(\delta L)^{1/3}$, one has
+\begin{equation}\label{eq:momk}
+\begin{aligned}
+\frac1{N_\lambda}\sum_{n\in\mathcal B_\lambda}\bigl(\omega_S(n)-\delta L\bigr)^{k}
+  &\ =\ C_k(\delta L)^{k/2}\Bigl(1+O\bigl(k^{3/2}(\delta L)^{-1/2}\bigr)\Bigr) && (k\ \text{even}),\\
+\frac1{N_\lambda}\sum_{n\in\mathcal B_\lambda}\bigl(\omega_S(n)-\delta L\bigr)^{k}
+  &\ \ll\ C_k(\delta L)^{k/2}k^{3/2}(\delta L)^{-1/2}                          && (k\ \text{odd}).
+\end{aligned}
+\end{equation}
+Consequently, uniformly for $t\in\mathbb R$,
+\begin{equation}\label{eq:concl}
+\frac1{N_\lambda}\#\Bigl\{n\in\mathcal B_\lambda:\ \omega_S(n)\le\delta L
++t\sqrt{\delta L}\Bigr\}\ =\ \Phi(t)+o(1)\qquad(\lambda\to\infty).
+\end{equation}
+If in addition
+\begin{enumerate}
+\item[\textup{(iii)}] $\displaystyle\sum_{n\in\mathcal B_\lambda}\bigl(\Omega(n)-\omega(n)\bigr)\ \ll\ N_\lambda$,
+\end{enumerate}
+then \eqref{eq:concl} also holds with $\omega_S$ replaced by $\Omega_S$.
+\end{proposition}
+
+The constant $\xi$ is any exponent of distribution available for the family: for palindromes any
+$\xi<\beta(b)$ of Theorem~\ref{thm:col}, for reversed primes any $\xi<\xi_0(b)$ of
+Theorem~\ref{thm:drs}. The conclusion does not depend on its value, only on its existence
+(Remark~\ref{rem:inputs}). Theorems~\ref{thm:pal}--\ref{thm:moments} are the case in which $S$ is the
+set of all primes and $\delta=1$; Corollary~\ref{cor:cheb} below is the general case.
+
+Proposition~\ref{prop:criterion} differs from \cite[Prop.~3]{GS} and \cite[Thm.~3]{MMP} in exactly one
+respect: the presence of the finite set $\mathcal E$, at whose primes no hypothesis is imposed. That
+single change is what makes the two families of this note accessible. In a typical application of the
+moment estimate of \cite{GS} (quoted as Proposition~\ref{prop:gs} below) one chooses the multiplicative
+function $h$ appearing there so as to model the local densities of the family; the hypothesis
+$0\le h(d)\le d$ then encodes what is known about them. In the proof of
+Proposition~\ref{prop:criterion} nothing is modelled. We take $h\equiv1$, so that $r_d$ means exactly
+\eqref{eq:defr}, and hypothesis (ii) alone carries the assertion that the remainders are small on
+average. Both families treated here need this latitude: by Lemma~\ref{lem:dens}(i) and
+Example~\ref{ex:base10} the local densities of $R_\lambda(p)$ at the primes dividing $b$ are not
+$1/\ell$, and by Lemma~\ref{lem:cong}(i) at those dividing $b^{2}-1$ they vanish, while for palindromes
+the constraints are those described after \eqref{eq:defE}; any criterion that insists on modelling them
+correctly is unusable here. Since $\mathcal E$ is finite and independent of $\lambda$, discarding its
+primes shifts $\omega_S$ by $O(1)$, which is $o(\sqrt L)$ and therefore invisible on the scale of
+\eqref{eq:concl}: whatever happens at those primes cannot affect the limit law.
+
+The proof of Proposition~\ref{prop:criterion} runs as follows. Given $k$, one truncates at
+$y=b^{\xi\lambda/(k+1)}$, so that products of $k+1$ primes below $y$ stay within the level
+$b^{\xi\lambda}$ of hypothesis (ii); the truncation is cheap because
+$\log\log y=L+\log\xi-\log(k+1)$, so that it moves the mean by $O(\log(2k))$ only. The primes of
+$\mathcal E$ and those exceeding $y$ are then discarded, which by hypothesis (i) alters $\omega_S(n)$ by
+at most $\#\mathcal E+\lambda\log b/\log y\ll k=o(\sqrt L)$. What is left is a sum over primes at which
+hypothesis (ii) is available, and to it one applies the estimate of Granville and Soundararajan.
+
+Taking for $S$ the primes with a prescribed Frobenius class gives the following.
+
+\begin{corollary}\label{cor:cheb}
+Let $K$ be a finite Galois extension of $\mathbb Q$, let $\mathcal C$ be a conjugacy class in
+$\Gal(K/\mathbb Q)$, and let $S_{\mathcal C}$ be the set of primes unramified in $K$ whose Frobenius
+class is $\mathcal C$; put $\delta:=\#\mathcal C/[K:\mathbb Q]$. Then Theorems~\ref{thm:pal},
+\ref{thm:main} and \ref{thm:moments} hold with $\omega$ replaced by $\omega_{S_{\mathcal C}}$ and
+$\Omega$ by $\Omega_{S_{\mathcal C}}$, and with $L$ and $\sqrt L$ replaced by $\delta L$ and
+$\sqrt{\delta L}$; in particular the moments are uniform for positive integers
+$k\le\frac12(\delta L)^{1/3}$, with error term $O\bigl(k^{3/2}(\delta L)^{-1/2}\bigr)$.
+\end{corollary}
+
+Proposition~\ref{prop:criterion} is proved in Section~\ref{sec:criterion}. Section~\ref{sec:pal} treats
+palindromes and Section~\ref{sec:local} reversed primes; the latter uses the set $\mathcal E_b$ of
+\eqref{eq:defE} and one identity from the proof of Lemma~\ref{lem:palhyp}, but is otherwise independent
+of the former. Section~\ref{sec:remarks} collects four remarks: on the arithmetic inputs and why a
+Siegel--Walfisz range would not suffice (Remark~\ref{rem:inputs}), on the extremal problem of
+\cite{BSh} (Remark~\ref{rem:extremal}), on other levels of distribution for palindromes
+(Remark~\ref{rem:paldist}), and on rates of convergence (Remark~\ref{rem:rate}).
+
+
+\section{An Erd\H os--Kac criterion}\label{sec:criterion}
+
+We use the sieve-theoretic moment estimate of Granville and Soundararajan in the following form. Let
+$\mathcal M$ be a finite multiset of $N$ positive integers (we shall use it only when $\mathcal M$ is a
+set), put $N(d):=\#\{n\in\mathcal M:d\mid n\}$, let $h$ be a non-negative multiplicative function with
+$0\le h(d)\le d$ for squarefree $d$, and write $N(d)=h(d)N/d+r_d$ for squarefree $d$. For a set of
+primes $\mathcal R$ put
+\[
+\mu_{\mathcal R}:=\sum_{\ell\in\mathcal R}\frac{h(\ell)}{\ell},\qquad
+\sigma_{\mathcal R}^{2}:=\sum_{\ell\in\mathcal R}\frac{h(\ell)}{\ell}\Bigl(1-\frac{h(\ell)}{\ell}\Bigr),
+\]
+these being the mean and the variance of the sieve model introduced after \eqref{eq:defy} below; put
+$\omega_{\mathcal R}(n):=\#\{\ell\in\mathcal R:\ \ell\mid n\}$, as before; and, for an integer
+$j\ge0$, let $\Pi_j(\mathcal R)$ be the set of squarefree integers which are products of at most $j$
+primes of $\mathcal R$. The letter $\mu$ is used for this mean throughout, the M\"obius function not
+occurring in this note.
+
+\begin{proposition}[Granville and Soundararajan {\cite[Prop.~3]{GS}}]\label{prop:gs}
+Uniformly for all positive integers $k\le\sigma_{\mathcal R}^{2/3}$, one has
+\[
+\begin{aligned}
+\sum_{n\in\mathcal M}\bigl(\omega_{\mathcal R}(n)-\mu_{\mathcal R}\bigr)^{k}
+  &= C_kN\sigma_{\mathcal R}^{k}\Bigl(1+O\Bigl(\frac{k^{3}}{\sigma_{\mathcal R}^{2}}\Bigr)\Bigr)
+     +O\Bigl(\mu_{\mathcal R}^{k}\!\!\sum_{d\in \Pi_k(\mathcal R)}\!\!|r_d|\Bigr)
+  && (k\ \text{even}),\\
+\sum_{n\in\mathcal M}\bigl(\omega_{\mathcal R}(n)-\mu_{\mathcal R}\bigr)^{k}
+  &\ll C_kN\sigma_{\mathcal R}^{k}\frac{k^{3/2}}{\sigma_{\mathcal R}}
+     +\mu_{\mathcal R}^{k}\!\!\sum_{d\in \Pi_k(\mathcal R)}\!\!|r_d|
+  && (k\ \text{odd}).
+\end{aligned}
+\]
+\end{proposition}
+
+Throughout this section $(\mathcal B_\lambda)$, $N_\lambda$, $\xi$, $\mathcal E$ and $S$ are as
+in Proposition~\ref{prop:criterion}, with $S$ regular of density $\delta$. Given a positive integer
+$k\le\frac12(\delta L)^{1/3}$, set
+\begin{equation}\label{eq:defy}
+y\ :=\ b^{\xi\lambda/(k+1)},\qquad
+\mathcal Q\ :=\ \{\ell\le y:\ \ell\in S,\ \ell\notin\mathcal E\},\qquad
+\mu:=\mu_{\mathcal Q},\quad \sigma:=\sigma_{\mathcal Q},
+\end{equation}
+the last two formed with $h\equiv1$, so that $\mu=\sum_{\ell\in\mathcal Q}\ell^{-1}$ and
+$\sigma^{2}=\sum_{\ell\in\mathcal Q}\ell^{-1}(1-\ell^{-1})$. These are the mean and the variance of
+$\sum_{\ell\in\mathcal Q}X_\ell$, where the $X_\ell$ are independent Bernoulli variables with
+$\mathbb P(X_\ell=1)=1/\ell$: this is the sieve model for $\omega_{\mathcal Q}$ in the sense of
+\cite{GS}, and Proposition~\ref{prop:gs} says that the moments of $\omega_{\mathcal Q}-\mu$ follow it.
+
+The next lemma records the three properties of \eqref{eq:defy} that the proof needs: that the
+truncation moves the mean by $O(\log(2k))$ only; that discarding $\mathcal E$ and the primes above $y$
+changes $\omega_S$ by $O(k)$; and that every modulus arising in Proposition~\ref{prop:gs} is covered by
+hypothesis (ii).
+
+\begin{lemma}\label{lem:setup}
+With the notation \eqref{eq:defy} one has, uniformly for $1\le k\le\frac12(\delta L)^{1/3}$:
+\begin{enumerate}
+\item[\textup{(i)}] $\mu=\delta L+O(\log(2k))$ and $\sigma^{2}=\delta L+O(\log(2k))$;
+\item[\textup{(ii)}] $\bigl|\omega_S(n)-\omega_{\mathcal Q}(n)\bigr|\le (k+1)/\xi+\#\mathcal E\ \ll\ k$ for every
+$n\in\mathcal B_\lambda$;
+\item[\textup{(iii)}] $\displaystyle\sum_{d\in \Pi_{k+1}(\mathcal Q)}|r_d(\lambda)|\ \ll_A\ N_\lambda\lambda^{-A}$
+for every $A>0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) By \eqref{eq:regular}, $\sum_{\ell\le y,\ \ell\in S}\ell^{-1}=\delta\log\log y+O(1)$, and deleting the
+at most $\#\mathcal E$ primes of $\mathcal E$ alters this by $O(1)$; hence $\mu=\delta\log\log y+O(1)$.
+From $\log y=\bigl(\xi/(k+1)\bigr)\lambda\log b$ we get $\log\log y=L+\log\xi-\log(k+1)$, which
+gives the first assertion. The second follows from
+$\sigma^{2}=\mu-\sum_{\ell\in\mathcal Q}\ell^{-2}=\mu+O(1)$.
+
+(ii) The difference is at most $\#\{\ell\in\mathcal E:\ell\mid n\}+\#\{\ell>y:\ell\mid n\}$. The first term
+is at most $\#\mathcal E$; for the second, $n\le b^{\lambda}$ by hypothesis (i) and every prime counted
+exceeds $y=b^{\xi\lambda/(k+1)}$, so their number is less than $\lambda\log b/\log y=(k+1)/\xi$.
+
+(iii) Recall that $\Pi_{k+1}(\mathcal Q)$ is the set of squarefree integers which are products of at
+most $k+1$ primes of $\mathcal Q$, and let $d=\ell_1\cdots\ell_j\in \Pi_{k+1}(\mathcal Q)$, the
+$\ell_i$ being distinct elements of $\mathcal Q$ and $j\le k+1$. Then $d$ is squarefree; every prime
+factor of $d$ lies in $\mathcal Q$ and hence outside $\mathcal E$, so that
+$d\in\mathcal D(\mathcal E)$ by \eqref{eq:defD}; and each $\ell_i\le y$, so that
+\[
+d\ \le\ y^{j}\ \le\ y^{k+1}\ =\ b^{\xi\lambda}
+\]
+by the choice of $y$ in \eqref{eq:defy}. Hence
+\[
+\Pi_{k+1}(\mathcal Q)\ \subseteq\
+\bigl\{d\le b^{\xi\lambda}:\ d\ \text{squarefree},\ d\in\mathcal D(\mathcal E)\bigr\},
+\]
+and since the terms $|r_d(\lambda)|$ are non-negative, the sum in (iii) is at most the sum in
+hypothesis (ii) of Proposition~\ref{prop:criterion}, which is $\ll_A N_\lambda\lambda^{-A}$. This is
+what dictates the exponent in \eqref{eq:defy}: the truncation point $y$ is chosen so that $y^{k+1}$
+is exactly the level $b^{\xi\lambda}$ supplied by hypothesis (ii), with $k+1$ rather than $k$
+because Proposition~\ref{prop:gs} is applied below at every order $m\le k+1$, and
+$\Pi_m(\mathcal Q)\subseteq \Pi_{k+1}(\mathcal Q)$ for such $m$.
+\end{proof}
+
+We can now say where the range $k\le\frac12(\delta L)^{1/3}$ of Proposition~\ref{prop:criterion} comes
+from. It arises twice. Firstly, Proposition~\ref{prop:gs} is available only for
+$k\le\sigma^{2/3}$, and by Lemma~\ref{lem:setup}(i) the variance of the sieve model satisfies
+$\sigma^{2}=\delta L+O(\log(2k))$. Secondly, the binomial estimate in the proof below requires
+$k^{3/2}\ll\sigma$, which is the same condition. Both therefore read $k\ll(\delta L)^{1/3}$, the factor
+$\frac12$ absorbing the $O(\log(2k))$ discrepancy between $\sigma^{2}$ and $\delta L$, together with the
+passage from $k$ to $k+1$ in the proof.
+
+\begin{proof}[Proof of Proposition~\ref{prop:criterion}]
+Fix $k\le\frac12(\delta L)^{1/3}$ and let $y,\mathcal Q,\mu,\sigma$ be as in \eqref{eq:defy}. Apply
+Proposition~\ref{prop:gs} with $\mathcal M=\mathcal B_\lambda$, $N=N_\lambda$, $h\equiv1$ and
+$\mathcal R=\mathcal Q$; the remainders $r_d$ are then those of \eqref{eq:defr}, and only
+$d\in\mathcal D(\mathcal E)$ occur in the conclusion, every element of $\Pi_{k+1}(\mathcal Q)$ being a
+product of primes of $\mathcal Q$ and hence coprime to $\mathcal E$. By Lemma~\ref{lem:setup}(i) we have
+$\sigma^{2/3}=(\delta L)^{1/3}(1+o(1))\ge k+1$ for all large $\lambda$, uniformly for $k$ in the
+stated range, so Proposition~\ref{prop:gs} is available for every order $m\le k+1$.
+
+Write $W(n):=\omega_{\mathcal Q}(n)-\mu$. By Lemma~\ref{lem:setup}(i) there is a constant $C$, not
+depending on $k$, with $\mu\le\delta L+C\log(2k)\le L\bigl(1+C\log(2k)/L\bigr)$, since $\delta\le1$.
+Raising this to the $m$-th power and using $1+u\le e^{u}$ gives
+$\mu^{m}\le L^{m}\exp\bigl(Cm\log(2k)/L\bigr)$; and for $m\le k+1$ the exponent is $o(1)$, because
+$2k\le(\delta L)^{1/3}$ gives $\log(2k)\le\frac13\log L$ while $m\ll L^{1/3}$, so that
+$m\log(2k)\ll L^{1/3}\log L=o(L)$. Thus $\mu^{m}\le L^{m}e^{o(1)}$. In particular no constant is
+raised here to a power that grows with $k$. With Lemma~\ref{lem:setup}(iii) at $A=1$,
+the second error term of Proposition~\ref{prop:gs}
+is therefore $\ll L^{m}\lambda^{-1}$ after division by $N_\lambda$. Since $\lambda=e^{L}/\log b$ and
+$m\le k+1\ll L^{1/3}$, this is $e^{-L(1+o(1))}$, hence smaller than any fixed power of
+$L^{-1}$. As $C_m\sigma^{m}\ge1$ for $\lambda$ large, and since $\sigma^{2}\asymp L$, it is in
+particular smaller than both $C_m\sigma^{m}m^{3}\sigma^{-2}$ and $C_m\sigma^{m}m^{3/2}\sigma^{-1}$, and so
+may be absorbed into the error terms below. Hence, for $1\le m\le k+1$,
+\begin{equation}\label{eq:D0}
+\begin{aligned}
+\frac1{N_\lambda}\sum_{n}W(n)^{m}
+  &=   C_m\sigma^{m}\Bigl(1+O\bigl(m^{3}\sigma^{-2}\bigr)\Bigr) && (m\ \text{even}),\\
+\frac1{N_\lambda}\sum_{n}W(n)^{m}
+  &\ll C_m\sigma^{m}m^{3/2}\sigma^{-1}                          && (m\ \text{odd}).
+\end{aligned}
+\end{equation}
+In particular, for every $0\le m\le k$,
+\begin{equation}\label{eq:absmom}
+\frac1{N_\lambda}\sum_{n}\bigl|W(n)\bigr|^{m}\ \ll\ C_m\sigma^{m}.
+\end{equation}
+For $m=0$ both sides equal $1$; for $1\le m\le k$, Lyapunov's inequality and the even case of
+\eqref{eq:D0} give
+\[
+\frac1{N_\lambda}\sum_{n}\bigl|W(n)\bigr|^{m}
+\ \le\ \Bigl(\frac1{N_\lambda}\sum_{n}W(n)^{2\lceil m/2\rceil}\Bigr)^{m/(2\lceil m/2\rceil)}
+\ \ll\ C_m\sigma^{m},
+\]
+where for odd $m$ the last step uses
+$C_{m+1}^{m/(m+1)}\ll C_m$, which follows from $C_m=\Gamma(m+1)/(2^{m/2}\Gamma(m/2+1))$ and Stirling's
+formula.
+
+Now put $\Delta(n):=\bigl(\omega_S(n)-\omega_{\mathcal Q}(n)\bigr)+\bigl(\mu-\delta L\bigr)$, so that
+$\omega_S(n)-\delta L=W(n)+\Delta(n)$ and, by Lemma~\ref{lem:setup}(i) and (ii),
+$\|\Delta\|_\infty\ll k+\log(2k)\ll k$. By the binomial theorem,
+\[
+\frac1{N_\lambda}\sum_{n}\bigl(\omega_S(n)-\delta L\bigr)^{k}
+=\frac1{N_\lambda}\sum_{n}W(n)^{k}
++\sum_{j=1}^{k}\binom kj\frac1{N_\lambda}\sum_{n}W(n)^{k-j}\Delta(n)^{j},
+\]
+and by \eqref{eq:absmom} the $j$-th summand is $\ll\binom kj(c_1k)^{j}C_{k-j}\sigma^{k-j}$, where $c_1$
+depends only on the parameters held fixed in this section and, in particular, not on $k$. Stirling's
+formula gives $C_m\asymp(m/e)^{m/2}$ for $m\ge1$, and $C_0=1$; hence
+$C_{k-j}\ll C_k(e/k)^{j/2}$ for $0\le j\le k$, because
+$\bigl((k-j)/k\bigr)^{(k-j)/2}\le1$. So, using $\binom kj\le k^{j}/j!$ and writing
+$c_2:=c_1\sqrt e$ and absorbing the implied constant just introduced,
+\[
+\sum_{j=1}^{k}\binom kj(c_1k)^{j}C_{k-j}\sigma^{k-j}
+\ \ll\ C_k\sigma^{k}\sum_{j\ge1}\frac1{j!}\Bigl(\frac{c_2k^{3/2}}{\sigma}\Bigr)^{j}
+\ \ll\ C_k\sigma^{k}\,\frac{k^{3/2}}{\sigma},
+\]
+the last step because $u:=c_2k^{3/2}/\sigma=O(1)$ in the stated range, whence
+$e^{u}-1\ll u$. Finally, write
+$\sigma^{2}=\delta L(1+\vartheta)$, where $\vartheta\ll\log(2k)/(\delta L)$ by
+Lemma~\ref{lem:setup}(i). Then $k|\vartheta|\ll(\delta L)^{-2/3}\log(\delta L)=o(1)$ uniformly in
+the stated range, so
+\[
+\sigma^{k}=(\delta L)^{k/2}\exp\bigl(\tfrac k2\log(1+\vartheta)\bigr)
+=(\delta L)^{k/2}\bigl(1+O(k\log(2k)/(\delta L))\bigr),
+\]
+and $k\log(2k)/(\delta L)\ll k^{3/2}(\delta L)^{-1/2}$. Combining this with \eqref{eq:D0} for $m=k$,
+and noting $k^{3}\sigma^{-2}\ll k^{3/2}\sigma^{-1}$ in the stated range, gives \eqref{eq:momk} and its odd
+counterpart.
+
+For \eqref{eq:concl}, fix $k$ and let $\lambda\to\infty$ in \eqref{eq:momk}: the $k$-th moment of
+$(\omega_S-\delta L)/\sqrt{\delta L}$ tends to $C_k$ for $k$ even and to $0$ for $k$ odd, which
+are the moments of the standard normal law. That law is determined by its moments, so \eqref{eq:concl}
+follows by the method of moments in the form of \cite[Thm.~30.2]{Bil}, uniformly in $t$ because $\Phi$ is
+continuous.
+
+Assume now hypothesis (iii), and let $F^{\omega}_\lambda$ and $F^{\Omega}_\lambda$ denote the
+distribution functions in \eqref{eq:concl} formed with $\omega_S$ and with $\Omega_S$ respectively.
+Since $\Omega_S(n)-\omega_S(n)=\sum_{\ell\in S}\max(v_\ell(n)-1,0)\le\Omega(n)-\omega(n)$, hypothesis
+(iii) gives $N_\lambda^{-1}\sum_n(\Omega_S(n)-\omega_S(n))\ll1$. Fix $\tau>0$ and let
+$\eta_\tau(\lambda)$ be the proportion of $n\in\mathcal B_\lambda$ with
+$\Omega_S(n)-\omega_S(n)>\tau\sqrt{\delta L}$; by Markov's inequality applied to the non-negative
+function $\Omega_S-\omega_S$ we have $\eta_\tau(\lambda)\ll1/(\tau\sqrt{\delta L})$, a bound depending
+on $\lambda$ and $\tau$ but not on $t$. Now $\Omega_S\ge\omega_S$ pointwise, so for every real $c$ the
+condition $\Omega_S(n)\le c$ forces $\omega_S(n)\le c$; and conversely
+$\omega_S(n)\le c-\tau\sqrt{\delta L}$ forces $\Omega_S(n)\le c$ unless $n$ is one of the
+$\eta_\tau(\lambda)N_\lambda$ exceptions. Taking $c=\delta L+t\sqrt{\delta L}$ therefore gives
+\[
+F^{\omega}_\lambda(t-\tau)-\eta_\tau(\lambda)\ \le\ F^{\Omega}_\lambda(t)
+\ \le\ F^{\omega}_\lambda(t)\qquad(t\in\mathbb R),
+\]
+whence
+\[
+\sup_t\bigl|F^{\Omega}_\lambda(t)-\Phi(t)\bigr|\ \le\ \sup_t\bigl|F^{\omega}_\lambda(t)-\Phi(t)\bigr|
++\sup_t\bigl|\Phi(t)-\Phi(t-\tau)\bigr|+\eta_\tau(\lambda),
+\]
+in which the middle term is at most $\tau/\sqrt{2\pi}$, since $\Phi'\le(2\pi)^{-1/2}$. Letting
+$\lambda\to\infty$ with $\tau$ fixed, and then $\tau\to0$, gives \eqref{eq:concl} for $\Omega_S$,
+uniformly in $t$.
+\end{proof}
+
+\section{Palindromes}\label{sec:pal}
+
+Write $\mathcal T:=\bigcup_{\nu\ge1}\mathcal T_\nu$ for the set of all base-$b$ palindromes and, for
+$x\ge1$, $a\in\mathbb Z$ and $q\ge1$, put $\mathcal T(x):=\{n\in\mathcal T:n<x\}$ and
+$\mathcal T(x,a,q):=\{n\in\mathcal T(x):n\equiv a\ (\mathrm{mod}\ q)\}$. Since
+$\#\mathcal T_\nu=(b-1)b^{\lceil\nu/2\rceil-1}$, summation over $\nu\le\lambda$ gives
+\begin{equation}\label{eq:Tsize}
+\#\mathcal T\bigl(b^{\lambda}\bigr)\ \asymp\ b^{\lceil\lambda/2\rceil}\ \asymp\ \#\mathcal T_\lambda ,
+\end{equation}
+since the family grows geometrically, so that the cumulative and the per-length counts are
+interchangeable; this is what makes the passage from $\mathcal T(x)$ to $\mathcal T_\lambda$ in
+Lemma~\ref{lem:palhyp} harmless. We use two results from the literature: a level of distribution, and
+an upper bound of Brun--Titchmarsh type valid for every modulus.
+
+\begin{theorem}[Col {\cite[Thm.~2]{Col}}]\label{thm:col}
+For every integer $b\ge2$ there is a constant $\beta=\beta(b)>0$ such that for all $A>0$ and $\eta>0$,
+\[
+\sum_{\substack{q<x^{\beta-\eta}\\ \gcd(q,\,b^{3}-b)=1}}\ \sup_{z\le x}\ \max_{a\in\mathbb Z}
+\left|\ \#\mathcal T(z,a,q)-\frac{\#\mathcal T(z)}{q}\ \right|
+\ \ll_{b,A,\eta}\ \frac{\#\mathcal T(x)}{\log^{A}x}.
+\]
+\end{theorem}
+
+Admissible values of $\beta(b)$ are tabulated in \cite[\S1]{Col}: one may take $\beta(2)=1/30$ and
+$\beta(10)=1/186$, and $\beta(b)\sim1/(6\pi b)$ as $b\to\infty$.
+
+\begin{theorem}[Banks and Shparlinski {\cite[Thm.~7]{BSh}}]\label{thm:bsh}
+For every integer $b\ge2$, every $\nu\ge1$ and every integer $d\ge1$,
+$\ \#\{n\in\mathcal T_\nu:\ d\mid n\}\ \ll_b\ \#\mathcal T_\nu\,d^{-1/2}$.
+\end{theorem}
+
+Theorem~\ref{thm:bsh} is stated in \cite{BSh} for a fixed number of digits, which is the form used
+below. The two results just quoted are complementary:
+Theorem~\ref{thm:col} is an equidistribution statement, giving the main term $\#\mathcal T(z)/q$
+with a saving of an arbitrary power of $\log x$; but it applies only to $q$ below the level
+$x^{\beta-\eta}$ and coprime to $b^{3}-b$, and it supplies hypothesis (ii) of
+Proposition~\ref{prop:criterion} directly. Theorem~\ref{thm:bsh} supplies no main term and loses a
+square root ($d^{-1/2}$ where equidistribution would give $d^{-1}$), but holds for every $d$,
+with neither a coprimality condition nor a restriction of range. It is used only in the verification
+of hypothesis (iii), and there only for the moduli beyond the reach of Theorem~\ref{thm:col}. For
+these an upper bound suffices, since the quantity being estimated need only be shown to be $O(1)$;
+that is what makes the loss of a square root affordable. The exponent $-1/2$ is critical: the case
+$m=2$ in the proof of Lemma~\ref{lem:palhyp} produces $\sum_\ell\ell^{-1}$, which is bounded only
+because the range is truncated at $b^{\xi\lambda/2}<\ell<b^{\lambda/2}$, the two cut-offs being
+comparable powers of $b^{\lambda}$; any weaker exponent would diverge there.
+
+Since $b^{3}-b=b(b^{2}-1)$, the coprimality condition in Theorem~\ref{thm:col} is exactly
+$q\in\mathcal D(\mathcal E_b)$ for the set
+\begin{equation}\label{eq:defE}
+\mathcal E_b\ :=\ \bigl\{\ell:\ \ell\mid b(b^{2}-1)\bigr\},\qquad
+\#\mathcal E_b=\omega\bigl(b(b^{2}-1)\bigr)\ll1 .
+\end{equation}
+The set $\mathcal E_b$ is larger than the structure of $\mathcal T_\lambda$ alone would require. If
+$\lambda$ is even then $(b+1)\mid n$ for every $n\in\mathcal T_\lambda$: as $\lambda-1$ is odd, the indices
+$j$ and $\lambda-1-j$ are distinct and of opposite parity, so pairing them in
+$n\equiv\sum_j\eps_j(n)(-1)^{j}\pmod{b+1}$ gives $n\equiv0$. Moreover the last digit of a palindrome
+equals its leading digit and is therefore non-zero, which biases divisibility by the primes dividing
+$b$. Theorem~\ref{thm:col} excludes the divisors of $b-1$ as
+well. Proposition~\ref{prop:criterion} imposes no hypothesis at the primes of $\mathcal E$, so these
+constraints do not enter what follows.
+
+\begin{lemma}\label{lem:palhyp}
+Set $\mathcal B_\lambda:=\mathcal T_\lambda$ and $\mathcal E:=\mathcal E_b$, and
+let $0<\xi<\beta(b)$. Then hypotheses \textup{(ii)} and \textup{(iii)} of
+Proposition~\ref{prop:criterion} hold.
+\end{lemma}
+
+\begin{proof}
+For (ii), fix $\xi'$ with $\xi<\xi'<\beta(b)$, let $x:=b^{\lambda}$ and let $q\le x^{\xi}$ satisfy
+$\gcd(q,b^{3}-b)=1$. Then
+\[
+\#\bigl\{n\in\mathcal T_\lambda:\ q\mid n\bigr\}=\#\mathcal T(b^{\lambda},0,q)-\#\mathcal T(b^{\lambda-1},0,q),
+\qquad
+\#\mathcal T_\lambda=\#\mathcal T(b^{\lambda})-\#\mathcal T(b^{\lambda-1}),
+\]
+both endpoints being at most $x$. Subtracting, the main terms combine to give exactly
+$\#\mathcal T_\lambda/q$, so by \eqref{eq:defr}
+\[
+\bigl|r_q(\lambda)\bigr|\ \le\ 2\sup_{z\le x}\max_{a\in\mathbb Z}
+\left|\ \#\mathcal T(z,a,q)-\frac{\#\mathcal T(z)}{q}\ \right| .
+\]
+As $q\le x^{\xi}<x^{\xi'}$, choosing $\eta:=\beta(b)-\xi'>0$ in Theorem~\ref{thm:col} and summing over $q$
+gives $\sum_{q}|r_q(\lambda)|\ll_{b,A}\#\mathcal T(x)(\log x)^{-A}$, which is
+$\ll_{b,A}\#\mathcal T_\lambda\lambda^{-A}$ by \eqref{eq:Tsize}. This is (ii), and in fact for all such
+$q$ and not only the squarefree ones; we record the stronger form because it will be applied below to
+the prime-power moduli $\ell^{m}$ in the verification of hypothesis (iii).
+
+For (iii), use $\Omega(n)-\omega(n)=\sum_{m\ge2}\#\{\ell:\ell^{m}\mid n\}$, valid since a prime $\ell$ is
+counted $\max(v_\ell(n)-1,0)$ times on the right; it therefore suffices to show that
+\[
+\sum_{m\ge2}\ \sum_{\ell}\ \frac{1}{\#\mathcal T_\lambda}
+\#\bigl\{n\in\mathcal T_\lambda:\ \ell^{m}\mid n\bigr\}\ \ll\ 1 .
+\]
+Every prime power occurring divides some $n<b^{\lambda}$,
+so $\ell<b^{\lambda/m}$ and $2\le m\le M:=\lambda\log b/\log2$. If $\ell^{m}\le b^{\xi\lambda}$ and
+$\ell\nmid b^{3}-b$, then the bound just proved for (ii) applies to the modulus $\ell^{m}$, and after
+division by $\#\mathcal T_\lambda$ the total contribution is at
+most $\sum_{m\ge2}\sum_{\ell}\ell^{-m}+O(\lambda^{-1})=O(1)$. In every remaining case we appeal to
+Theorem~\ref{thm:bsh}, which gives
+$\#\{n\in\mathcal T_\lambda:\ell^{m}\mid n\}\ll\#\mathcal T_\lambda\,\ell^{-m/2}$. The primes
+$\ell\mid b^{3}-b$ then contribute $\ll\sum_{\ell\mid b^{3}-b}\sum_{m\ge2}\ell^{-m/2}\ll1$, there being
+$O(1)$ of them; and for the pairs with $\ell^{m}>b^{\xi\lambda}$ we have $\ell>b^{\xi\lambda/m}$, whence
+\[
+\begin{aligned}
+\sum_{2\le m\le M}\ \sum_{b^{\xi\lambda/m}<\ell<b^{\lambda/m}}\ell^{-m/2}
+&\ \ll\ \sum_{b^{\xi\lambda/2}<\ell<b^{\lambda/2}}\frac1\ell
+\ +\ \sum_{3\le m\le M}\bigl(b^{\xi\lambda/m}\bigr)^{1-m/2}\\
+&\ \ll\ \log\frac1\xi+\lambda\,b^{-\xi\lambda/6}\ \ll\ 1 .
+\end{aligned}
+\]
+Here the first sum is $\log\log b^{\lambda/2}-\log\log b^{\xi\lambda/2}+o(1)=\log(1/\xi)+o(1)$ by Mertens'
+theorem, the upper cut-off $\ell<b^{\lambda/2}$ keeping it bounded; in the second sum
+$\bigl(b^{\xi\lambda/m}\bigr)^{1-m/2}=b^{-\xi\lambda(m-2)/(2m)}\le b^{-\xi\lambda/6}$ because
+$(m-2)/(2m)\ge\frac16$ for $m\ge3$, while the number of terms is $M\ll\lambda$. Adding the three
+contributions gives (iii).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:pal}, and of Theorem~\ref{thm:moments} for palindromes]
+We apply Proposition~\ref{prop:criterion}, taking $\mathcal B_\lambda:=\mathcal T_\lambda$,
+$\mathcal E:=\mathcal E_b$ and $0<\xi<\beta(b)$, with $S$ the set of all primes, so that
+$\omega_S=\omega$ and $\delta=1$. Hypothesis (i) holds because every element of $\mathcal T_\lambda$ is
+less than $b^{\lambda}$, while hypotheses (ii) and (iii) are Lemma~\ref{lem:palhyp}.
+\end{proof}
+
+\section{Reversed primes}\label{sec:local}
+
+We verify the hypotheses of Proposition~\ref{prop:criterion} for the sets $\mathcal A_{\lambda,i}$ of
+\eqref{eq:defA}. Reversing a block of $\lambda$ base-$b$ digits, leading zeros retained, is an
+involution on the set of such blocks; hence $R_\lambda$ is injective on $\{0,\dots,b^{\lambda}-1\}$,
+and in particular on $\mathcal P_\lambda$, so that $\#\mathcal A_{\lambda,i}=\pi_{\lambda,i}$ for
+$\lambda\ge2$.
+
+\subsection{Local structure of the reversal}
+
+Reversal is not multiplicative, but it is compatible with reduction modulo $b^{2}-1$ and modulo the
+divisors of $b$. The congruences of Lemma~\ref{lem:cong} are those of (3.8) in \cite{DRS}, and its gcd
+assertion corresponds to (3.9) there. Stating the first congruence modulo $b^{2}-1$ rather than modulo
+$b-1$ and $b+1$ separately is a genuine strengthening when $b$ is odd, since
+$\operatorname{lcm}(b-1,b+1)=(b^{2}-1)/2$ then; it also yields the equality of greatest common
+divisors.
+
+\begin{lemma}[cf.\ {\cite[(3.8), (3.9)]{DRS}}]\label{lem:cong}
+Let $\lambda\ge2$ and let $n$ be an integer with $b^{\lambda-1}\le n<b^{\lambda}$.
+\begin{enumerate}
+\item[\textup{(i)}] One has $R_\lambda(n)\equiv b^{\lambda-1}n\pmod{b^{2}-1}$; in particular
+$R_\lambda(n)\equiv n\pmod{b-1}$ and $R_\lambda(n)\equiv(-1)^{\lambda-1}n\pmod{b+1}$. Moreover
+$\gcd\bigl(R_\lambda(n),b^{2}-1\bigr)=\gcd\bigl(n,b^{2}-1\bigr)$, and consequently
+$\gcd(R_\lambda(p),b^{2}-1)=1$ for every $p\in\mathcal P_\lambda$ with $p>b+1$. One also has
+$b^{\lambda-1}\le R_\lambda(p)<b^{\lambda}$ for every $p\in\mathcal P_\lambda$ with $p>b$.
+\item[\textup{(ii)}] If $\ell\mid b$ then $R_\lambda(n)\equiv\eps_{\lambda-1}(n)\pmod\ell$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Modulo $b^{2}-1$ we have $b^{2}\equiv1$, hence $b^{-1}\equiv b$ and $b^{-j}\equiv b^{j}$ for every
+$j\ge0$; and $\gcd(b,b^{2}-1)=1$, so the powers of $b$ are invertible. Thus \eqref{eq:defR} gives
+\[
+R_\lambda(n)\ =\ b^{\lambda-1}\sum_{j=0}^{\lambda-1}\eps_j(n)b^{-j}
+\ \equiv\ b^{\lambda-1}\sum_{j=0}^{\lambda-1}\eps_j(n)b^{j}
+\ =\ b^{\lambda-1}n\pmod{b^{2}-1}.
+\]
+Reducing modulo $b-1$ and modulo $b+1$ and using $b\equiv1$, respectively $b\equiv-1$, gives the two
+stated congruences; and since $b^{\lambda-1}$ is invertible modulo $b^{2}-1$, the displayed congruence
+yields $\gcd(R_\lambda(n),b^{2}-1)=\gcd(n,b^{2}-1)$, which is $1$ for a prime $p>b+1$. Finally
+$R_\lambda(p)<b^{\lambda}$ is immediate from \eqref{eq:defR}, while the leading digit of $R_\lambda(p)$ is
+$\eps_0(p)=p\bmod b$, non-zero because $\gcd(p,b)=1$; hence $R_\lambda(p)\ge b^{\lambda-1}$.
+
+(ii) If $\ell\mid b$ then $b^{\lambda-1-j}\equiv0\pmod\ell$ for $j<\lambda-1$, so \eqref{eq:defR} leaves
+only the term with $j=\lambda-1$.
+\end{proof}
+
+By \eqref{eq:defD} and \eqref{eq:defE}, $d\in\mathcal D(\mathcal E_b)$ if and only if
+$\gcd(d,b(b^{2}-1))=1$. We next compute the local densities of $R_\lambda(p)$ at the primes dividing
+$b$; those dividing $b^{2}-1$ were settled in Lemma~\ref{lem:cong}(i).
+
+\begin{lemma}\label{lem:dens}
+One has $\pi_{\lambda,i}\sim\pi_\lambda/(b-1)$ for each fixed $i\in\{1,\dots,b-1\}$; in particular
+$\pi_{\lambda,i}\asymp\pi_\lambda\asymp b^{\lambda}\lambda^{-1}$. Moreover, if
+$\ell\mid b$ then
+\begin{enumerate}
+\item[\textup{(i)}] $\frac{1}{\pi_\lambda}\#\bigl\{p\in\mathcal P_\lambda:\ \ell\mid R_\lambda(p)\bigr\}
+\ \longrightarrow\ \frac{1}{b-1}\Bigl\lfloor\frac{b-1}{\ell}\Bigr\rfloor\qquad(\lambda\to\infty),$
+
+\item[\textup{(ii)}] $\displaystyle\sum_{m\ge2}\frac{1}{\pi_\lambda}
+\#\bigl\{p\in\mathcal P_\lambda:\ \ell^{m}\mid R_\lambda(p)\bigr\}\ \ll\ 1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For fixed $i$ the interval $[ib^{\lambda-1},(i+1)b^{\lambda-1})$ has length comparable to its
+endpoints, so the prime number theorem in the form $\pi(z)\sim z/\log z$ already gives
+\[
+\pi_{\lambda,i}=\pi\bigl((i+1)b^{\lambda-1}\bigr)-\pi\bigl(ib^{\lambda-1}\bigr)
+\ \sim\ \frac{b^{\lambda-1}}{(\lambda-1)\log b},
+\]
+Here the ratio $(i+1)/i$ of the endpoints is bounded away from $1$ in terms of $b$ alone, so the
+difference of the two counts is comparable to each of them and the $o(1)$ relative errors are
+absorbed. Summing over
+$i$ gives $\pi_\lambda\sim(b-1)b^{\lambda-1}/((\lambda-1)\log b)$, whence
+$\pi_{\lambda,i}\sim\pi_\lambda/(b-1)$: the leading digit of a prime in $\mathcal P_\lambda$ is
+asymptotically uniformly distributed on $\{1,\dots,b-1\}$.
+
+For (i), Lemma~\ref{lem:cong}(ii) shows that for $\ell\mid b$ one has $\ell\mid R_\lambda(p)$ if and
+only if $\ell$ divides the leading digit $\eps_{\lambda-1}(p)$; exactly
+$\lfloor(b-1)/\ell\rfloor$ of the possible leading digits $i\in\{1,\dots,b-1\}$ qualify, so summing
+$\pi_{\lambda,i}\sim\pi_\lambda/(b-1)$ over these $i$ gives (i).
+
+For (ii), write $v:=v_\ell(b)\ge1$ and, for $m\ge1$, put $j:=\lceil m/v\rceil$, so that $\ell^{m}\mid
+b^{j}$. Suppose first that $j\le\lambda/2$. By \eqref{eq:defR},
+$R_\lambda(n)\equiv\sum_{r<j}\eps_{\lambda-1-r}(n)b^{r}\pmod{\ell^{m}}$, so the condition
+$\ell^{m}\mid R_\lambda(n)$ depends only on the $j$ leading digits of $n$; and as
+$(\eps_{\lambda-1},\dots,\eps_{\lambda-j})$ runs through $\{0,\dots,b-1\}^{j}$ the quantity
+$\sum_{r<j}\eps_{\lambda-1-r}b^{r}$ runs bijectively through $\{0,\dots,b^{j}-1\}$, so the number of
+admissible leading blocks is at most $b^{j}\ell^{-m}+1$. Each fixed leading block confines $p$ to an
+interval of length $b^{\lambda-j}\ge b^{\lambda/2}$, in which the Brun--Titchmarsh inequality
+\cite[Thm.~2]{MV} gives $\ll b^{\lambda-j}/\bigl((\lambda-j)\log b\bigr)\ll\pi_\lambda b^{-j}$ primes,
+since $(\lambda-j)^{-1}\le2\lambda^{-1}$ and $\pi_\lambda\asymp b^{\lambda}\lambda^{-1}$. Hence
+$\#\{p\in\mathcal P_\lambda:\ell^{m}\mid R_\lambda(p)\}\ll\pi_\lambda(\ell^{-m}+b^{-j})$, and summing over
+those $m\ge2$ with $\lceil m/v\rceil\le\lambda/2$ contributes
+$\ll\sum_{m\ge2}\ell^{-m}+v\sum_{j\ge1}b^{-j}\ll1$.
+
+Suppose now that $j>\lambda/2$, so that $m>v(\lambda/2-1)\ge\lambda/2-1$. Since $R_\lambda$ is injective
+on $\mathcal P_\lambda$, the values $R_\lambda(p)$ with $p\in\mathcal P_\lambda$ are distinct positive
+integers below $b^{\lambda}$, so that
+\begin{equation}\label{eq:trivbound}
+\#\bigl\{p\in\mathcal P_\lambda:\ d\mid R_\lambda(p)\bigr\}
+\ \le\ \#\bigl\{1\le n<b^{\lambda}:\ d\mid n\bigr\}\ \le\ b^{\lambda}/d
+\qquad(d\ge1),
+\end{equation}
+so, using $\pi_\lambda\asymp b^{\lambda}\lambda^{-1}$ and $\ell\ge2$, the remaining $m$ contribute
+$\ll\lambda\sum_{m>\lambda/2-1}\ell^{-m}\ll\lambda\,2^{-\lambda/2+1}\ll1$.
+\end{proof}
+
+\begin{example}\label{ex:base10}
+For $b=10$ we have $b(b^{2}-1)=2\cdot3^{2}\cdot5\cdot11$, so $\mathcal E_{10}=\{2,3,5,11\}$. By
+Lemma~\ref{lem:cong}(i), $3\nmid R_\lambda(p)$ and $11\nmid R_\lambda(p)$ for every prime $p>11$, while
+by Lemma~\ref{lem:dens}(i) the densities of the events $2\mid R_\lambda(p)$ and $5\mid R_\lambda(p)$
+tend to $4/9$ and $1/9$ rather than to $1/2$ and $1/5$.
+\end{example}
+
+\subsection{Level of distribution and proof of the theorems}
+
+Write $\pi_\lambda(z)$ for the number of $p$ with $b^{\lambda-1}\le p<z$, and
+$\overline\pi_\lambda(z,a,d)$ for the number of those $p$ with $R_\lambda(p)\equiv a\pmod d$, residues
+being taken in $\{1,\dots,d\}$, so that $a=d$ is the class $0\bmod d$; thus
+$\pi_\lambda=\pi_\lambda(b^{\lambda})$.
+
+\begin{theorem}[Dartyge, Rivat and Swaenepoel {\cite[Thm.~1.3]{DRS}}]\label{thm:drs}
+For every integer $b\ge2$ there is an explicit constant $\xi_0=\xi_0(b)>0$ such that, given
+$\xi\in(0,\xi_0)$, there exist $c=c(b,\xi)>0$ and $\lambda_0(b,\xi)\ge2$ with the following property. For
+every integer $\lambda\ge\lambda_0(b,\xi)$,
+\[
+\sum_{\substack{d\le b^{\xi\lambda}\\ \gcd(d,\,b(b^{2}-1))=1}}\ \
+\sup_{b^{\lambda-1}\le z\le b^{\lambda}}\ \ \sup_{1\le a\le d}
+\left|\ \overline\pi_\lambda(z,a,d)-\frac{\pi_\lambda(z)}{d}\ \right|
+\ \ll\ b^{\lambda-c\sqrt{\lambda}} .
+\]
+\end{theorem}
+
+The supremum over $z$ is what permits the restriction to $\mathcal P_{\lambda,i}$ in the next lemma:
+for $\mathcal A_\lambda$ itself the single value $z=b^{\lambda}$ would serve, so the localised form of
+Theorem~\ref{thm:main} is bought precisely by that supremum.
+
+\begin{lemma}\label{lem:hyp2}
+Let $\xi\in(0,\xi_0(b))$ and let $i\in\{1,\dots,b-1\}$. Then for every $A>0$,
+\[
+\sum_{\substack{d\le b^{\xi\lambda}\\ d\in\mathcal D(\mathcal E_b)}}\bigl|r_d(\lambda)\bigr|
+\ \ll_A\ \pi_{\lambda,i}\,\lambda^{-A},
+\]
+where $r_d(\lambda)$ is formed from $\mathcal A_{\lambda,i}$ as in \eqref{eq:defr}, and the sum is over all
+such $d$ and not only the squarefree ones.
+\end{lemma}
+
+\begin{proof}
+Since $\mathcal P_{\lambda,i}$
+consists of the $p$ with $ib^{\lambda-1}\le p<(i+1)b^{\lambda-1}$,
+\[
+\#\bigl\{n\in\mathcal A_{\lambda,i}:\ d\mid n\bigr\}
+=\overline\pi_\lambda\bigl((i+1)b^{\lambda-1},d,d\bigr)-\overline\pi_\lambda\bigl(ib^{\lambda-1},d,d\bigr),
+\]
+\[ \pi_{\lambda,i}=\pi_\lambda\bigl((i+1)b^{\lambda-1}\bigr)-\pi_\lambda\bigl(ib^{\lambda-1}\bigr),
+\]
+both endpoints lying in $[b^{\lambda-1},b^{\lambda}]$. Subtracting, the main terms combine to give exactly
+$\pi_{\lambda,i}/d$, so $|r_d(\lambda)|$ is at most twice the supremum appearing in
+Theorem~\ref{thm:drs}, and that theorem gives $\sum_{d}|r_d(\lambda)|\ll b^{\lambda-c\sqrt\lambda}$ with
+$c=c(b,\xi)>0$. By Lemma~\ref{lem:dens}, $\pi_{\lambda,i}\asymp b^{\lambda}\lambda^{-1}$, so the
+right-hand side is $\pi_{\lambda,i}\cdot O(\lambda b^{-c\sqrt\lambda})$; and
+$b^{-c\sqrt\lambda}=\exp(-c\sqrt\lambda\,\log b)$ decays faster than any fixed
+power of $\lambda^{-1}$.
+\end{proof}
+
+\begin{lemma}\label{lem:hyp3}
+For every $i\in\{1,\dots,b-1\}$ one has
+$\sum_{p\in\mathcal P_{\lambda,i}}\bigl(\Omega(R_\lambda(p))-\omega(R_\lambda(p))\bigr)\ll\pi_{\lambda,i}$.
+\end{lemma}
+
+\begin{proof}
+Since $\mathcal P_{\lambda,i}\subseteq\mathcal P_\lambda$ and $\pi_{\lambda,i}\asymp\pi_\lambda$ by
+Lemma~\ref{lem:dens}, it suffices to prove the bound with $\mathcal P_\lambda$ and $\pi_\lambda$ in place
+of $\mathcal P_{\lambda,i}$ and $\pi_{\lambda,i}$; and by the identity
+$\Omega(n)-\omega(n)=\sum_{m\ge2}\#\{\ell:\ \ell^{m}\mid n\}$ used in the proof of
+Lemma~\ref{lem:palhyp} it suffices to show that
+\[
+\sum_{m\ge2}\ \sum_{\ell}\ \frac{1}{\pi_\lambda}
+\#\bigl\{p\in\mathcal P_\lambda:\ \ell^{m}\mid R_\lambda(p)\bigr\}\ \ll\ 1 .
+\]
+Fix $\xi\in(0,\xi_0(b))$ and split the range of $(\ell,m)$ into four parts. Every prime power counted
+divides some $R_\lambda(p)<b^{\lambda}$, so $2\le m\le M:=\lambda\log b/\log2$ throughout.
+
+If $\ell\mid b^{2}-1$ then $\ell\nmid R_\lambda(p)$ for $p>b+1$ by Lemma~\ref{lem:cong}(i), so these
+$\ell$ contribute $O(1)$ in total; and if $\ell\mid b$ then Lemma~\ref{lem:dens}(ii) bounds the
+corresponding subsum by $O(1)$ for each of the $O(1)$ such $\ell$.
+
+Let now $\ell\nmid b(b^{2}-1)$. If $\ell^{m}\le b^{\xi\lambda}$ then $\ell^{m}\in\mathcal D(\mathcal E_b)$,
+so Lemma~\ref{lem:hyp2} applies. Distinct pairs $(\ell,m)$ with $m\ge2$ give distinct moduli $\ell^{m}$, so
+summing the conclusion of that lemma over the $b-1$ values of $i$ and using
+$\#\{p\in\mathcal P_\lambda:\ell^{m}\mid R_\lambda(p)\}=\pi_\lambda\ell^{-m}+\sum_{i}r^{(i)}_{\ell^{m}}(\lambda)$,
+where $r^{(i)}$ is formed from $\mathcal A_{\lambda,i}$, we obtain
+\[
+\sum_{m\ge2}\ \sum_{\substack{\ell\nmid b(b^{2}-1)\\ \ell^{m}\le b^{\xi\lambda}}}
+\frac{1}{\pi_\lambda}\#\bigl\{p:\ \ell^{m}\mid R_\lambda(p)\bigr\}
+\ \le\ \sum_{m\ge2}\sum_{\ell}\frac{1}{\ell^{m}}+O\bigl(\lambda^{-1}\bigr)\ =\ O(1).
+\]
+Finally, still with $\ell\nmid b(b^{2}-1)$, if $\ell^{m}>b^{\xi\lambda}$ then
+$\ell>u_m:=b^{\xi\lambda/m}$, and \eqref{eq:trivbound} with
+$\pi_\lambda\asymp b^{\lambda}\lambda^{-1}$ and
+$\sum_{n>u}n^{-m}\le u^{-m}+u^{1-m}/(m-1)\le2u^{1-m}$, valid for $u\ge1$ and $m\ge2$, gives
+\[
+\begin{aligned}
+\sum_{2\le m\le M}\ \sum_{\ell>u_m}\frac{1}{\pi_\lambda}
+\#\bigl\{p:\ \ell^{m}\mid R_\lambda(p)\bigr\}
+&\ \ll\ \lambda\sum_{2\le m\le M}\ \sum_{\ell>u_m}\frac{1}{\ell^{m}} \\
+&\ \ll\ \lambda\sum_{2\le m\le M}u_m^{1-m}\ \ll\
+\lambda^{2}b^{-\xi\lambda/2}\ \ll\ 1,
+\end{aligned}
+\]
+since $u_m^{1-m}=b^{-\xi\lambda(m-1)/m}\le b^{-\xi\lambda/2}$ for $m\ge2$ and the sum over $m$ has
+$O(\lambda)$ terms.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}, and of Theorem~\ref{thm:moments} for reversed primes]
+Fix $i\in\{1,\dots,b-1\}$ and apply Proposition~\ref{prop:criterion} to
+$\mathcal B_\lambda:=\mathcal A_{\lambda,i}$ with $\mathcal E:=\mathcal E_b$, $\xi\in(0,\xi_0(b))$
+fixed, and $S$ the set of all primes.\footnote{By Lemma~\ref{lem:dens} we have $\pi_{\lambda,i}>0$ for
+all large $\lambda$; we set $\mathcal B_\lambda:=\{1\}$ for the finitely many $\lambda$ at which
+$\mathcal A_{\lambda,i}$ is empty. This does not affect the limits, since all statements are asymptotic
+in $\lambda$.} Hypothesis (i) holds by
+\eqref{eq:defR}, which gives $R_\lambda(p)<b^{\lambda}$ for every $p\in\mathcal P_\lambda$; hypothesis
+(ii) is Lemma~\ref{lem:hyp2}, and hypothesis (iii) is
+Lemma~\ref{lem:hyp3}. This gives Theorem~\ref{thm:moments} for $\mathcal A_{\lambda,i}$ and the localised
+form of Theorem~\ref{thm:main}.
+
+Since $\mathcal P_\lambda$ is the disjoint union of the $\mathcal P_{\lambda,i}$, every average over
+$\mathcal A_\lambda$ is the convex combination, with weights $\pi_{\lambda,i}/\pi_\lambda$, of the
+corresponding averages over the $\mathcal A_{\lambda,i}$. Applying this to $(\omega(n)-L)^{k}$ gives
+Theorem~\ref{thm:moments} for $\mathcal A_\lambda$, the $b-1$ estimates having the same main term and the
+same relative error when $k$ is even, and the same upper bound when $k$ is odd; and applying it to the
+distribution functions of the localised statement,
+$F_{\lambda,i}(t):=\pi_{\lambda,i}^{-1}\,\#\bigl\{p\in\mathcal P_{\lambda,i}:\ \omega(R_\lambda(p))\le
+L+t\sqrt L\bigr\}$,
+gives $\sup_t|F_\lambda-\Phi|\le\max_i\sup_t|F_{\lambda,i}-\Phi|=o(1)$ for the corresponding function
+$F_\lambda$ formed with $\mathcal P_\lambda$ and $\pi_\lambda$, which is the unlocalised form of
+Theorem~\ref{thm:main}. The argument for $\Omega$ is identical.
+\end{proof}
+
+\begin{proof}[Proof of Corollaries~\ref{cor:normalorder} and \ref{cor:cheb}]
+For Corollary~\ref{cor:normalorder}, apply Theorems~\ref{thm:pal} and \ref{thm:main} with
+$t=\pm\theta\sqrt L$, where $L\to\infty$, and use $\Phi(-u)+1-\Phi(u)\to0$ as $u\to\infty$. For the
+last assertion, every element of $\mathcal T_\lambda\cup\mathcal A_\lambda$ lies in
+$[b^{\lambda-1},b^{\lambda})$ for $\lambda\ge3$: for $\mathcal T_\lambda$ by definition, and for
+$\mathcal A_\lambda$ by Lemma~\ref{lem:cong}(i), since $p\ge b^{\lambda-1}\ge b^{2}>b$ for every
+$p\in\mathcal P_\lambda$. On that range $\log\log n=L+O(\lambda^{-1})$, as was already noted after
+\eqref{eq:defCk}. For
+Corollary~\ref{cor:cheb}, let $S:=S_{\mathcal C}$ be the set of primes unramified in $K$ whose Frobenius
+class is $\mathcal C$; by the Chebotarev density theorem with the classical
+error term \cite[Thm.~1.3]{LO} and partial summation,
+$\sum_{\ell\le y,\ \ell\in S}\ell^{-1}=\delta\log\log y+O(1)$, so $S$ is regular of density $\delta$, and
+the proofs above apply verbatim with this $S$.
+\end{proof}
+
+\section{Remarks}\label{sec:remarks}
+
+\begin{remark}\label{rem:inputs}
+The proofs require a level of distribution with moduli up to a fixed power of $b^{\lambda}$, together with
+the treatment of the primes dividing $b(b^{2}-1)$ in \eqref{eq:defE} and Lemma~\ref{lem:dens}. Any
+improvement of $\xi_0(b)$ in Theorem~\ref{thm:drs}, or of $\beta(b)$ in Theorem~\ref{thm:col}, leaves the
+results unchanged. A Siegel--Walfisz range for the moduli would not suffice: for reversed primes the range
+$d\le\exp(c\sqrt\lambda)$ of \cite{BS1,BS2}, and for palindromes the range
+$q\le\exp(c\lambda/\log\lambda)$ of \cite[Thm.~1]{Col}, would force the truncation point $y$ of
+\eqref{eq:defy} below every fixed power of $b^{\lambda}$, and the bound
+$\#\{\ell>y:\ell\mid n\}\le\lambda\log b/\log y$ of Lemma~\ref{lem:setup}(ii) would then exceed
+$\sqrt{L}$.
+\end{remark}
+
+\begin{remark}\label{rem:extremal}
+Theorem~\ref{thm:pal} determines the typical value of $\omega$ on $\mathcal T_\lambda$ and says nothing
+about its largest value, which is the question of \cite{BSh} and remains open: the trivial upper bound is
+$\max_{n\in\mathcal T_\lambda}\omega(n)\ll\lambda/\log\lambda$, while the lower bound of \cite{BSh} is
+$(\log\log n)^{1+o(1)}=\lambda^{o(1)}$. The two are far apart, and Theorem~\ref{thm:pal} does not narrow
+the gap. It does recover the lower bound in the form in which it is stated, and for a positive proportion
+of $n\in\mathcal T_\lambda$ rather than for a single one: for each fixed $t$ the proportion of
+$n\in\mathcal T_\lambda$ with $\omega(n)\ge\log\log n+t\sqrt{\log\log n}$ tends to $1-\Phi(t)>0$, and
+$\log\log n+t\sqrt{\log\log n}=(\log\log n)^{1+o(1)}$.
+\end{remark}
+
+\begin{remark}\label{rem:paldist}
+Tuxanidy and Panario \cite[Thm.~1.5]{TP} prove a level of distribution $1/5-\eta$ for palindromes, with an
+exponent independent of $b$, whereas Col's $\beta(b)\sim1/(6\pi b)$ degrades as $b$ grows. Their result is
+stated for the palindromes coprime to $b^{3}-b$, and every palindrome with an even number of digits is
+divisible by $b+1$; the set to which it applies therefore contains no element of $\mathcal T_\lambda$ when
+$\lambda$ is even. Substituting it for Theorem~\ref{thm:col} in Lemma~\ref{lem:palhyp} would give
+Theorem~\ref{thm:pal} for the palindromes in $\mathcal T_\lambda$ coprime to $b^{3}-b$, with $\xi$ close
+to $1/5$, but only for $\lambda$ odd. For the squarefree palindromes an exponent of distribution $1/16$
+is due to Tuxanidy \cite{Tux}.
+\end{remark}
+
+\begin{remark}\label{rem:rate}
+Theorem~\ref{thm:moments} is quantitative, but we do not deduce from it a rate of convergence in
+Theorem~\ref{thm:pal} or Theorem~\ref{thm:main}. The classical method of moments \cite[Thm.~30.2]{Bil} is
+qualitative, and the known routes to a rate for $\omega$ proceed instead through characteristic functions,
+as in R\'enyi and Tur\'an \cite{RT}, or through Stein's method, as in Harper \cite{Har}. For a digitally
+defined sequence a rate has been obtained by the former route: Mauduit and S\'ark\"ozy
+\cite[Thm.~4]{MS2} give $\ll(\log\log\log N)/\sqrt{\log\log N}$ for the integers up to $N$ with a fixed
+digit sum. A cumulant
+criterion such as \cite[Thm.~2.4]{DJS} does convert into a Kolmogorov bound, but requires control of
+cumulants of every order.
+\end{remark}
+
+
+\section*{Declaration on the use of AI tools}
+
+This note was prepared with extensive assistance from large language models
+(Claude Fable 5 and Claude Opus 5, Anthropic), used at every stage of its preparation: for the
+literature search, for jointly working out the main arguments, and for drafting and typesetting the
+manuscript itself. In particular,
+Theorem~\ref{thm:col}, on which Theorem~\ref{thm:pal} depends, was located by
+the models, and the modification of \cite[Prop.~3]{GS} presented in
+Proposition~\ref{prop:criterion} was worked out jointly with the models. The
+author has verified all statements, proofs and references, made the final
+decisions on content and presentation, and is responsible for any errors that
+remain.
+
+\begin{thebibliography}{99}
+
+\bibitem{BSh} W.~D.~Banks and I.~E.~Shparlinski, \emph{Prime divisors of palindromes},
+Period.\ Math.\ Hungar.\ \textbf{51} (2005), 1--10.
+
+\bibitem{BS1} G.~Bhowmik and Y.~Suzuki, \emph{On Telhcirid's theorem on arithmetic progressions},
+preprint, 2024, \href{https://arxiv.org/abs/2406.13334}{arXiv:2406.13334}.
+
+\bibitem{BS2} G.~Bhowmik and Y.~Suzuki, \emph{The Zsiflaw--Legeis theorem for arbitrary bases},
+preprint, 2025, \href{https://arxiv.org/abs/2507.08714}{arXiv:2507.08714}.
+
+\bibitem{Bil} P.~Billingsley, \emph{Probability and measure}, 3rd ed., Wiley, New York, 1995.
+
+\bibitem{CJ} S.~Chourasiya and D.~R.~Johnston, \emph{Power-free palindromes and reversed primes},
+Monatsh.\ Math.\ \textbf{208} (2025), no.~3, 369--385.
+
+\bibitem{Col} S.~Col, \emph{Palindromes dans les progressions arithm\'etiques},
+Acta Arith.\ \textbf{137} (2009), 1--41.
+
+\bibitem{DMRSS} C.~Dartyge, B.~Martin, J.~Rivat, I.~E.~Shparlinski and C.~Swaenepoel,
+\emph{Reversible primes},
+J.\ Lond.\ Math.\ Soc.\ (2) \textbf{109} (2024).
+
+\bibitem{DRS} C.~Dartyge, J.~Rivat and C.~Swaenepoel, \emph{Prime numbers with an almost prime reverse},
+preprint, 2025, \href{https://arxiv.org/abs/2506.21642}{arXiv:2506.21642}.
+
+\bibitem{DJS} H.~D\"oring, S.~Jansen and K.~Schubert, \emph{The method of cumulants for the normal
+approximation}, Probab.\ Surv.\ \textbf{19} (2022), 185--270.
+
+\bibitem{EK} P.~Erd\H os and M.~Kac, \emph{The Gaussian law of errors in the theory of additive number
+theoretic functions}, Amer.\ J.\ Math.\ \textbf{62} (1940), 738--742.
+
+\bibitem{EMS} P.~Erd\H os, C.~Mauduit and A.~S\'ark\"ozy, \emph{On arithmetic properties of integers
+with missing digits. II. Prime factors}, Discrete Math.\ \textbf{200} (1999), 149--164.
+
+\bibitem{GS} A.~Granville and K.~Soundararajan, \emph{Sieving and the Erd\H os--Kac theorem}, in:
+Equidistribution in number theory, an introduction, A.~Granville and Z.~Rudnick (eds.),
+NATO Sci.\ Ser.\ II Math.\ Phys.\ Chem.\ \textbf{237}, Springer, Dordrecht, 2007, pp.\ 15--27.
+
+\bibitem{HJ} M.~Harm and D.~R.~Johnston, \emph{The reverse Goldbach problem and a refined
+Zsiflaw--Legeis theorem}, preprint, 2026, \href{https://arxiv.org/abs/2605.21876}{arXiv:2605.21876}.
+
+\bibitem{Har} A.~J.~Harper, \emph{Two new proofs of the Erd\H os--Kac theorem, with bound on the rate of
+convergence, by Stein's method for distributional approximations}, Math.\ Proc.\ Cambridge Philos.\ Soc.\
+\textbf{147} (2009), 95--114.
+
+\bibitem{JK} D.~R.~Johnston and B.~Kerr, \emph{The infinitude of square-free palindromes},
+preprint, 2026, \href{https://arxiv.org/abs/2601.07097}{arXiv:2601.07097}.
+
+\bibitem{KMS} S.~Konyagin, C.~Mauduit and A.~S\'ark\"ozy, \emph{On the number of prime factors of
+integers characterized by digit properties}, Period.\ Math.\ Hungar.\ \textbf{40} (2000), 37--52.
+
+\bibitem{LO} J.~C.~Lagarias and A.~M.~Odlyzko, \emph{Effective versions of the Chebotarev density
+theorem}, in: Algebraic number fields: $L$-functions and Galois properties, A.~Fr\"ohlich (ed.),
+Academic Press, London, 1977,
+pp.\ 409--464.
+
+\bibitem{MS1} C.~Mauduit and A.~S\'ark\"ozy, \emph{On the arithmetic structure of sets characterized
+by sum of digits properties}, J.\ Number Theory \textbf{61} (1996), 25--38.
+
+\bibitem{MS2} C.~Mauduit and A.~S\'ark\"ozy, \emph{On the arithmetic structure of the integers whose
+sum of digits is fixed}, Acta Arith.\ \textbf{81} (1997), 145--173.
+
+\bibitem{MV} H.~L.~Montgomery and R.~C.~Vaughan, \emph{The large sieve},
+Mathematika \textbf{20} (1973), 119--134.
+
+\bibitem{MMP} M.~R.~Murty, V.~K.~Murty and S.~Pujahari, \emph{An all-purpose Erd\H os--Kac theorem},
+Math.\ Z.\ \textbf{305} (2023).
+
+\bibitem{RT} A.~R\'enyi and P.~Tur\'an, \emph{On a theorem of Erd\H os--Kac}, Acta Arith.\ \textbf{4}
+(1958), 71--84.
+
+\bibitem{Tux} A.~Tuxanidy, \emph{Distribution of square-free palindromes}, preprint, 2026,
+\href{https://arxiv.org/abs/2603.02549}{arXiv:2603.02549}.
+
+\bibitem{TP} A.~Tuxanidy and D.~Panario, \emph{Infinitude of palindromic almost-prime numbers},
+Int.\ Math.\ Res.\ Not.\ IMRN \textbf{2024}.
+
+\end{thebibliography}
+
+\end{document}
