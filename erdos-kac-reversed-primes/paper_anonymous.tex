@@ -974,6 +974,37 @@ criterion such as \cite[Thm.~2.4]{DJS} does convert into a Kolmogorov bound, but
 cumulants of every order.
 \end{remark}
 
+\begin{remark}[Formal verification]\label{rem:lean}
+The deductive content of this note has been verified with the Lean~4 proof
+assistant (Lean~4.33.0 with Mathlib). In the companion repository
+\begin{center}
+  \url{https://github.com/vibefrtz/vibemath}\\[2pt]
+  (folder \texttt{erdos-kac-reversed-primes}, archived at
+  \href{https://doi.org/10.5281/zenodo.22078540}{\texttt{doi:10.5281/zenodo.22078540}})
+\end{center}
+the results quoted from the literature --- Proposition~\ref{prop:gs},
+Theorems~\ref{thm:col}, \ref{thm:bsh} and \ref{thm:drs}, the
+Brun--Titchmarsh inequality, the prime number theorem, Mertens' second
+theorem and the method of moments --- are declared as axioms, in the form in
+which they are used here, and everything this note itself proves is
+machine-checked from those axioms with no unproved goals:
+Proposition~\ref{prop:criterion} together with Lemma~\ref{lem:setup} and the
+moment computation; Lemmas~\ref{lem:palhyp}, \ref{lem:cong}, \ref{lem:dens},
+\ref{lem:hyp2} and \ref{lem:hyp3}; and the deductions of
+Theorems~\ref{thm:pal} and \ref{thm:main} (pointwise and uniformly in $t$,
+localised and unlocalised), of Theorem~\ref{thm:moments} at each fixed
+moment order, and of Corollaries~\ref{cor:normalorder} and \ref{cor:cheb},
+the latter for an arbitrary regular set $S$. An axiom audit included in the
+repository lists, for every theorem, the exact axioms its proof consumes;
+these coincide with the citations invoked by the corresponding proof in this
+note. Two points lie outside the verification and are documented in the
+repository: the transcriptions of the quoted results were not checked
+mechanically against their sources beyond what is recorded there, and the
+uniformity in $k$ asserted in Theorem~\ref{thm:moments} is verified at each
+fixed $k$ only --- the case that Theorems~\ref{thm:pal} and \ref{thm:main}
+use.
+\end{remark}
+
 
 \section*{Declaration on the use of AI tools}
 

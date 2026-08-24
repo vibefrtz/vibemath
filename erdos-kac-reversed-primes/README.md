@@ -1,5 +1,7 @@
 # EKRev — a conditional Lean verification of "An Erdős–Kac law for palindromes and for reversed primes"
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22078540.svg)](https://doi.org/10.5281/zenodo.22078540)
+
 This repository accompanies the paper *An Erdős–Kac law for palindromes
 and for reversed primes*. It contains a Lean 4 formalisation in which
 
@@ -100,3 +102,14 @@ lean/
 paper_anonymous.pdf the manuscript (anonymised), with paper_anonymous.tex
 VERIFICATION.md     the detailed verification report
 ```
+
+## Citing this work
+
+This paper and its formalisation are archived on Zenodo with the permanent
+identifier
+
+```
+doi:10.5281/zenodo.22078540
+```
+
+which is also recorded in Remark 5.5 of the manuscript.

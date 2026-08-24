@@ -1,5 +1,7 @@
 # vibemath
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22078540.svg)](https://doi.org/10.5281/zenodo.22078540)
+
 A collection of mathematics papers, each accompanied by a Lean 4
 formalisation that certifies the paper's deductive content.
 
