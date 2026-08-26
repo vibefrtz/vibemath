@@ -1,0 +1,522 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.15in]{geometry}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\hypersetup{pdfauthor={},pdftitle={Prime values of digital functions along the primes},pdfsubject={},pdfkeywords={},pdfcreator={},pdfproducer={}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+
+\DeclareMathOperator{\Card}{\#}
+
+\begin{document}
+
+\title[Prime values of digital functions]{Prime values of digital functions along the primes}
+
+% \author{}
+% \address{}
+% \email{}
+
+\date{}
+
+\subjclass[2020]{Primary 11A63; Secondary 11N05, 11N60}
+\keywords{sum of digits, $q$-additive function, local limit theorem, Mertens formula, distribution of primes}
+
+\begin{abstract}
+Let $g$ be an integer valued strongly $b$-additive function with $\gcd(g(1),\dots,g(b-1))=1$ and with nonnegative mean $\mu_g$ over the digits. We show that $g(p)$ is prime for infinitely many primes $p$. When $\mu_g>0$ we prove a Mertens type formula: the sum of $1/p$ over the primes $p<X$ with $g(p)$ prime is $\frac{d_g}{\varphi(d_g)}\log_3X+C_{g,1}+O\big(1/\log\log X\big)$, where $d_g\mid b-1$ is a modulus attached to $g$ and $C_{g,1}$ is a constant. The analogous formula holds for the primes whose first $j$ iterates under $g$ are prime, and for the base $b$ digit sum it sharpens theorems of Harman. We show further that the number of $p\le x$ with $g(p)$ prime is $\ll\pi(x)/\log\log x$, and that it is of that exact order on a large set of $x$; under a hypothesis on primes in intervals of length $\sqrt y$, it is of that order at every $x$. The normal order of $\omega(g(p))$ is $\log_3p$. The proofs rest on a local limit theorem of Martin, Mauduit and Rivat. Our running example is the sum $S$ of the squares of the decimal digits: the primes $p$ with $S(p)$ prime, sequence A052034 of the OEIS, are infinite in number.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Fix an integer $b\ge 2$. A function $g\colon \N\to\Z$ is \emph{strongly $b$-additive} if
+\[
+g\Big(\sum_{j\ge 0}\varepsilon_j b^{j}\Big)=\sum_{j\ge 0}g(\varepsilon_j)\qquad (0\le \varepsilon_j\le b-1),
+\]
+so that $g$ is determined by the values $g(0)=0,g(1),\dots,g(b-1)$, whose mean and variance we denote by
+\[
+\mu_g=\frac1b\sum_{a=0}^{b-1}g(a),\qquad
+\sigma_g^2=\frac1b\sum_{a=0}^{b-1}\big(g(a)-\mu_g\big)^2 .
+\]
+Write $\log_1=\log$ and $\log_{i}=\log\circ\log_{i-1}$. We prove that if $\gcd(g(1),\dots,g(b-1))=1$ and $\mu_g\ge0$, then $g(p)$ is prime for infinitely many primes $p$. If in addition $\mu_g>0$, then the sum of $1/p$ over the primes $p<X$ with $g(p)$ prime equals $\frac{d_g}{\varphi(d_g)}\log_3X+C_{g,1}+O(1/\log_2X)$, for a constant $C_{g,1}$ and a divisor $d_g$ of $b-1$ attached to $g$ in \eqref{eq:dg}. We state these as Theorems \ref{thm:main} and \ref{thm:mertens}, the latter in an iterated form.
+
+Our running example is $b=10$ and
+\[
+S(n)=\sum_{j\ge 0}\varepsilon_j(n)^2,\qquad n=\sum_{j\ge 0}\varepsilon_j(n)10^{j},\quad 0\le \varepsilon_j(n)\le 9 ,
+\]
+the sum of the squares of the decimal digits, for which $d_S=1$. The primes $p$ for which $S(p)$ is again prime begin
+\[
+11,\ 23,\ 41,\ 61,\ 83,\ 101,\ 113,\ 131,\ 137,\ 173,\ 179,\ 191,\ \dots
+\]
+and were recorded by De Geest in 1999 as sequence A052034 of the OEIS \cite{oeis}, where the citations are to the recreational literature. We have not located anywhere a proof, or an assertion, that the sequence is infinite. It is.
+
+In a paper of 1968, Gel'fond \cite{gelfond} raised several questions about the interaction between the digits of an integer and its multiplicative structure, among them the distribution in arithmetic progressions of the decimal digit sum $s(p)$ as $p$ runs over the primes. The question stood for four decades. It was answered by Mauduit and Rivat \cite{mauduitrivat}, who proved that $s(p)$ is equidistributed modulo $m$ for every $m$ coprime to $9$, with a saving of a power of $x$ in the error term. Shortly before, Drmota, Mauduit and Rivat \cite{dmr} had obtained a local version for the base $q$ digit sum $s_q$. Writing $\mu_q=(q-1)/2$, $\sigma_q^2=(q^2-1)/12$ and
+\[
+\delta_q(k,x)=\frac{k-\mu_q\log_q x}{\sigma_q\sqrt{\log_q x}},
+\]
+their result reads
+\begin{equation}\label{eq:dmr}
+\Card\{p\le x:\ s_q(p)=k\}=\frac{q-1}{\varphi(q-1)}\cdot\frac{\pi(x)}{\sqrt{2\pi\sigma_q^2\log_q x}}\Big(e^{-\delta_q(k,x)^2/2}+O\big((\log x)^{-\frac12+\varepsilon}\big)\Big),
+\end{equation}
+uniformly in integers $k\ge 0$ with $\gcd(k,q-1)=1$; the coprimality condition cannot be dropped, since $s_q(n)\equiv n \pmod{q-1}$. Harman \cite{harman} observed that \eqref{eq:dmr} settles a question much easier to ask than to answer: every sufficiently large $k$ with $\gcd(k,q-1)=1$ is the digit sum of some prime, and prime values of $k$ are available in abundance, so there are infinitely many primes whose digit sum is again prime. He proved a good deal more: a Mertens type formula for the reciprocals of those primes, and an iterated version for primes whose digit sum is prime, whose digit sum is prime, and so on. On a hypothesis about primes in short intervals he obtained an asymptotic formula for their number.
+
+The role of \eqref{eq:dmr} is played here by a local limit theorem of Martin, Mauduit and Rivat \cite{mmr2019}, quoted as Theorem \ref{thm:mmr} in Section \ref{sec:mmr}; everything below is deduced from it. Implied constants may always depend on the base $b$ and on the weight $g$; further dependence will be noted explicitly.
+
+\begin{theorem}\label{thm:main}
+Let $b\ge 2$ and let $g$ be strongly $b$-additive with integer values, $\gcd(g(1),\dots,g(b-1))=1$ and $\mu_g\ge0$. Then $g(p)$ is prime for infinitely many primes $p$. More precisely, {\rm(i)} if $\mu_g>0$, then for every sufficiently large prime $k$ there are at least $x_k(\log x_k)^{-2}$ primes $p\le x_k$ with $g(p)=k$, where $x_k=b^{k/\mu_g}$; and {\rm(ii)} if $\mu_g=0$, then for every integer $k$ coprime to $b-1$, and in fact to the divisor $d_g$ of $b-1$ defined in Section \ref{sec:mmr}, there are $\gg\pi(x)(\log x)^{-1/2}$ primes $p\le x$ with $g(p)=k$ once $x$ is large in terms of $k$.
+\end{theorem}
+
+\begin{theorem}\label{thm:count}
+Assume the hypotheses of Theorem \ref{thm:main}. If $\mu_g>0$ there is a constant $C=C(b,g)$ with
+\[
+\Card\{p\le x:\ g(p)\ \text{prime}\}\ \ge\ x\exp\big(-C(\log x)^{0.525}\big)
+\]
+for all large $x$, while if $\mu_g=0$ the count is $\gg\pi(x)(\log x)^{-1/2}$, a single prime target sufficing.
+\end{theorem}
+
+Theorem \ref{thm:count} is not of the right order, the truth being of order $\pi(x)/\log\log x$ by Theorem \ref{thm:bracket} below, but it has the merit of holding at every large $x$, which Theorem \ref{thm:bracket} does not. The reciprocal sum, on the other hand, can be evaluated exactly, and in an iterated form. Let $\mathcal P^{(0)}$ be the set of all primes, and put
+\[
+\mathcal P^{(j)}=\{p\ \text{prime}:\ g(p)\in\mathcal P^{(j-1)}\}\qquad(j\ge1),
+\]
+so that $\mathcal P^{(1)}$ consists of the primes at which $g$ takes a prime value, $\mathcal P^{(2)}$ of those for which $g(p)$ is in turn such a prime, and so on.
+
+\begin{theorem}\label{thm:mertens}
+Let $b$ and $g$ be as in Theorem \ref{thm:main} with $\mu_g>0$, and let $j\ge1$ be fixed. There is a constant $C_{g,j}$ such that
+\[
+\sum_{\substack{p<X\\ p\in\mathcal P^{(j)}}}\frac1p=\left(\frac{d_g}{\varphi(d_g)}\right)^{\!j}\log_{j+2}X+C_{g,j}+O\!\left(\frac{1}{\log_{j+1}X}\right),
+\]
+where $d_g\mid b-1$ is defined in \eqref{eq:dg}, and $C_{g,j}$ and the implied constant depend also on $j$.
+\end{theorem}
+
+The remainder is dictated by the shape of the proof, which passes through \eqref{eq:ind} evaluated at $Y\asymp\log X$, so that each iteration costs a logarithm. For $j=1$ the argument gives more, namely
+\begin{equation}\label{eq:sharp}
+\sum_{\substack{p<X\\ g(p)\ \text{prime}}}\frac1p=\frac{d_g}{\varphi(d_g)}\log\big(\log_2X+\kappa_g\big)+C_{g,1}+O\big(e^{-c\sqrt{\log_2X}}\big),\qquad \kappa_g=\log\frac{\mu_g}{\log b},
+\end{equation}
+of which the displayed formula is the crude form, since $\log(\log_2X+\kappa_g)=\log_3X+O(1/\log_2X)$.
+
+For $g=s_b$ one has $d_g=b-1$, and the leading term is due to Harman \cite[Theorems 2 and 3]{harman}, who states the remainder as $O(1)$; that the difference between the sum and its main term tends to a limit is the new information. For $b=10$ and $g=S$ the leading coefficient is $1$.
+
+It is natural to ask why the reciprocal sum is accessible when the asymptotic count is not. For a single $x$ one would have to count the primes $k$ in a window of length $\asymp\sqrt{y}$ about $y=\mu_g\log_bx$; this is the obstruction described after Conjecture \ref{conj}. Partial summation replaces that count by an integral over $t\le X$, during which the centre $\mu_g\log_bt$ sweeps a long range. Reversing the order of summation then asks only for the primes $k$ up to $\mu_g\log_bX$, which is Mertens' theorem. The averaging in $t$ does the work that a short interval hypothesis would otherwise have to do. Theorem \ref{thm:mertens} may accordingly be read as saying that Conjecture \ref{conj} holds on average.
+
+Lagrange interpolation attaches to $g$ a unique $P\in\Q[X]$ with $\deg P\le b-1$, $P(0)=0$ and $P(a)=g(a)$ for $0\le a<b$, and conversely every such $P$ that is integer valued on the digits arises in this way. Theorem \ref{thm:main} is therefore a statement about digit weights defined by polynomials, and about all of them, its hypotheses reading
+\[
+\gcd\big(P(1),\dots,P(b-1)\big)=1,\qquad \frac1b\sum_{a=0}^{b-1}P(a)\ \ge\ 0 .
+\]
+For a fixed $P$ and large $b$, Faulhaber's formula settles the second condition by the sign of the leading coefficient of $P$. Integrality of the coefficients is not needed, only of the values. For $P(X)=\binom{X}{2}$ in base ten one has $\sum_j\binom{\varepsilon_j(n)}{2}=\frac12\big(S(n)-s(n)\big)$, whose digit values $0,0,1,3,6,10,15,21,28,36$ have greatest common divisor $1$ and mean $12$, so $\frac12(S(p)-s(p))$ is prime for infinitely many primes $p$. We record three consequences.
+
+\begin{corollary}\label{cor:powers}
+Let $b\ge2$ and $r\ge1$. There are infinitely many primes $p$ such that the sum of the $r$th powers of the base $b$ digits of $p$ is prime.
+\end{corollary}
+
+\begin{corollary}\label{cor:count}
+Let $b\ge2$ and let $c\in\{1,\dots,b-1\}$. There are infinitely many primes in whose base $b$ expansion the digit $c$ occurs a prime number of times.
+\end{corollary}
+
+\begin{corollary}\label{cor:iter}
+Let $b$ and $g$ be as in Theorem \ref{thm:main} with $\mu_g>0$, and let $t\ge1$. Write $g^{(i)}$ for the $i$th iterate of $g$. There are infinitely many primes $p$ such that $g(p),g^{(2)}(p),\dots,g^{(t)}(p)$ are all prime.
+\end{corollary}
+
+Corollary \ref{cor:powers} with $r=2$ and $b=10$ is the assertion about A052034 made above; Corollary \ref{cor:iter} follows on applying clause (i) of Theorem \ref{thm:main} $t$ times in succession. For $g=s$ the last is contained, in a stronger and quantitative form, in Harman \cite{harman}; Lehmann \cite{lehmann} has since made the underlying surjectivity explicit and deduced the existence of infinitely many primes whose whole chain of iterated digit sums consists of primes.
+
+The exponent $0.525$ in Theorem \ref{thm:count} comes from the theorem of Baker, Harman and Pintz \cite{bhp} on primes in short intervals, and any improvement there improves it. The truth should be much larger. Heuristically the values $g(p)$ for $p\le x$ cluster around $\mu_g\log_bx$ in a range of length of order $\sqrt{\log x}$, and a prime should be about as likely to occur there as at a random integer of that size; this suggests the following.
+
+\begin{conjecture}\label{conj}
+Let $b$ and $g$ be as in Theorem \ref{thm:main} with $\mu_g>0$. Then
+\[
+\Card\{p\le x:\ g(p)\ \text{prime}\}\sim \frac{d_g}{\varphi(d_g)}\cdot\frac{\pi(x)}{\log(\mu_g\log_bx)}\qquad(x\to\infty);
+\]
+for $b=10$ and $g=S$ the right side is $\pi(x)/\log\big(\tfrac{57}{2}\log_{10}x\big)$.
+\end{conjecture}
+
+Conjecture \ref{conj} seems out of reach at present, for a reason that has nothing to do with digits. Even granting the full strength of Theorem \ref{thm:mmr}, an asymptotic count requires the primes to be distributed as expected in intervals of length of order $\sqrt{y}$ about $y=\mu_g\log_bx$, and no such statement is known; as Harman notes for $s$, this is not obtainable even on the Riemann Hypothesis together with the pair correlation conjecture. Nor is the length $\sqrt y$ an artifact: it is the length of the range the values $g(p)$ occupy, and Theorem \ref{thm:mmr} says nothing about which integers there are prime. The conjecture can nevertheless be bracketed unconditionally: from above at every $x$, and from below on a large set of $x$.
+
+\begin{theorem}\label{thm:bracket}
+Let $b$ and $g$ be as in Theorem \ref{thm:main} with $\mu_g>0$, and write $M(x)=\Card\{p\le x: g(p)\ \text{prime}\}$. Then
+\[
+M(x)\ \ll\ \frac{\pi(x)}{\log\log x}\qquad(x\ge16),
+\]
+and there are $\delta>0$ and $t_0\ge16$ such that, for all large $X$, the set of $t\in[t_0,X]$ with
+\[
+M(t)\ \ge\ \delta\,\frac{\pi(t)}{\log\log t}
+\]
+has measure at least $\delta\log_3X$ with respect to $\nu=dt/(t\log t\log_2t)$, which assigns mass $\log_3X+O(1)$ to $[t_0,X]$.
+\end{theorem}
+
+So the order of magnitude in Conjecture \ref{conj} is correct, and is attained on a set of positive density for $\nu$, that is, on the $\log_3$ scale. What is missing is that it is attained at \emph{every} large $x$, and that is where a hypothesis on primes in short intervals enters.
+
+The same window controls the factorisation of $g(p)$ as well as its primality; $\omega$ and $\Omega$ denote the number of prime divisors of an integer, without and with multiplicity.
+
+\begin{theorem}\label{thm:omega}
+Let $b$ and $g$ be as in Theorem \ref{thm:main} with $\mu_g>0$. For all but $o(\pi(x))$ of the primes $p\le x$,
+\[
+\omega\big(g(p)\big)=\big(1+o(1)\big)\log_3p,\qquad \Omega\big(g(p)\big)=\big(1+o(1)\big)\log_3p .
+\]
+\end{theorem}
+
+The normal order of $\omega(g(p))$ is thus the same as that of $\omega(n)$ for $n$ of size $\log p$; Section \ref{sec:sieve} records what can instead be arranged for the smallest prime factor of $g(p)$, a statement about rare $p$ rather than about the typical one. Carrying the same moment computation to the $r$th order, with the cut-off $z=y^{1/(2r)}$ in place of $y^{1/4}$, gives the Erd\H{o}s--Kac law for $\omega(g(p))$.
+
+The hypothesis that would settle Conjecture \ref{conj} can be named precisely.
+
+\begin{hypothesis}[SI]\label{hyp:si}
+For every fixed $c>0$, $\ \pi(y+c\sqrt y)-\pi(y)\sim c\sqrt y/\log y$ as $y\to\infty$.
+\end{hypothesis}
+
+\begin{theorem}\label{thm:cond}
+Let $b$ and $g$ be as in Theorem \ref{thm:main} with $\mu_g>0$. On Hypothesis \ref{hyp:si},
+\[
+\Card\{p\le x:\ g(p)\ \text{prime}\}\sim\frac{d_g}{\varphi(d_g)}\cdot\frac{\pi(x)}{\log(\mu_g\log_bx)}\qquad(x\to\infty).
+\]
+In particular Conjecture \ref{conj} holds on Hypothesis \ref{hyp:si}.
+\end{theorem}
+
+Harman \cite[Theorem 6]{harman} proves the corresponding statement for $s$ on a hypothesis of this kind, in his case about intervals shorter than $\sqrt y$, which implies Hypothesis \ref{hyp:si}.
+
+\section{A local limit theorem for digital functions}\label{sec:mmr}
+
+Let $\mathcal F_+$ denote the set of strongly $b$-additive functions $g\colon\N\to\Z$ satisfying
+\begin{equation}\label{eq:gcd}
+\gcd\big(g(1),\dots,g(b-1)\big)=1,
+\end{equation}
+and for $g\in\mathcal F_+$ set
+\begin{equation}\label{eq:dg}
+d_g=\gcd\big(g(2)-2g(1),\ g(3)-3g(1),\ \dots,\ g(b-1)-(b-1)g(1),\ b-1\big).
+\end{equation}
+The integer $d_g$ divides $b-1$ and records the congruence rigidity of $g$. Indeed $b\equiv1\pmod{d_g}$ and $g(a)\equiv ag(1)\pmod{d_g}$ for each digit $a$, so that
+\[
+g(n)\equiv g(1)\sum_{j\ge0}\varepsilon_j(n)\equiv g(1)\,n \pmod{d_g}\qquad (n\ge1);
+\]
+the value $g(p)$ is thus confined modulo $d_g$ to a class determined by $p$.
+
+\begin{theorem}[Martin, Mauduit, Rivat {\cite[Th\'eor\`eme 1]{mmr2019}}]\label{thm:mmr}
+Let $b\ge2$ and $g\in\mathcal F_+$, and fix $\varepsilon\in(0,\tfrac12)$. Uniformly for $x>2$ and $k\in\Z$,
+\begin{equation}\label{eq:mmr}
+\Card\{p\le x: g(p)=k\}
+=\frac{d_g\,\pi_k(x)}{\sqrt{2\pi\sigma_g^{2}\log_b x}}\,
+\exp\left(-\frac{(k-\mu_g\log_b x)^{2}}{2\sigma_g^{2}\log_b x}\right)
++O\!\left(\frac{\pi(x)}{(\log x)^{1-\varepsilon}}\right),
+\end{equation}
+where $\pi_k(x)=\Card\{p\le x:\ g(1)p\equiv k \!\!\pmod{d_g}\}$ and the implied constant depends also on $\varepsilon$.
+\end{theorem}
+
+Martin, Mauduit and Rivat prove the more general statement in which the left side of \eqref{eq:mmr} carries a factor $e(\beta p)$, uniformly in real $\beta$; the case $\beta=0$ is what we need. The only consequence they draw is that $(\beta p)$ is equidistributed modulo $1$, for irrational $\beta$, as $p$ runs over the primes with $g(p)=\lfloor\mu_g\log_b p\rfloor$; prime values of $g$ are not discussed. Their earlier papers \cite{mmr2014,mmr2015} supply the underlying exponential sum estimates; Bassily and K\'atai \cite{bassilykatai} had established the central limit theorem, without the local refinement, for strongly $q$-additive functions along polynomial sequences.
+
+Theorem \ref{thm:mmr} contains \eqref{eq:dmr}: for $g=s_b$ one has $g(a)=a$, so every difference $g(a)-ag(1)$ vanishes, $d_g=b-1$, and $\pi_k(x)=\pi(x;k,b-1)\sim\pi(x)/\varphi(b-1)$ when $\gcd(k,b-1)=1$. Substituting into \eqref{eq:mmr} returns \eqref{eq:dmr} with $q=b$, coprimality condition and constant $(b-1)/\varphi(b-1)$ included.
+
+We record two elementary consequences of \eqref{eq:gcd}.
+
+\begin{lemma}\label{lem:easy}
+Let $g\in\mathcal F_+$ with $b\ge2$. Then $\sigma_g>0$ and $\gcd(g(1),d_g)=1$.
+\end{lemma}
+
+\begin{proof}
+If $\sigma_g=0$ then $g$ is constant on $\{0,1,\dots,b-1\}$, and since $g(0)=0$ that constant is $0$, contradicting \eqref{eq:gcd}. For the second assertion, suppose a prime $\ell$ divides both $g(1)$ and $d_g$. By \eqref{eq:dg}, $\ell$ divides $g(a)-ag(1)$ for $2\le a\le b-1$, whence $\ell\mid g(a)$ for all $a$, again contradicting \eqref{eq:gcd}.
+\end{proof}
+
+\section{Digital functions take prime values: Proofs of Theorems \ref{thm:main} and \ref{thm:count}}
+
+\begin{proof}[Proof of Theorem \ref{thm:main}]
+The proof is a direct application of Theorem \ref{thm:mmr}. Fix $\varepsilon=\frac14$ there, and let $k$ be an integer with $\gcd(k,d_g)=1$, which holds in particular when $\gcd(k,b-1)=1$. By Lemma \ref{lem:easy} the residue $g(1)$ is invertible modulo $d_g$; so the congruence $g(1)p\equiv k \pmod{d_g}$ confines $p$ to the single class $c\equiv g(1)^{-1}k$, which is coprime to $d_g$. The prime number theorem for arithmetic progressions therefore gives
+\begin{equation}\label{eq:pik}
+\pi_k(x)=\frac{\pi(x)}{\varphi(d_g)}\big(1+o(1)\big)\qquad (x\to\infty),
+\end{equation}
+the modulus $d_g$ being fixed.
+
+Suppose first that $\mu_g>0$, and let $k$ be a prime exceeding $b-1$. Choose the range of summation to suit the target:
+\[
+x_k=b^{k/\mu_g},\qquad\text{so that}\qquad \mu_g\log_b x_k=k
+\]
+and the exponential in \eqref{eq:mmr} equals $1$. With this choice, \eqref{eq:mmr} and \eqref{eq:pik} give
+\[
+\Card\{p\le x_k: g(p)=k\}=\frac{d_g}{\varphi(d_g)}\cdot\frac{\pi(x_k)}{\sqrt{2\pi\sigma_g^2\log_b x_k}}\big(1+o(1)\big)+O\!\left(\frac{\pi(x_k)}{(\log x_k)^{3/4}}\right).
+\]
+The main term has order $\pi(x_k)(\log x_k)^{-1/2}$ and so dominates; consequently
+\begin{equation}\label{eq:lower}
+\Card\{p\le x_k: g(p)=k\}\gg \frac{x_k}{(\log x_k)^{3/2}}
+\end{equation}
+once $k$ is large; in particular the right side exceeds $x_k(\log x_k)^{-2}$, which is the form stated in Theorem \ref{thm:main}. The count being positive, some prime $p$ has $g(p)=k$. As $k$ runs through the primes, $x_k\to\infty$, and the primes so produced cannot repeat: distinct $k$ give distinct values $g(p)$.
+
+Suppose now that $\mu_g=0$ and that $k$ is fixed with $\gcd(k,b-1)=1$. The exponential in \eqref{eq:mmr} is $\exp(-k^2/(2\sigma_g^2\log_b x))=1+o(1)$, so \eqref{eq:mmr} and \eqref{eq:pik} give
+\[
+\Card\{p\le x: g(p)=k\}=\frac{d_g}{\varphi(d_g)}\cdot\frac{\pi(x)}{\sqrt{2\pi\sigma_g^2\log_b x}}\big(1+o(1)\big)+O\!\left(\frac{\pi(x)}{(\log x)^{3/4}}\right)\gg\frac{\pi(x)}{\sqrt{\log x}} .
+\]
+Taking for $k$ a prime coprime to $b-1$, of which there are infinitely many, finishes the proof.
+\end{proof}
+
+Note the direction of the argument: rather than seek a prime inside a prescribed short interval, which would be hopeless, one selects the prime target first and then slides the range $x$ until the distribution of $g(p)$ is centred on it.
+
+\begin{proof}[Proof of Theorem \ref{thm:count}]
+This time the range is prescribed and the target must be fitted to it. Let $x$ be large, put $y=\mu_g\log_b x$, and let $k$ be the largest prime with $k\le y$. By the theorem of Baker, Harman and Pintz \cite{bhp}, the interval $[y-y^{0.525},y]$ contains a prime once $y$ is large, so $y-k\ll y^{0.525}\ll(\log x)^{0.525}$. Hence
+\[
+x_k=b^{k/\mu_g}=x\cdot b^{-(y-k)/\mu_g}\ge x\exp\big(-C_1(\log x)^{0.525}\big)
+\]
+for a suitable $C_1=C_1(b,g)$, and in particular $x_k\le x$. Every prime counted by \eqref{eq:lower} satisfies $p\le x_k\le x$ and $g(p)=k$ prime, so
+\[
+\Card\{p\le x: g(p)\ \text{prime}\}\ \ge\ \Card\{p\le x_k: g(p)=k\}\ \gg\ \frac{x_k}{(\log x_k)^{3/2}}\ \ge\ x\exp\big(-C(\log x)^{0.525}\big)
+\]
+with $C=C_1+1$, say, for all large $x$. The final assertion is clause (ii) of Theorem \ref{thm:main} applied to a single prime $k$ coprime to $b-1$.
+\end{proof}
+
+\begin{proof}[Proofs of Corollaries \ref{cor:powers} and \ref{cor:count}]
+In both cases the function $g$ is strongly $b$-additive by construction. For Corollary \ref{cor:powers}, $g(a)=a^r$ has $g(1)=1$, so \eqref{eq:gcd} holds, and $\mu_g=\frac1b\sum_{a<b}a^r>0$. For Corollary \ref{cor:count}, $g(a)=1$ if $a=c$ and $g(a)=0$ otherwise, so \eqref{eq:gcd} holds and $\mu_g=1/b>0$. Theorem \ref{thm:main} applies in each case.
+\end{proof}
+
+\begin{proof}[Proof of Corollary \ref{cor:iter}]
+The set in question is $\mathcal P^{(t)}$, whose reciprocal sum diverges by Theorem \ref{thm:mertens}. Alternatively, and without Theorem \ref{thm:mertens}: let $k_t$ be a prime large enough for clause (i) of Theorem \ref{thm:main} and construct $k_{t-1},\dots,k_0$ downwards, clause (i) supplying at each step a prime $k_i$ with $g(k_i)=k_{i+1}$. Since $g(n)\ll\log n$, the relation $k_{i+1}=g(k_i)$ forces $k_i\gg\exp(ck_{i+1})$ for some $c=c(b,g)>0$, so each $k_i$ in turn is large enough for the next application, and $p=k_0$ works.
+\end{proof}
+
+\section{A Mertens formula for these primes: Proof of Theorem \ref{thm:mertens}}
+
+We first record the large deviation estimate that lets us discard the primes at which $g$ is far from its mean. Let $R=\max_{a<b}g(a)-\min_{a<b}g(a)$, which is positive by Lemma \ref{lem:easy}.
+
+\begin{lemma}\label{lem:hoeffding}
+Let $g$ be strongly $b$-additive with $\mu_g\ge0$. For $t\ge b$ and $u>0$,
+\[
+\Card\{n\le t:\ |g(n)-\mu_g\log_bt|\ge u+\mu_g\}\ \le\ 2bt\exp\left(-\frac{u^{2}}{2R^{2}(\log_bt+1)}\right).
+\]
+\end{lemma}
+
+\begin{proof}
+The lemma is an instance of Hoeffding's inequality. Put $m=\lfloor\log_bt\rfloor+1$, so that $b^{m}>t$ and every $n\le t$ lies in $[0,b^m)$. Under the uniform measure on that range the digits $\varepsilon_0,\dots,\varepsilon_{m-1}$ are independent and uniform on $\{0,\dots,b-1\}$, so $g(n)=\sum_{i<m}g(\varepsilon_i)$ is a sum of $m$ independent random variables with mean $\mu_g$ and range at most $R$. Hoeffding's inequality \cite{hoeffding} gives
+\[
+\Card\{n<b^{m}:\ |g(n)-\mu_gm|\ge u\}\le 2b^{m}\exp\left(-\frac{u^{2}}{2mR^{2}}\right),
+\]
+and the lemma follows from $b^m\le bt$, $m\le\log_bt+1$ and $|\mu_gm-\mu_g\log_bt|\le\mu_g$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:mertens}]
+The proof is by induction on $j$. Partial summation converts the sum into an integral over $t$, and Theorem \ref{thm:mmr} evaluates the integrand in a window about the mean; reversing the order of summation and integration then leaves the reciprocal sum of the targets, one level down in the iteration. Write $c_g=d_g/\varphi(d_g)$; the inductive hypothesis is
+\begin{equation}\label{eq:ind}
+\sum_{\substack{k\le Y\\ k\in\mathcal P^{(j-1)}}}\frac1k=c_g^{\,j-1}\log_{j+1}Y+C_{g,j-1}+O\!\left(\frac{1}{\log_{j}Y}\right),
+\end{equation}
+which for $j=1$ is Mertens' theorem, with $C_{g,0}$ the Mertens constant and remainder $O(1/\log Y)$. Put $\mathcal Q=\mathcal P^{(j-1)}$ and $M(t)=\Card\{p\le t: g(p)\in\mathcal Q\}$, so that $\mathcal P^{(j)}=\{p: g(p)\in\mathcal Q\}$. Partial summation and the bound $M(X)\le\pi(X)\ll X/\log X$ give
+\[
+\sum_{\substack{p<X\\ p\in\mathcal P^{(j)}}}\frac1p=\frac{M(X)}{X}+\int_2^X\frac{M(t)}{t^2}\,dt=\int_{t_0}^X\frac{M(t)}{t^{2}}\,dt+c_0+O\!\left(\frac{1}{\log X}\right),
+\]
+where $t_0$ is a constant to be chosen and $c_0=\int_2^{t_0}M(t)t^{-2}dt$ is another. Throughout put $L=\log_bt$, and let
+\[
+H=H(t)=\sigma_g\sqrt{L}\,\log L,\qquad W(t)=[\mu_gL-H,\ \mu_gL+H].
+\]
+Split $M=M_1+M_2$ according as $g(p)\in W(t)$ or not.
+
+\emph{Outside the window.} The count $M_2$ is small enough that its whole contribution to the integral is bounded. Discarding primality and applying Lemma \ref{lem:hoeffding} with $u=H-\mu_g$,
+\[
+M_2(t)\le\Card\{n\le t:\ |g(n)-\mu_gL|>H\}\ll t\exp\big(-c(\log L)^{2}\big)
+\]
+for some $c=c(b,g)>0$. Substituting $t=b^{L}$ and then $L=e^{v}$,
+\[
+\int_{t_0}^{X}\frac{M_2(t)}{t^{2}}\,dt\ \ll\ \int_{t_0}^{X}e^{-c(\log\log_bt)^{2}}\,\frac{dt}{t}\ \ll\ \int_{1}^{\infty}e^{-c(\log L)^{2}}\,dL=\int_{0}^{\infty}e^{-cv^{2}+v}\,dv=O(1).
+\]
+
+\emph{Inside the window.} This is where Theorem \ref{thm:mmr} enters: it evaluates $M_1$ one target at a time. Enlarging $t_0$ we may assume $\mu_gL-H>d_g$ for $t\ge t_0$, so every prime $k\in W(t)$ is coprime to $d_g$. By Brun--Titchmarsh the number of primes in $W(t)$ is $\ll H/\log H\ll\sqrt{L}$. Applying Theorem \ref{thm:mmr} with $\varepsilon=\frac14$ to each $k\in\mathcal Q\cap W(t)$, and the Siegel--Walfisz theorem to $\pi_k(t)$ for the fixed modulus $d_g$,
+\[
+M_1(t)=\frac{c_g\,\pi(t)}{\sqrt{2\pi\sigma_g^{2}L}}\sum_{k\in\mathcal Q\cap W(t)}\exp\left(-\frac{(k-\mu_gL)^{2}}{2\sigma_g^{2}L}\right)+O\left(\frac{t}{(\log t)^{5/4}}+\sqrt{L}\,t\,e^{-c\sqrt{\log t}}\right).
+\]
+Both error terms are harmless: $\int_{t_0}^{X}t^{-1}(\log t)^{-5/4}dt=O(1)$, and $\int_{t_0}^{X}\sqrt{\log t}\,e^{-c\sqrt{\log t}}\,t^{-1}dt=O(1)$ after the substitution $\log t=w^{2}$.
+
+\emph{The main term.} Each target $k$ will now receive its own integral, which Laplace's method will show to be close to $1/k$. All terms being nonnegative, we may reverse the order of summation and integration:
+\[
+\int_{t_0}^{X}\frac{c_g\,\pi(t)}{t^{2}\sqrt{2\pi\sigma_g^{2}L}}\sum_{k\in\mathcal Q\cap W(t)}e^{-\frac{(k-\mu_gL)^{2}}{2\sigma_g^{2}L}}\,dt=c_g\sum_{k\in\mathcal Q}I_k(X),
+\]
+where $I_k(X)$ is the same integrand integrated over those $t\in[t_0,X]$ with $k\in W(t)$. Substituting $t=b^{L}$ and $\pi(t)=t(\log t)^{-1}(1+O((\log t)^{-1}))$,
+\[
+I_k(X)=\int\frac{1}{L\sqrt{2\pi\sigma_g^{2}L}}\exp\left(-\frac{(k-\mu_gL)^{2}}{2\sigma_g^{2}L}\right)dL\cdot\big(1+O(1/k)\big),
+\]
+the integral being over an interval of $L$. Write $L=k/\mu_g+v$. On the range $|v|\ll\sqrt{k}\log k$ allowed by the window one has $L=(k/\mu_g)(1+O(\mu_gv/k))$, whence
+\[
+\frac{(k-\mu_gL)^{2}}{2\sigma_g^{2}L}=\frac{\mu_g^{3}v^{2}}{2\sigma_g^{2}k}\Big(1+O\big(k^{-1/2}\log k\big)\Big),\qquad
+\frac{1}{L\sqrt{2\pi\sigma_g^{2}L}}=\frac{\mu_g^{3/2}}{k^{3/2}\sqrt{2\pi\sigma_g^{2}}}\Big(1+O\big(k^{-1/2}\log k\big)\Big).
+\]
+The Gaussian integral $\int_{\R}\exp(-\mu_g^{3}v^{2}/2\sigma_g^{2}k)\,dv=(2\pi\sigma_g^{2}k/\mu_g^{3})^{1/2}$, and the part of it beyond the window is $\ll\sqrt{k}\exp(-\tfrac12(\log L_k)^{2})$ with $L_k=k/\mu_g$, which is smaller than any fixed power of $1/k$. Hence, for every $k$ whose peak $b^{k/\mu_g}$ lies in $[t_0,X]$ at distance more than $2H$ from either endpoint,
+\[
+I_k(X)=\frac1k\left(1+O\left(\frac{(\log k)^{3}}{\sqrt{k}}\right)\right),
+\]
+while $I_k(X)\ll 1/k$ always. The $k$ excluded by the endpoint condition number $O(\sqrt{\Lambda}\log\Lambda)$ with $\Lambda=\log_bX$, and each contributes $\ll1/\Lambda$, for a total of $O(\Lambda^{-1/2}\log\Lambda)$. For every $k$ not so excluded, $I_k(X)=I_k(\infty)$, since the constraint $t\le X$ is then inactive on the range where $k\in W(t)$.
+
+Every error term above was bounded in absolute value by a function integrable on $[t_0,\infty)$, or by the tail of a convergent series; there were four in all. The error term of Theorem \ref{thm:mmr} was controlled by the integral $\int^{\infty}t^{-1}(\log t)^{-5/4}\,dt$; the Siegel--Walfisz term by $\int^{\infty}\sqrt{\log t}\,e^{-c\sqrt{\log t}}\,t^{-1}dt$; the contribution from outside the window, through Lemma \ref{lem:hoeffding}, by $\int^{\infty}e^{-cv^{2}+v}dv$; and the Laplace approximation by the series $\sum_kk^{-3/2}(\log k)^{3}$. Each therefore converges as $X\to\infty$, contributing to a constant $D=D(b,g,j)$, and each remainder is $O((\log X)^{-1/4})$ at worst. Writing $\Lambda=\log_bX$, we obtain
+\[
+\sum_{\substack{p<X\\ p\in\mathcal P^{(j)}}}\frac1p=c_g\sum_{\substack{k\in\mathcal Q\\ k\le\mu_g\Lambda}}\frac1k+D+O\big((\log X)^{-1/4}\big).
+\]
+Applying \eqref{eq:ind} with $Y=\mu_g\Lambda$ gives the theorem, with $C_{g,j}=c_gC_{g,j-1}+D$: the remainder of \eqref{eq:ind} becomes $O(1/\log_{j+1}X)$, since $\log\log Y=\log_{j+1}X\cdot(1+o(1))$ is one logarithm short of $\log\log X$, and $\log_{i}(\alpha\log X)=\log_{i+1}X+O(1/\log_2X)$ for fixed $\alpha>0$ and $i\ge2$. For $j=1$ the same computation with Mertens' theorem in the form $\sum_{k\le Y}1/k=\log_2Y+M+O(e^{-c\sqrt{\log Y}})$ gives \eqref{eq:sharp}.
+\end{proof}
+
+\section{How often \texorpdfstring{$g(p)$}{g(p)} is prime: Proofs of Theorems \ref{thm:bracket}, \ref{thm:omega} and \ref{thm:cond}}
+
+\begin{proof}[Proof of Theorem \ref{thm:bracket}]
+The upper bound comes from summing Theorem \ref{thm:mmr} over the primes in the window, with Brun--Titchmarsh controlling their number; the second assertion is then extracted from Theorem \ref{thm:mertens} by averaging. Keep the notation $L=\log_bx$, $y=\mu_gL$, $V=\sigma_g^{2}L$ and $W=[y-H,y+H]$ with $H=\sigma_g\sqrt L\log L$, and note $V/y=\sigma_g^{2}/\mu_g$, so that $\sqrt V\asymp\sqrt y$ and $\log y\asymp\log\log x$. By Lemma \ref{lem:hoeffding} the primes with $g(p)\notin W$ number $\ll x\exp(-c(\log L)^{2})=o(\pi(x)/\log y)$, and Theorem \ref{thm:mmr} with $\varepsilon=\frac14$ applied to the $\ll\sqrt L$ primes $k\in W$ gives
+\[
+M(x)\ll\frac{\pi(x)}{\sqrt{V}}\sum_{\substack{k\ \text{prime}\\ k\in W}}e^{-(k-y)^{2}/(2V)}+O\!\left(\frac{\pi(x)}{(\log x)^{1/4}}\right).
+\]
+Partition $W$ into blocks of length $\sqrt V$. The block at distance between $(i-1)\sqrt V$ and $i\sqrt V$ from $y$ carries $\ll\sqrt V/\log y$ primes, by Brun--Titchmarsh and $\log\sqrt V\asymp\log y$, and on it the Gaussian is at most $e^{-(i-1)^{2}/2}$. Summing over $i$,
+\[
+\sum_{\substack{k\ \text{prime}\\ k\in W}}e^{-(k-y)^{2}/(2V)}\ \ll\ \frac{\sqrt V}{\log y}\sum_{i\ge1}e^{-(i-1)^{2}/2}\ \ll\ \frac{\sqrt V}{\log y},
+\]
+which gives $M(x)\ll\pi(x)/\log y\ll\pi(x)/\log\log x$.
+
+For the second assertion, let $\nu$ be the measure $dt/(t\log t\log_2t)$, so that $\nu([t_0,X])=\log_3X+O(1)$, and put $\lambda(t)=M(t)\log_2t/\pi(t)$, which, by what precedes, is bounded by a constant $B=B(b,g)$. Since $\pi(t)/t^{2}=(1+O(1/\log t))/(t\log t)$, Theorem \ref{thm:mertens} with $j=1$ reads
+\[
+\int_{t_0}^{X}\lambda\,d\nu=\int_{t_0}^{X}\frac{M(t)}{t^{2}}\,dt+O(1)=c_g\log_3X+O(1),
+\]
+with $c_g=d_g/\varphi(d_g)\ge1$. If the set where $\lambda\ge c_g/2$ had $\nu$-measure $\eta\log_3X$, then $\int\lambda\,d\nu\le\frac{c_g}{2}\log_3X+B\eta\log_3X+O(1)$, forcing $\eta\ge c_g/(2B)+o(1)$. Taking $\delta=\min(c_g/2,\ c_g/(4B))$ completes the proof.
+\end{proof}
+
+For the normal order we need Tur\'an's inequality in intervals of length $\sqrt y$, where it is still elementary.
+
+\begin{lemma}\label{lem:turan}
+Let $y\ge16$ and $\sqrt y\le H\le y/2$. Then
+\[
+\sum_{|k-y|\le H}\big(\omega(k)-\log_2 y\big)^{2}\ \ll\ H\log_2 y .
+\]
+\end{lemma}
+
+\begin{proof}
+We truncate $\omega$ and compute two moments, as in Tur\'an's original argument. Put $z=y^{1/4}$ and $\omega_z(k)=\Card\{\ell\le z:\ \ell\ \text{prime},\ \ell\mid k\}$, so that $0\le\omega(k)-\omega_z(k)\le4$ for $k\le2y$. Counting multiples in the interval $I=[y-H,y+H]$,
+\[
+\sum_{k\in I}\omega_z(k)=\sum_{\ell\le z}\Big(\frac{2H}{\ell}+O(1)\Big)=2H\log_2z+O\big(H+\pi(z)\big),
+\]
+and $\pi(z)\ll y^{1/4}\ll H$. Similarly, separating $\ell_1=\ell_2$ from $\ell_1\ne\ell_2$,
+\[
+\sum_{k\in I}\omega_z(k)^{2}=2H(\log_2z)^{2}+O\big(H\log_2z+\pi(z)^{2}\big),
+\]
+and $\pi(z)^{2}\ll\sqrt y/(\log y)^{2}\ll H$. Expanding the square and using $\log_2z=\log_2y+O(1)$ gives the lemma.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:omega}]
+The plan is to confine $g(p)$ to a short window about $y$ and to apply Lemma \ref{lem:turan} there. Let $\epsilon>0$ and $A\ge A_0:=\max\big(1,\sqrt{\mu_g}/\sigma_g\big)$; the lower bound ensures $A\sqrt V\ge\sqrt y$, as Lemma \ref{lem:turan} requires. Keep the notation above, and write $W_A=[y-A\sqrt V,\,y+A\sqrt V]$. Summing Theorem \ref{thm:mmr} over the integers $k\notin W_A$ inside $W$, and using Lemma \ref{lem:hoeffding} outside $W$, the primes $p\le x$ with $g(p)\notin W_A$ number
+\[
+\ll\frac{\pi(x)}{\sqrt V}\sum_{|k-y|>A\sqrt V}e^{-(k-y)^{2}/(2V)}+O\!\left(\frac{\pi(x)\log\log x}{(\log x)^{1/4}}\right)+o(\pi(x))\ \ll\ e^{-A^{2}/2}\pi(x)+o(\pi(x)),
+\]
+the second error term arising because $W\setminus W_A$ contains $\asymp\sqrt L\log L$ integers, of which only $\ll\sqrt L$ are prime. By Lemma \ref{lem:turan} applied with $H=A\sqrt V$, the integers $k\in W_A$ with $|\omega(k)-\log_2y|>\epsilon\log_2y$ number $\ll_\epsilon A\sqrt V/\log_2y$, and by Theorem \ref{thm:mmr} again the primes $p$ with $g(p)$ among them number
+\[
+\ll_\epsilon\frac{\pi(x)}{\sqrt V}\cdot\frac{A\sqrt V}{\log_2y}+A\sqrt V\cdot\frac{\pi(x)}{(\log x)^{3/4}}\ =\ o(\pi(x))
+\]
+for fixed $A$ and $\epsilon$, since $\log_2y\to\infty$ and $\sqrt V\ll(\log x)^{1/2}$. Hence all but $O(e^{-A^{2}/2}\pi(x))+o(\pi(x))$ primes $p\le x$ satisfy $|\omega(g(p))-\log_2y|\le\epsilon\log_2y$. Letting $A\to\infty$ and then $\epsilon\to0$, and noting that $\log_2y=\log_3x+O(1/\log_2x)$ while $\log_3p=\log_3x+O(1/\log_2x)$ for all but $o(\pi(x))$ of the primes $p\le x$, the assertion for $\omega$ follows. For $\Omega$ it suffices to add that $\sum_{k\in I}(\Omega(k)-\omega(k))\ll H$ for $I$ as in Lemma \ref{lem:turan}, since the prime powers $\ell^{a}\le2y$ with $a\ge2$ number $\ll\sqrt y\ll H$ and contribute $\ll H\sum_{a\ge2}\sum_\ell\ell^{-a}+\sqrt y$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:cond}]
+We rerun the proof of the upper bound in Theorem \ref{thm:bracket}; where Brun--Titchmarsh could only bound the number of primes in a block, Hypothesis \ref{hyp:si} now evaluates it. Put $L=\log_bx$, $y=\mu_gL$, $V=\sigma_g^{2}L$, $H=\sigma_g\sqrt L\log L$ and $W=[y-H,y+H]$. By Lemma \ref{lem:hoeffding} the primes $p\le x$ with $g(p)\notin W$ number $\ll x\exp(-c(\log L)^{2})=o(\pi(x)/\log y)$. Exactly as in the proof of Theorem \ref{thm:mertens}, Theorem \ref{thm:mmr} with $\varepsilon=\frac14$ and the Siegel--Walfisz theorem give
+\[
+\Card\{p\le x: g(p)\ \text{prime}\}=\frac{c_g\,\pi(x)}{\sqrt{2\pi V}}\sum_{\substack{k\ \text{prime}\\ k\in W}}e^{-(k-y)^{2}/(2V)}+o\!\left(\frac{\pi(x)}{\log y}\right),
+\]
+the error term absorbing $O(\sqrt L\,\pi(x)(\log x)^{-3/4})$. Fix $A>0$ and $c>0$ and partition $[y-A\sqrt V,\,y+A\sqrt V]$ into blocks of length $c\sqrt V$. Since $V/y=\sigma_g^{2}/\mu_g$ exactly, a block of length $c\sqrt V$ has length $c'\sqrt{y'}(1+o(1))$ with $c'=c\sigma_g/\sqrt{\mu_g}$ for each of its endpoints $y'$, so Hypothesis \ref{hyp:si} applied at $c'(1\pm\delta)$ and the monotonicity of $\pi$ sandwich the count of primes in the block between $(1\pm2\eta)(1+o(1))c\sqrt V/\log y$ for any fixed $\eta>0$. Letting $\eta\to0$, each block supplies $(1+o(1))c\sqrt V/\log y$ primes, while the Gaussian varies across a block by a factor $1+O(Ac)$. Summing over blocks, letting $c\to0$ and then $A\to\infty$, and bounding the range $A\sqrt V<|k-y|\le H$ by Brun--Titchmarsh at $\ll\sqrt Ve^{-A^{2}/2}/\log y$,
+\[
+\sum_{\substack{k\ \text{prime}\\ k\in W}}e^{-(k-y)^{2}/(2V)}=\big(1+o(1)\big)\frac{1}{\log y}\int_{\R}e^{-u^{2}/(2V)}\,du=\big(1+o(1)\big)\frac{\sqrt{2\pi V}}{\log y}.
+\]
+Since $\log y=\log(\mu_g\log_bx)$, the theorem follows.
+\end{proof}
+
+\section{Complements}
+
+\subsection{The modulus \texorpdfstring{$d_g$}{d\_g}}\label{sec:modulus}
+Let $\ell$ be a prime and $e\ge1$. From \eqref{eq:dg}, $\ell^e\mid d_g$ if and only if $\ell^e\mid b-1$ and $g(a)\equiv ag(1)\pmod{\ell^e}$ for $0\le a<b$. When $g$ is given by a polynomial $P\in\Z[X]$ and $e=1$, the second condition says that the function $a\mapsto P(a)-aP(1)$ vanishes on $\F_\ell$, that is, that $X^\ell-X$ divides $P(X)-P(1)X$ in $\F_\ell[X]$; here $\ell\le b-1$, so the digits do cover $\F_\ell$.
+
+For power sums this yields a formula in every base. For $g(a)=a^r$ one has $g(1)=1$, and the condition at $\ell$ becomes $a^r\equiv a \pmod \ell$ for all $a$, which holds precisely when $\ell-1\mid r-1$. No square of a prime divides $d_g$ once $r\ge2$, since $\ell^2\nmid\ell^r-\ell$. Hence
+\[
+d_g=\prod_{\substack{\ell\mid b-1\\ \ell-1\,\mid\, r-1}}\ell\quad(r\ge2),\qquad d_g=b-1\quad(r=1).
+\]
+In base ten this is $9$ for $r=1$, $3$ for odd $r\ge3$ and $1$ for even $r$, corresponding to the congruences $s(n)\equiv n\pmod 9$ and $\sum_j\varepsilon_j(n)^r\equiv n \pmod 3$ for odd $r$, and to the absence of any congruence in the even case. In base three the formula gives $2$ for every $r$, reflecting $a^r\equiv a\pmod2$. Thus $S$ is the most accommodating of these functions: $d_S=\gcd(2,6,12,20,30,42,56,72,9)=1$, the congruence in Theorem \ref{thm:mmr} is vacuous, and every sufficiently large integer occurs as $S(p)$ for some prime $p$. The restriction $r\ge2$ is needed for the squarefreeness: in general $d_g$ can be divisible by a square, as $P(X)=X$ in base ten shows.
+
+\subsection{Sharpness of the hypotheses}\label{sec:sharp}
+Theorem \ref{thm:mmr} is useful exactly for targets in the window
+\[
+|k-\mu_g\log_b x|\ \le\ \sigma_g\sqrt{(1-2\varepsilon)\,\log_b x\,\log\log x},
+\]
+which is where the Gaussian in \eqref{eq:mmr} exceeds the error term. This is narrower than the window used in the proof of Theorem \ref{thm:mertens}, where only an aggregate bound is wanted. Outside the window the theorem asserts nothing about a single $k$, and each of the ways in which our hypotheses can fail places the available targets there. Suppose first that $\delta=\gcd(g(1),\dots,g(b-1))>1$. Then $\delta\mid g(n)$ for every $n$, so a prime value forces $g(p)=\delta$; when $\mu_g>0$ this is a fixed target at distance $\asymp\log x$ from the centre. Suppose next that $\mu_g<0$. Then every positive target lies at that distance. Finally, with the hypotheses in force but $\mu_g>0$, a fixed $k$ is again out of reach. In each case the Gaussian contributes $x^{-c}$ against an error term of size $\pi(x)/\log x$, and nothing survives.
+
+Clause (ii) of Theorem \ref{thm:main} is the one case where fixed targets sit at the centre of the window rather than in its tail. There the coprimality hypothesis \eqref{eq:gcd} can be dispensed with when $\delta$ is prime: the assertion that $g(p)=\delta$ becomes $h(p)=1$ for $h=g/\delta$, and $h$ satisfies \eqref{eq:gcd} with $\mu_h=0$. For an instance of the clause, take $b=10$ with $g(0)=0$ and $g(a)=a-5$ for $1\le a\le9$; then $\mu_g=0$, $\sigma^2_g=6$, \eqref{eq:gcd} holds and $d_g=1$. Since the proof of clause (ii) uses only $\gcd(k,d_g)=1$, every integer $k$, in particular every prime, is the value $g(p)$ for $\gg\pi(x)(\log x)^{-1/2}$ primes $p\le x$.
+
+The words ``sufficiently large'' in clause (i) of Theorem \ref{thm:main} cannot be dropped. The value $k=3$ is prime and is never attained: $S(n)=3$ forces $n$ to have exactly three digits equal to $1$ and the rest equal to $0$, so that $s(n)=3$ and $3\mid n$. Likewise $S(n)=1$ forces $n=10^{j}$, so that $1$ and $3$ are omitted from the set of values $S(p)$. Congruence obstructions can therefore survive at small values even when $d_g=1$. There is no contradiction: $d_g$ governs $g$ on all of $\N$, whereas $S(n)=k$ with $k$ small confines $n$ to the sparse set of integers with at most $k$ nonzero digits, where $s$ and $S$ are tightly linked.
+
+\subsection{The function \texorpdfstring{$S$}{S}}\label{sec:S}
+On $\{0,1\}$ one has $a^2=a$, so in base $2$ the function $S$ coincides with the digit sum and Corollary \ref{cor:powers} reduces to the theorem of Drmota, Mauduit and Rivat. In base $10$ the general theory is needed, $S$ being no function of $s$: $s(19)=s(28)$ while $S(19)=82$ and $S(28)=68$.
+
+For $b=10$ and $g=S$, the iteration in Corollary \ref{cor:iter} cannot be continued indefinitely. The map $S$ is the one that defines the happy numbers: every orbit reaches $1$ or enters the cycle
+\[
+4,\ 16,\ 37,\ 58,\ 89,\ 145,\ 42,\ 20 .
+\]
+The orbit of a fixed $n$ is eventually periodic, and neither $\{1\}$ nor the eight-term cycle consists of primes, so no prime has all of its $S$-iterates prime: the restriction to finitely many steps in Corollary \ref{cor:iter} is not an artifact of the method.
+
+\subsection{What sieve methods give}\label{sec:sieve}
+One may try to detect prime values of $S(p)$ by a sieve, the values having size of order $\log x$. The equidistribution of $S(p)$ modulo $m$ furnished by \cite{mmr2015} is uniform for $m$ up to roughly $\sqrt{\log x/\log\log x}$, which permits inclusion and exclusion over the squarefree moduli composed of primes below $c\log\log x$ for small enough $c$. A routine argument then gives infinitely many primes $p$ with $S(p)$ free of prime factors below $c\log\log p$. This does not improve on Theorem \ref{thm:omega}; what it produces is a thin set of $p$ on which the \emph{smallest} prime factor of $S(p)$ is atypically large. Detecting primality would require sifting up to $S^{1/2}$, hence moduli of size $\exp((\log x)^{1/2})$, beyond the available uniformity by an exponential; and the parity obstruction would remain in any case.
+
+\subsection{Two numerical remarks}\label{sec:numerics}
+Neither Theorem \ref{thm:mertens} nor Theorem \ref{thm:omega} is visible in its leading term at an accessible height. Indeed $\log_3X$ is only $1.07$ at $X=10^{8}$, while the secondary term $\log(1+\kappa_g/\log_2X)$ in \eqref{eq:sharp}, taking $g=S$ and $\kappa_S=\log\frac{57}{2\log10}=2.516$, is worth $0.62$ there, more than half the size of the leading term. The constant, on the other hand, is visible. For $g=S$ the difference between $\sum_{p<X,\ S(p)\ \text{prime}}1/p$ and $\log(\log_2X+\kappa_S)$ moves by only $0.004$ between $X=10^{4}$ and $X=10^{8}$, so the limit whose existence \eqref{eq:sharp} asserts is already in evidence; extrapolation gives $C_{S,1}=-1.19$.
+
+So is the mechanism behind Theorem \ref{thm:omega}. Over the primes of eight decimal digits the mean of $\omega(S(p))$ is $2.055$, nearly twice $\log_3(10^{8})$, so the normal order itself is nowhere in sight. But the proof ran through the window, and the window makes a prediction of its own: weighting the integers $k$ by the Gaussian of \eqref{eq:mmr} gives $2.051$ for the mean of $\omega(k)$, and the two variances are $0.480$. It is the window, not the iterated logarithm, that the computation sees at this height.
+
+\subsection{Further questions}
+A weight may be allowed to depend on the position of the digit, or on several consecutive digits at once, as in $\sum_j F(\varepsilon_{j+1}(n),\varepsilon_j(n))$. The second of these is the setting of automatic sequences, where the equidistribution of the values along the primes is known but a local limit theorem, as far as we are aware, is not. One may also ask for two digital conditions at once, say that $s(p)$ and $S(p)$ be simultaneously prime; the nearest available model is the work of Drmota, Mauduit and Rivat on primes in two bases \cite{dmr2bases}.
+
+Finally, the results above are ineffective, the constant implied in Theorem \ref{thm:mmr} not being explicit; Lehmann \cite{lehmann} has done the corresponding work for the digit sum, and the general case would require the constants of \cite{mmr2019} to be tracked.
+
+\section*{Use of automated tools}
+
+Most of this manuscript was written by large language models, principally Opus 5
+and Fable 5, working under the author's direction; the exposition was afterwards
+revised by the author and the same models. The numerical values quoted in
+\S\ref{sec:numerics} were computed by machine, and the scripts that produce them
+are distributed with the paper in the companion repository
+\begin{center}
+  \url{https://github.com/vibefrtz/vibemath}\\[2pt]
+  (folder \texttt{prime-values-digital-functions}, archived at
+  \href{https://doi.org/10.5281/zenodo.22093372}{\texttt{doi:10.5281/zenodo.22093372}}).
+\end{center}
+
+A Lean 4 formalisation accompanies the paper and was written the same way. It
+derives Theorem \ref{thm:main} in the case $d_g=1$, and with it Corollaries
+\ref{cor:powers} and \ref{cor:count} in that case, from a single axiom
+transcribing Theorem \ref{thm:mmr}; Lemma \ref{lem:easy} and the assertions of
+\S\ref{sec:modulus}, \S\ref{sec:sharp} and \S\ref{sec:S} are proved outright, on
+no hypothesis at all. Theorems \ref{thm:count}, \ref{thm:mertens},
+\ref{thm:bracket}, \ref{thm:omega} and \ref{thm:cond} are not formalised, nor is
+clause (ii) of Theorem \ref{thm:main}. The formalisation compiles against
+Mathlib with no incomplete proofs, and the axiom it assumes has been compared
+clause by clause with the statement of Theorem \ref{thm:mmr} in its source.
+
+Responsibility for the mathematics rests with the author.
+
+\begin{thebibliography}{99}
+
+\bibitem{bhp} R. C. Baker, G. Harman, and J. Pintz, \emph{The difference between consecutive primes, II}, Proc. London Math. Soc. (3) \textbf{83} (2001), 532--562.
+
+\bibitem{bassilykatai} N. L. Bassily and I. K\'atai, \emph{Distribution of the values of $q$-additive functions on polynomial sequences}, Acta Math. Hungar. \textbf{68} (1995), 353--361.
+
+\bibitem{dmr} M. Drmota, C. Mauduit, and J. Rivat, \emph{Primes with an average sum of digits}, Compos. Math. \textbf{145} (2009), 271--292.
+
+\bibitem{dmr2bases} M. Drmota, C. Mauduit, and J. Rivat, \emph{Prime numbers in two bases}, Duke Math. J. \textbf{169} (2020), no.~10, 1809--1876.
+
+\bibitem{gelfond} A. O. Gel'fond, \emph{Sur les nombres qui ont des propri\'et\'es additives et multiplicatives donn\'ees}, Acta Arith. \textbf{13} (1967/68), 259--265.
+
+\bibitem{harman} G. Harman, \emph{Counting primes whose sum of digits is prime}, J. Integer Seq. \textbf{15} (2012), Article 12.2.2.
+
+\bibitem{hoeffding} W. Hoeffding, \emph{Probability inequalities for sums of bounded random variables}, J. Amer. Statist. Assoc. \textbf{58} (1963), 13--30.
+
+\bibitem{lehmann} J. Lehmann, \emph{An explicit surjectivity threshold for digit sums of primes}, preprint, 2026, \texttt{arXiv:2606.04677}.
+
+\bibitem{mmr2014} B. Martin, C. Mauduit, and J. Rivat, \emph{Th\'eor\`eme des nombres premiers pour les fonctions digitales}, Acta Arith. \textbf{165} (2014), 11--45.
+
+\bibitem{mmr2015} B. Martin, C. Mauduit, and J. Rivat, \emph{Fonctions digitales le long des nombres premiers}, Acta Arith. \textbf{170} (2015), 175--197.
+
+\bibitem{mmr2019} B. Martin, C. Mauduit, and J. Rivat, \emph{Propri\'et\'es locales des chiffres des nombres premiers}, J. Inst. Math. Jussieu \textbf{18} (2019), 189--224.
+
+\bibitem{mauduitrivat} C. Mauduit and J. Rivat, \emph{Sur un probl\`eme de Gel'fond: la somme des chiffres des nombres premiers}, Ann. of Math. (2) \textbf{171} (2010), 1591--1646.
+
+\bibitem{oeis} OEIS Foundation Inc., \emph{The On-Line Encyclopedia of Integer Sequences}, Sequence A052034, \url{https://oeis.org/A052034}.
+
+\end{thebibliography}
+
+\end{document}

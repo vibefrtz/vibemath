@@ -51,6 +51,7 @@ remains reproducible bit-for-bit regardless of when it was added.
 | Paper | Lean status |
 |---|---|
 | [An Erdős–Kac law for palindromes and for reversed primes](erdos-kac-reversed-primes/) | all of the paper's own arguments machine-checked (0 `sorry`); 8 quoted literature results as axioms; clean axiom audit |
+| [Prime values of digital functions along the primes](prime-values-digital-functions/) | the first two phases machine-checked (0 `sorry`); a single quoted literature result as an axiom, with 32 of the 40 audited results unconditional; the axiom discipline enforced at build time |
 
 ## License
 

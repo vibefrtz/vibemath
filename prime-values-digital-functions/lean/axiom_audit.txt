@@ -1,0 +1,51 @@
+Expected output of `lake env lean AxiomAudit.lean`.
+
+Lean's three built-in axioms are `propext`, `Classical.choice` and `Quot.sound`.
+The only axiom declared by this development is `DigSq.mmr`, in `DigSq/Cited.lean`,
+transcribed from Théorème 1 of Martin–Mauduit–Rivat and compared clause by clause
+with the source in `SOURCE_AUDIT.md`.
+
+Note the split: every Phase 1 result is unconditional, and every Phase 2 result
+depends on `mmr` and on nothing else.  In particular `A052034_infinite` — the
+headline — rests on a single assumption beyond Lean's own.
+
+'DigSq.Weight.sigSq_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.Weight.coprime_w_one_dg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.Weight.dg_dvd_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.Weight.dg_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.Weight.dg_dvd_eval_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.Weight.dg_dvd_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.Weight.eval_add_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.Weight.eval_ofDigits' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.powWeight_coprime₁' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.powWeight_mu_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.eval_powWeight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.dg_powWeight_ten_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.mu_wS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.dg_wS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.eval_wS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.digitCount_coprime₁' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.dg_digitCount' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.digitCount_mu_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.eval_digitCount' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.sqrt_lt_rpow_three_quarters' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.piCong_of_dg_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.sum_countEq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.countEq_le_piCong' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.infinite_of_exists_prime_eval_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.three_dvd_of_S_eq_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.eq_pow_ten_of_S_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.S_ne_one_of_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.S_ne_three_of_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.S_lt_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.S_mem_happyCycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.reaches_one_or_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.exists_iterate_not_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DigSq.exists_prime_eval_eq_of_dg_one' depends on axioms: [propext, Classical.choice, mmr, Quot.sound]
+'DigSq.infinite_prime_eval_prime_of_dg_one' depends on axioms: [propext, Classical.choice, mmr, Quot.sound]
+'DigSq.infinite_prime_powDigitSum_prime' depends on axioms: [propext, Classical.choice, mmr, Quot.sound]
+'DigSq.infinite_prime_digitOccurrences_prime' depends on axioms: [propext, Classical.choice, mmr, Quot.sound]
+'DigSq.exists_prime_S_eq' depends on axioms: [propext, Classical.choice, mmr, Quot.sound]
+'DigSq.A052034_infinite' depends on axioms: [propext, Classical.choice, mmr, Quot.sound]
+'DigSq.A052034_infinite_inlined' depends on axioms: [propext, Classical.choice, mmr, Quot.sound]
+'DigSq.A052034_exists_gt' depends on axioms: [propext, Classical.choice, mmr, Quot.sound]

@@ -1,6 +1,9 @@
 # Lean build artifacts
 **/.lake/
 *.olean
+*.ilean
+*.hash
+*.trace
 
 # LaTeX build artifacts
 *.aux

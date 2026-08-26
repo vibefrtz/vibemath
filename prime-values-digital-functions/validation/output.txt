@@ -1,0 +1,37 @@
+pi(10^8) = 5761455 (known: 5761455)
+
+[1] first primes p with S(p) prime: [11, 23, 41, 61, 83, 101, 113, 131, 137, 173, 179, 191, 197, 199]
+    paper lists: 11 23 41 61 83 101 113 131 137 173 179 191
+
+[2] 8-digit primes: count=5096876  mean omega(S(p))=2.0549  var=0.4801  (paper 2.055 / 0.480)
+    mu_S = 28.5  sigma_S^2 = 721.05
+    L=8.00: gaussian-weighted mean omega(k)=2.0513 var=0.4808 (paper 2.051 / 0.480)
+    L=7.95: gaussian-weighted mean omega(k)=2.0502 var=0.4804 (paper 2.051 / 0.480)
+    L=8.00: gaussian-weighted mean omega(k)=2.0513 var=0.4808 (paper 2.051 / 0.480)
+    log_3(10^8) = 1.0693461790997605
+
+[3] kappa_S = log(57/(2 log 10)) = 2.5159  (paper 2.516)
+    X=1e4   sum=0.37984  log(log_2X+kappa)=1.55523  diff=-1.17540
+    X=1e5   sum=0.42414  log(log_2X+kappa)=1.60127  diff=-1.17714
+    X=1e6   sum=0.45953  log(log_2X+kappa)=1.63738  diff=-1.17785
+    X=1e7   sum=0.48813  log(log_2X+kappa)=1.66692  diff=-1.17879
+    X=1e8   sum=0.51209  log(log_2X+kappa)=1.69182  diff=-1.17973
+    secondary term log(1+kappa/log_2 X) at X=1e8 : 0.6225 (paper 0.62)
+
+=== MMR main term vs reality for g=S, b=10 (d_g=1, so pi_k(x)=pi(x))
+ x        k     actual    MMR main   ratio
+ 1e6     131        526       395.7   1.3292
+ 1e6     171        620       476.1   1.3022
+ 1e6     211        525       395.7   1.3267
+      total over all k: actual pi(x)=78498, summed main term=78139.9, ratio=1.0046
+      max_k |actual - main| = 327.6 ;  pi(x)/(log x)^{3/4} = 10954.3
+ 1e7     160       4066      3197.4   1.2716
+ 1e7     200       4651      3731.8   1.2463
+ 1e7     240       3705      3172.2   1.1680
+      total over all k: actual pi(x)=664579, summed main term=662959.0, ratio=1.0024
+      max_k |actual - main| = 1787.4 ;  pi(x)/(log x)^{3/4} = 82615.5
+ 1e8     188      30668     26344.1   1.1641
+ 1e8     228      31289     30263.2   1.0339
+ 1e8     268      24650     26344.1   0.9357
+      total over all k: actual pi(x)=5761455, summed main term=5753893.9, ratio=1.0013
+      max_k |actual - main| = 9241.7 ;  pi(x)/(log x)^{3/4} = 647967.0
