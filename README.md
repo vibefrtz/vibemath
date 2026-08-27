@@ -52,6 +52,7 @@ remains reproducible bit-for-bit regardless of when it was added.
 |---|---|
 | [An Erdős–Kac law for palindromes and for reversed primes](erdos-kac-reversed-primes/) | all of the paper's own arguments machine-checked (0 `sorry`); 8 quoted literature results as axioms; clean axiom audit |
 | [Prime values of digital functions along the primes](prime-values-digital-functions/) | the first two phases machine-checked (0 `sorry`); a single quoted literature result as an axiom, with 32 of the 40 audited results unconditional; the axiom discipline enforced at build time |
+| [Prime values of digital functions and prescribed digit sums of squares](digit-sums-of-squares/) | the entire squares half — Theorem 1.10, with Bose–Chowla **proved in Lean** rather than quoted — machine-checked with **no axioms at all** (45 of 48 audited results unconditional); the almost-prime theorem Corollary 1.3 from exactly 2 quoted literature results as axioms; 0 `sorry`; the axiom discipline enforced at build time |
 
 ## License
 

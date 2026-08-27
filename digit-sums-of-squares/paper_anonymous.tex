@@ -1,0 +1,1224 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.15in]{geometry}
+\usepackage[expansion=false]{microtype}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\hypersetup{pdfauthor={},pdftitle={Prime values of digital functions and prescribed digit sums of squares},pdfsubject={},pdfkeywords={},pdfcreator={},pdfproducer={}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+
+\DeclareMathOperator{\Card}{\#}
+\DeclareMathOperator{\rad}{rad}
+
+\begin{document}
+
+\title[Prime values of digital functions]{Prime values of digital functions and prescribed digit sums of squares}
+
+% \author{}
+% \address{}
+% \email{}
+
+\date{}
+
+\subjclass[2020]{Primary 11A63; Secondary 11N35, 11N36, 11N60}
+\keywords{sum of digits, $q$-additive function, local limit theorem, sieve methods, almost primes, Sidon sets, squares}
+
+\begin{abstract}
+Let $g$ be an integer valued strongly $b$-additive function with $\gcd(g(1),\dots,g(b-1))=1$, and let $\mu_g$ be its mean over the digits. A local limit theorem of Martin, Mauduit and Rivat describes, for a single integer $k$, how many primes $p\le x$ satisfy $g(p)=k$; a recent manuscript developed from it a theory of prime values of $g$ along the primes. We continue that study in several directions. The values $g(p)$ have exponent of distribution $\tfrac12$ on their natural scale $\log x$, and a weighted sieve then shows that $g(p)$ has at most three prime factors for $\gg\pi(x)/\log\log x$ primes $p\le x$ when $\mu_g>0$, and at most two when moreover $d_g=1$, the modulus $d_g$ recording the congruence rigidity of $g$. When $\mu_g=0$ the count of $p\le x$ with $g(p)$ prime obeys an unconditional asymptotic formula, of a strength which for positive mean is known only under a hypothesis on primes in short intervals, and the same holds along any fixed number of iterates of $g$. Allowing the zero digit to carry a weight, so that the value depends also on the number of digits, we evaluate the resulting Mertens sums, prove that every large integer is the number of zero digits of a prime, and exhibit weights whose densities on the $m$-digit primes oscillate periodically with $m$. Independently of the theory along primes, an elementary construction from Sidon sets shows that every sufficiently large integer $q$ in the admissible class modulo $b-1$ is the base $b$ digit sum of at least $\exp(c_b\sqrt q)$ squares $n^2\le b^{C_bq}$ with $(n,b)=1$. Further consequences include a joint Erd\H{o}s--Kac theorem for $g(p)$, mean value theorems for divisor and power-free counts at the digital scale, and a Fourier criterion locating exactly what is missing for the analogous theory along squares and squares of primes.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Fix an integer $b\ge 2$, and write
+\[
+n=\sum_{j\ge 0}\varepsilon_j(n)\,b^{j},\qquad 0\le \varepsilon_j(n)\le b-1,
+\]
+for the base $b$ expansion of a nonnegative integer. A function $g\colon\N\to\Z$ is \emph{strongly $b$-additive} if
+\[
+g(n)=\sum_{j\ge 0}g\big(\varepsilon_j(n)\big),
+\]
+so that $g$ is specified by its digit values $g(0)=0,g(1),\dots,g(b-1)$; write $\mu_g$ and $\sigma_g^2$ for their mean and variance,
+\[
+\mu_g=\frac1b\sum_{a=0}^{b-1}g(a),\qquad
+\sigma_g^2=\frac1b\sum_{a=0}^{b-1}\big(g(a)-\mu_g\big)^2 .
+\]
+The base $b$ digit sum $s_b$ is the basic example. Throughout, the letters $p$ and $\ell$ denote primes, as does $q$ except where it names the prescribed digit sum of a square, in Theorem \ref{thm:squares} and Section \ref{sec:squares}; $\pi(x)$ is the number of $p\le x$, $\varphi$ and $\mu$ and $\tau$ are the functions of Euler and M\"obius and the divisor function, and $\omega(n)$ and $\Omega(n)$ count the prime factors of $n$ without and with multiplicity. An integer $n\ge2$ with $\Omega(n)\le r$ is called a $P_r$. We write $\log_1=\log$ and $\log_{i}=\log\circ\log_{i-1}$, and $L=\log_bx$. Implied constants may always depend on $b$ and on $g$; any further dependence is noted explicitly.
+
+In 1968 Gel'fond \cite{gelfond} asked how the digits of an integer interact with its multiplicative structure, and in particular how $s_b(p)$ distributes in arithmetic progressions as $p$ runs over the primes. Mauduit and Rivat \cite{mauduitrivat} answered the question four decades later, and Drmota, Mauduit and Rivat \cite{dmr2009} promoted the answer to a local theorem: an asymptotic formula for the number of $p\le x$ with $s_b(p)=k$, valid uniformly in $k$. Harman \cite{harman} then drew from the local theorem the answer to a question older than the theorem, whether infinitely many primes have prime digit sum, and went considerably further, evaluating the sum of $1/p$ over such primes. Martin, Mauduit and Rivat \cite{mmr2019} proved the corresponding local theorem for an arbitrary integer valued strongly $b$-additive function $g$ subject to the natural normalisation
+\begin{equation}\label{eq:gcd}
+\gcd\big(g(1),\dots,g(b-1)\big)=1,
+\end{equation}
+and a recent manuscript \cite{vibefrtz} developed from it the analogue of Harman's theory in this generality: prime values, Mertens formulas with the correct local factor, iterated versions, the normal order of $\omega(g(p))$, and a conditional asymptotic count. The local factor is governed by the modulus
+\begin{equation}\label{eq:dg}
+d_g=\gcd\big(g(2)-2g(1),\ g(3)-3g(1),\ \dots,\ g(b-1)-(b-1)g(1),\ b-1\big),
+\end{equation}
+a divisor of $b-1$ for which
+\begin{equation}\label{eq:congruence}
+g(n)\equiv g(1)\,n\pmod{d_g}\qquad(n\ge1),
+\end{equation}
+so that the residue of $g(p)$ modulo $d_g$ is dictated by the residue of $p$. Lehmann \cite{lehmann} has recently made the surjectivity underlying Harman's argument explicit for the digit sum.
+
+The present paper continues \cite{vibefrtz}, whose notation we keep (writing only $\mathcal F_b$, in Section \ref{sec:local}, for the class of admissible $g$ there denoted $\mathcal F_+$), in two independent directions.
+
+The first direction stays with the primes and asks what else the local theorem of \cite{mmr2019} already contains. The answer is: a level of distribution, an unconditional asymptotic theory at mean zero, a theory of digit weights that see the length of the expansion, and the arithmetic statistics of the value $g(p)$. None of this requires any new exponential sum estimate; the point is to identify the statements and to run the right classical arguments on the other side. The second direction leaves the primes entirely. There we prescribe the digit sum of a square, a question with a long recreational history, and answer it in all bases with exponentially many representations of controlled size, by a carry-free construction from Sidon sets.
+
+We now describe the results in order.
+
+\subsection{The distribution of the values}
+The values $g(p)$, for $p\le x$, are integers of size about $\mu_gL$, concentrated in a window of length of order $\sqrt L$. It is natural to ask for their distribution in residue classes to moduli growing with $x$, and here the natural scale for the moduli is $L$ itself, not $x$. For $(m,d_g)=1$ and a residue class $a$ modulo $m$, put
+\[
+\Delta_g(x;m,a)=\Card\{p\le x:\ g(p)\equiv a\ (\mathrm{mod}\ m)\}-\frac{\pi(x)}m .
+\]
+
+\begin{theorem}\label{thm:level}
+Let $g$ satisfy \eqref{eq:gcd}. Fix $\delta\in(0,\tfrac12)$, an integer $B\ge1$, and $\varepsilon>0$. Then
+\begin{equation}\label{eq:level}
+\sum_{\substack{m\le L^{1/2-\delta}\\ (m,d_g)=1}}
+B^{\omega(m)}\,\max_{a\ (\mathrm{mod}\ m)}\ \big|\Delta_g(x;m,a)\big|
+\ \ll_{\delta,B,\varepsilon}\ \pi(x)\,L^{-1/2+\varepsilon}.
+\end{equation}
+\end{theorem}
+
+In the language of sieve theory, the sequence $(g(p))_{p\le x}$ has level of distribution $L^{1/2-\delta}$, with the strong remainder needed by weighted sieves; and since its entries have size $O(L)$, the level is the square root of the size, up to $L^{O(\delta)}$. This is the familiar Bombieri--Vinogradov threshold, transported to the scale $\log x$. It comes from the uniformity in $k$ of the local theorem rather than from any averaging over progressions of primes: the theorem is strong enough that one may simply sum it over a residue class, and Poisson summation does the rest. The reader looking for sieve theory with digits will know the work of Fouvry and Mauduit \cite{fouvrymauduit-sieve,fouvrymauduit-almost}, where the sieve acts on the integers $n$ with $s_2(n)$ prescribed; here, by contrast, the sieve acts on the values $g(p)$ themselves.
+
+Once a sieve has a level, it produces almost primes. Recall that a $P_r$ is an integer $n\ge2$ with $\Omega(n)\le r$.
+
+\begin{corollary}\label{cor:p3}
+Let $g$ satisfy \eqref{eq:gcd} and $\mu_g>0$. Then
+\[
+\Card\{p\le x:\ g(p)\ \text{is a}\ P_3\}\ \gg\ \frac{\pi(x)}{\log_2 x}.
+\]
+\end{corollary}
+
+\begin{corollary}\label{cor:p2}
+Let $g$ satisfy \eqref{eq:gcd} with $\mu_g>0$ and $d_g=1$. Then
+\[
+\Card\{p\le x:\ g(p)\ \text{is a}\ P_2\}\ \gg\ \frac{\pi(x)}{\log_2 x}.
+\]
+\end{corollary}
+
+The counts here have the order of magnitude that \cite{vibefrtz} establishes, on a hypothesis about primes in intervals of length $\sqrt y$ about $y=\mu_g\log_bx$, for the primality of $g(p)$ itself; the almost-prime statements are unconditional. Corollary \ref{cor:p3} comes from Theorem \ref{thm:level} and Richert's weighted sieve, exactly as $p+2=P_3$ comes from the Bombieri--Vinogradov theorem, the numerology being the same: entries of size the square of the level. Corollary \ref{cor:p2} does not use Theorem \ref{thm:level} at all. When $d_g=1$ every large integer is a value of $g$ on the primes, with the Gaussian frequency; taking for targets the $P_2$'s furnished by the theorem of Halberstam, Heath-Brown and Richert \cite{hhbr} on almost primes in short intervals, and summing the local theorem over these targets, gives the count. Primality itself, that is $P_1$, is out of reach of both routes: the sieve meets the parity barrier, and the short-interval route would need primes, rather than $P_2$'s, in intervals of length $y^{\theta}$ with $\theta<\tfrac12$ about $y\asymp\log x$, which is far beyond what is known even on the Riemann Hypothesis. Section \ref{sec:sieve} has the proofs and the precise references.
+
+\subsection{Mean zero}
+For $\mu_g>0$, the prime targets available to $g(p)$ at a given $x$ lie in a window of length $\asymp\sqrt{L}$ about $\mu_gL$, and an asymptotic count of $\{p\le x: g(p)\ \text{prime}\}$ would require the primes to appear in such windows with their expected frequency; this is the obstruction, discussed at length in \cite{vibefrtz}, that makes the asymptotic conditional for positive mean. When $\mu_g=0$ the window sits at the origin instead. The available targets are then all the primes $q\ll\sqrt L\log L$, an initial segment, and the ordinary prime number theorem knows everything about initial segments. The asymptotic count is therefore unconditional at mean zero, and it survives iteration.
+
+Write $\mathcal P^{(0)}$ for the set of all primes and, for $j\ge1$,
+\[
+\mathcal P^{(j)}=\{p:\ g(p)\in\mathcal P^{(j-1)}\},
+\]
+so that $p\in\mathcal P^{(j)}$ exactly when $g(p),\,g(g(p)),\,\dots$ are prime for $j$ steps.
+
+\begin{theorem}\label{thm:zeromean}
+Let $g$ satisfy \eqref{eq:gcd} and $\mu_g=0$, and put $c_g=d_g/\varphi(d_g)$. Then
+\[
+\Card\{p\le x:\ g(p)\ \text{prime}\}\ \sim\ c_g\,\frac{\pi(x)}{\log_2x},
+\qquad
+\sum_{\substack{p\le x\\ g(p)\ \text{prime}}}\frac1p\ \sim\ c_g\log_3x .
+\]
+\end{theorem}
+
+\begin{theorem}\label{thm:iterates}
+Let $g$ be as in Theorem \ref{thm:zeromean} and let $j\ge1$ be fixed. Then
+\begin{equation}\label{eq:iterates}
+\Card\{p\le x:\ p\in\mathcal P^{(j)}\}\ \sim\ c_g^{\,j}\,\frac{\pi(x)}{\log_2x\,\log_3x\cdots\log_{j+1}x},
+\qquad
+\sum_{\substack{p\le x\\ p\in\mathcal P^{(j)}}}\frac1p\ \sim\ c_g^{\,j}\log_{j+2}x .
+\end{equation}
+\end{theorem}
+
+For positive mean, \cite{vibefrtz} evaluates the reciprocal sums over $\mathcal P^{(j)}$ with a constant term and a power-of-$\log$ saving, but the counting function only up to a bounded factor, and only on a large set of $x$. At mean zero both statements come out asymptotically, at every $x$ and every fixed depth. The mechanism is a half-Gaussian estimate: writing $V=\sigma_g^{2}L$ for the variance of the window, the sum of $e^{-q^{2}/(2V)}$ over the primes $q$ is asymptotic to $\sqrt{2\pi V}/\log V$, half the Gaussian mass meeting primes at density $2/\log V$ near $\sqrt V$; iterating replaces the primes by $\mathcal P^{(j-1)}$, whose counting function the previous step supplies. The factor $c_g$ is genuinely present: in base $4$ the weights $(g(0),g(1),g(2),g(3))=(0,1,2,-3)$ have mean zero, satisfy \eqref{eq:gcd}, and have $d_g=3$, so $c_g=\tfrac32$.
+\subsection{Weights that see the length}
+A strongly additive $g$ is blind to the zero digit, since $g(0)=0$ is forced. If one insists on weighting every digit of the ordinary expansion, zeros included, the value acquires a term proportional to the number of digits. For integers $w_0,\dots,w_{b-1}$, not further constrained, define
+\begin{equation}\label{eq:Fw}
+F_{\mathbf w}(n)=\sum_{0\le j<\ell_b(n)}w_{\varepsilon_j(n)},
+\end{equation}
+where $\ell_b(n)$ denotes the number of base $b$ digits of $n\ge1$. Setting $g_{\mathbf w}(a)=w_a-w_0$, a strongly $b$-additive function, one has
+\begin{equation}\label{eq:split}
+F_{\mathbf w}(n)=w_0\,\ell_b(n)+g_{\mathbf w}(n),
+\qquad
+\overline w:=\frac1b\sum_{a=0}^{b-1}w_a=w_0+\mu_{g_{\mathbf w}} .
+\end{equation}
+The prototype is the number of zero digits,
+\[
+Z_b(n)=\Card\{0\le j<\ell_b(n):\ \varepsilon_j(n)=0\},
+\]
+obtained from $(w_0,w_1,\dots,w_{b-1})=(1,0,\dots,0)$.
+
+The pair $(\ell_b(n),g(n))$ is not covered by the theory along primes described so far, but on a fixed \emph{shell}, by which we mean a set $b^{m-1}\le p<b^m$ of $m$-digit primes, the length is the constant $m$, and the local theorem applies shell by shell. Two phenomena emerge. First, the congruence \eqref{eq:congruence} now interacts with the shell: on the $m$th shell the value $F_{\mathbf w}(p)$ is confined modulo $d_{g_{\mathbf w}}$ to a class that moves with $m$. In the Mertens sum the motion averages out, and only the primes dividing both $w_0$ and $d_{g_{\mathbf w}}$ survive as a local factor. Second, when $\overline w=0$ the count on the $m$th shell has a genuinely periodic density, which can vanish on entire residue classes of $m$; Theorem \ref{thm:zeroweights} in Section \ref{sec:weights} gives the exact coefficient, and Example \ref{ex:base3} a weight in base $3$ whose odd shells are, in the appropriate sense, empty.
+
+\begin{theorem}\label{thm:weights}
+Let $w_0,\dots,w_{b-1}$ be integers such that $g_{\mathbf w}$ satisfies \eqref{eq:gcd}, write $d=d_{g_{\mathbf w}}$, and assume $\overline w>0$. Then there is a constant $C_{\mathbf w}$ such that
+\[
+\sum_{\substack{p<x\\ F_{\mathbf w}(p)\ \text{prime}}}\frac1p
+=\kappa(\mathbf w)\log_3x+C_{\mathbf w}+o(1),
+\qquad\text{where}\quad
+\kappa(\mathbf w)=\prod_{\substack{\ell\mid d\\ \ell\mid w_0}}\frac{\ell}{\ell-1}.
+\]
+\end{theorem}
+
+For $w_0=0$ this recovers the constant $c_g=d_g/\varphi(d_g)$ of \cite{vibefrtz}, since then every prime dividing $d$ contributes; for $d=1$ there is no local factor at all. The proof reverses the order of summation in Harman's manner, shell by shell; the saddle point integral that evaluates each target's contribution turns out to be exact, an instance of the classical identity $\int_0^\infty u^{-3/2}e^{-a/u-cu}\,du=\sqrt{\pi/a}\,e^{-2\sqrt{ac}}$.
+
+The shellwise method also produces exact values, with the correct local obstruction; Theorem \ref{thm:exact} is the general statement. For the zero count the obstruction is empty:
+
+\begin{corollary}\label{cor:zeros}
+Fix $b\ge2$. Every sufficiently large integer $r$ is the number of zero digits of a prime; in fact
+\[
+\Card\{p:\ b^{br-1}\le p<b^{br},\ Z_b(p)=r\}
+\ \sim\ \Big(1-\frac1b\Big)\frac{\pi(b^{br})}{\sqrt{2\pi(b-1)r/b}}
+\qquad(r\to\infty),
+\]
+and there is a constant $C_b$ with
+\[
+\sum_{\substack{p<x\\ Z_b(p)\ \text{prime}}}\frac1p=\log_3x+C_b+o(1).
+\]
+\end{corollary}
+
+The shell $b^{br-1}\le p<b^{br}$ is the right one: a prime with $m$ digits has about $m/b$ zeros among them, so the targets $Z_b(p)=r$ sit at the centre of the window exactly when $m=br$. Section \ref{sec:numerics} reports some computations; at accessible heights the Mertens formula is, as one expects from the size of $\log_3x$, entirely invisible, while the window itself is plainly visible.
+
+\subsection{Digit sums of squares}
+We change ground. Since $b^j\equiv1 \pmod{b-1}$ for every $j$,
+\[
+s_b(n^2)\equiv n^2\pmod{b-1},
+\]
+and a digit sum of a square must be congruent to a square modulo $b-1$. Call an integer with this property \emph{admissible}. Which admissible integers actually occur? In base ten the question is old; Murthy and Ashbacher \cite[pp.~154--156]{murthyashbacher} record a construction realising every admissible value, with further squares obtained by appending pairs of zero digits to a solution. Hare, Laishram and Stoll \cite{harelaishramstoll} studied fixed values of $s_b(n)$ and $s_b(n^2)$ and, among other things, the solutions of $s_b(n)=s_b(n^2)$. The theorem below settles the question in every base, with three additions: the roots are prime to $b$, so that the trailing-zero mechanism is excluded; the number of representations is exponentially large in $\sqrt q$; and the representing squares have at most $C_bq$ digits, which up to the value of the constant is forced, an integer with $D$ base $b$ digits having digit sum at most $(b-1)D$.
+
+\begin{theorem}\label{thm:squares}
+For every $b\ge2$ there are constants $c_b,C_b>0$ such that, for every sufficiently large admissible $q$,
+\[
+\Card\{n\ge1:\ (n,b)=1,\ s_b(n^2)=q,\ n^2\le b^{C_bq}\}\ \ge\ \exp\big(c_b\sqrt q\,\big).
+\]
+For $b=2$ every large $q$ is admissible.
+\end{theorem}
+
+\begin{corollary}\label{cor:squarescount}
+For every $b\ge2$ there is $c_b'>0$ such that, for all large $X$,
+\[
+\Card\{n:\ n^2\le X,\ (n,b)=1,\ s_b(n^2)\ \text{prime}\}\ \ge\ \exp\big(c_b'\sqrt{\log X}\,\big).
+\]
+\end{corollary}
+
+The proof is elementary and occupies only a few pages. If $S$ is a finite Sidon set of digit positions (all pairwise sums distinct) which avoids its own sumset, then the square of $a=1+\sum_{r\in S'}b^r$ is carry-free for every subset $S'\subseteq S$, and one computes $s_b((ab^k-1)^2)$ exactly: it depends only on $k$ and on the cardinality $t=\Card S'$, through $(b-1)k+t^2$ when $b\ge3$. Choosing $t$ in a fixed residue class modulo $b-1$ and then solving for $k$ hits the target $q$; choosing the subset $S'$ freely, among $\binom{\Card S}{t}$ possibilities, supplies the multiplicity. The primes play no role here, and the local theorem plays no role. What the construction cannot do is deliver the expected count of representations of this size, which is exponential in $q$ rather than in $\sqrt q$; Section \ref{sec:transfer} formulates the local limit theorem for $s_b(n^2)$ that the counting problem wants, against the backdrop of what is known for squares through the work of Drmota and Rivat \cite{drsquares} and Mauduit and Rivat \cite{mauduitrivat-squares}.
+
+\subsection{The arithmetic of the value, and what the method needs}
+Two further groups of results are stated where they are proved.
+
+Section \ref{sec:arithmetic} concerns the multiplicative anatomy of $g(p)$ for $\mu_g>0$. The local theorem says that $g(p)$ samples the integers of a window of length $\asymp\sqrt y$ about $y=\mu_gL$ with Gaussian weights, and windows of that length are long enough for the classical machinery of additive functions: the Erd\H{o}s--Kac moment argument runs with a weight, and one obtains a joint limit law, Theorem \ref{thm:ek} and Corollary \ref{cor:omega}: the pair
+\[
+\Big(\frac{g(p)-\mu_gL}{\sigma_g\sqrt L},\ \frac{\omega(|g(p)|)-\log_3x}{\sqrt{\log_3x}}\Big)
+\]
+converges to a pair of independent standard Gaussians, and likewise for any bounded strongly additive function in the second slot. The independence deserves a word: the first coordinate records where in the window $g(p)$ fell, the second records the fingerprint of small primes in $g(p)$, and the window is so much longer than the scale of that fingerprint that the two decouple. The normal order statement for $\omega(g(p))$ in \cite{vibefrtz} is the marginal of the second coordinate. Beyond additive functions, any arithmetic average with a power-saving error term on ordinary intervals transfers to the digital window; we record the mechanism as Proposition \ref{prop:transfer} and two consequences, the density of $r$-free values of $g(p)$, extending the base $2$ theorem of Aloui, Mkaouar and Wannes \cite{aloui} to every base in the present primitive setting, and the average of the divisor function $\tau(|g(p)|)$, for which Huxley's exponent \cite{huxley} comfortably beats the $\sqrt y$ threshold.
+
+Section \ref{sec:blocking} records a sparse polynomial construction: for fixed $P\in\Z[T]$ and $u\ge1$, $v\in\Z$, the value $G\big(P(ub^k+v)\big)$ is, for every strongly $b$-additive $G$ and more generally every digital function reading blocks of fixed width, an affine function $Ak+C$ of $k$ for all large $k$. Prime values along such sparse sequences then reduce to Dirichlet. This is the digital analogue of the trivial member of the family of questions about $g$ along polynomial sequences, on which the genuine equidistribution results are those of Bassily and K\'atai \cite{bassilykatai} and Drmota, Mauduit and Rivat \cite{dmr-polynomial}.
+
+Section \ref{sec:transfer}, finally, axiomatises what was actually used. Everything along the primes above flows from a single-value local limit theorem, with an error smaller than the Gaussian peak by a power of $\log$, together with a Gaussian tail bound; we state Harman's reversal and the mean zero argument at that level of generality. We then give a Fourier criterion, Proposition \ref{prop:fourier}, isolating the exact estimate on the characteristic function $\theta\mapsto\sum_{n\le x}e^{i\theta h(n)}$ that produces such a local theorem: Gaussian behaviour in shrinking neighbourhoods, of radius $\asymp L^{-1/2}$, of finitely many rational frequencies, plus an integrated minor arc bound. For $h(n)=s_b(n^2)$, and all the more for $h(p)=s_b(p^2)$, the known results give fixed-frequency equidistribution, through \cite{drsquares,mauduitrivat-squares} and, along squares of primes, the recent work of Drmota and Rivat \cite{dr-primesquares}; the shrinking-frequency estimate is the missing piece, and the criterion is stated so as to make that piece visible. As a byproduct we compute the local factors that any such theorem must carry for polynomial arguments, and note the curiosity that for $g(n^2)$ the natural Mertens constant is $1$: squares of reduced residues are equidistributed enough that the congruence rigidity \eqref{eq:congruence} imposes no penalty.
+
+\subsection{Plan and conventions}
+Section \ref{sec:local} states the local theorem and the two standing estimates. Sections \ref{sec:sieve}, \ref{sec:zeromean}, \ref{sec:weights} prove the results along primes; Section \ref{sec:weights} closes with the numerical remarks. Section \ref{sec:arithmetic} treats the arithmetic of the value, Section \ref{sec:squares} the squares and the sparse polynomial sequences, Section \ref{sec:transfer} the abstract transfer and the Fourier criterion. The letter $x$ is a real parameter tending to infinity, $L=\log_bx$ throughout, and asymptotic notation refers to this limit unless a different variable is displayed.
+\section{The local theorem and two standing estimates}\label{sec:local}
+
+Let $\mathcal F_b$ denote the set of strongly $b$-additive $g\colon\N\to\Z$ satisfying \eqref{eq:gcd}, and for $g\in\mathcal F_b$ let $d_g$ be as in \eqref{eq:dg}; for $b=2$ the list in \eqref{eq:dg} reduces to the single entry $b-1=1$, so $d_g=1$. The congruence \eqref{eq:congruence} follows from $b\equiv1$ and $g(a)\equiv ag(1)$ modulo $d_g$, digit by digit. Two elementary facts from \cite[Lemma 2.2]{vibefrtz}: for $g\in\mathcal F_b$ one has $\sigma_g>0$, and $\gcd(g(1),d_g)=1$. For $k\in\Z$ put
+\[
+\pi_k(x)=\Card\{p\le x:\ g(1)\,p\equiv k\ (\mathrm{mod}\ d_g)\},
+\]
+the count of primes in the single residue class that \eqref{eq:congruence} allows to carry the value $k$.
+
+\begin{theorem}[Martin, Mauduit, Rivat {\cite[Th\'eor\`eme 1]{mmr2019}}]\label{thm:mmr}
+Let $b\ge2$ and $g\in\mathcal F_b$, and fix $\varepsilon\in(0,\tfrac12)$. Uniformly for $x>2$ and $k\in\Z$,
+\begin{equation}\label{eq:mmr}
+\Card\{p\le x:\ g(p)=k\}
+=\frac{d_g\,\pi_k(x)}{\sqrt{2\pi\sigma_g^{2}L}}\,
+\exp\left(-\frac{(k-\mu_gL)^{2}}{2\sigma_g^{2}L}\right)
++O\!\left(\frac{\pi(x)}{(\log x)^{1-\varepsilon}}\right),
+\end{equation}
+where $L=\log_bx$ and the implied constant depends also on $\varepsilon$.
+\end{theorem}
+
+We quote the theorem in the form used in \cite{vibefrtz}. Martin, Mauduit and Rivat prove more, an asymptotic formula for the same count twisted by $e^{2\pi i\beta p}$, uniformly in $\beta\in\R$; the underlying exponential sum estimates are in their earlier papers \cite{mmr2014,mmr2015}, and a companion paper \cite{mmr-multiple} treats several digital constraints at once. Since $\gcd(g(1),d_g)=1$, the class in $\pi_k(x)$ is $p\equiv g(1)^{-1}k$, reduced exactly when $(k,d_g)=1$; as $d_g$ is fixed, the prime number theorem in arithmetic progressions, with its classical error term, gives
+\begin{equation}\label{eq:pik}
+d_g\,\pi_k(x)=\frac{d_g}{\varphi(d_g)}\,\mathbf 1_{(k,d_g)=1}\,\pi(x)+O\big(x\,e^{-c_0\sqrt{\log x}}\big)
+\end{equation}
+uniformly in $k$, for some $c_0=c_0(g)>0$, where $\mathbf 1$ denotes the indicator; for the finitely many primes $k\mid d_g$ the count $\pi_k(x)$ is $O(1)$ rather than $0$, an abuse the error term absorbs.
+
+The second standing estimate is the large deviation bound that confines $g(p)$ to its window. It is Lemma 4.1 of \cite{vibefrtz}, an instance of Hoeffding's inequality \cite{hoeffding}; we restate it with the consequence we shall actually use. Here $R=\max_{a<b}g(a)-\min_{a<b}g(a)$, which is positive.
+
+\begin{lemma}\label{lem:tail}
+Let $g$ be strongly $b$-additive with real values. For $t\ge b$ and $u>0$,
+\[
+\Card\{n\le t:\ |g(n)-\mu_g\log_bt|\ge u+|\mu_g|\}\ \le\ 2b\,t\exp\left(-\frac{u^{2}}{2R^{2}(\log_bt+1)}\right).
+\]
+In particular, for each fixed $C>0$,
+\begin{equation}\label{eq:tail}
+\Card\{n\le x:\ |g(n)-\mu_gL|> C\sqrt L\log L\}\ \ll\ x\,e^{-c_1(\log L)^2},\qquad c_1=\frac{C^2}{4R^2},
+\end{equation}
+once $x$ is large.
+\end{lemma}
+
+\begin{proof}
+Put $m=\lfloor\log_bt\rfloor+1$, so that every $n\le t$ has an expansion of $m$ digits, possibly with leading zeros. Under the uniform measure on $[0,b^m)$ the digits are independent and uniform on $\{0,\dots,b-1\}$, so $g$ is a sum of $m$ independent variables with mean $\mu_g$ and range at most $R$, and Hoeffding's inequality bounds the number of $n<b^m$ with $|g(n)-\mu_gm|\ge u$ by $2b^{m}\exp(-u^{2}/2mR^{2})$. Now $b^m\le bt$, $m\le\log_bt+1$, and $|\mu_g|\,|m-\log_bt|\le|\mu_g|$. The consequence \eqref{eq:tail} follows on taking $u=C\sqrt L\log L-|\mu_g|$.
+\end{proof}
+
+The right side of \eqref{eq:tail} is smaller than $x(\log x)^{-A}$ for every fixed $A$, hence smaller than any of the error terms below; we shall use it without further comment to discard the primes, and more generally the integers, whose value $g$ lands outside the window $|k-\mu_gL|\le C\sqrt L\log L$. Everywhere, Theorem \ref{thm:mmr} and \eqref{eq:pik} combine to
+\begin{equation}\label{eq:mmr-clean}
+\Card\{p\le x:\ g(p)=k\}
+=\frac{d_g}{\varphi(d_g)}\,\mathbf 1_{(k,d_g)=1}\,\pi(x)\,\Gamma_k(L)
++O\big(\pi(x)L^{-1+\varepsilon}\big),
+\end{equation}
+uniformly in $k$, for every fixed $\varepsilon\in(0,\tfrac12)$, where
+\[
+\Gamma_k(L)=\frac{1}{\sqrt{2\pi\sigma_g^{2}L}}\exp\left(-\frac{(k-\mu_gL)^{2}}{2\sigma_g^{2}L}\right).
+\]
+
+\section{The distribution of the values: proofs of Theorem \ref{thm:level} and its corollaries}\label{sec:sieve}
+
+The only ingredient beyond \eqref{eq:mmr-clean} is the behaviour of Gaussian sums along arithmetic progressions, which Poisson summation settles at once.
+
+\begin{lemma}\label{lem:poisson}
+Fix $\sigma>0$ and $\delta\in(0,\tfrac12)$. There is $c_\delta>0$ such that, uniformly for $1\le M\le L^{1/2-\delta}$, for every residue class $c$ modulo $M$ and every $y\in\R$,
+\[
+\sum_{k\equiv c\ (\mathrm{mod}\ M)}\frac{1}{\sqrt{2\pi\sigma^2L}}\,
+e^{-(k-y)^{2}/(2\sigma^{2}L)}
+=\frac1M+O_{\sigma,\delta}\big(e^{-c_\delta L^{2\delta}}\big).
+\]
+\end{lemma}
+
+\begin{proof}
+By Poisson summation applied to the Gaussian density, the left side equals
+\[
+\frac1M\sum_{h\in\Z}e^{-2\pi^{2}\sigma^{2}Lh^{2}/M^{2}}\,e^{2\pi ih(c-y)/M}.
+\]
+The term $h=0$ contributes $1/M$. Since $L/M^{2}\ge L^{2\delta}$, the terms $h\ne0$ contribute at most $2\sum_{h\ge1}e^{-2\pi^{2}\sigma^{2}L^{2\delta}h^{2}}\ll e^{-c_\delta L^{2\delta}}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:level}]
+We may assume $\varepsilon<\tfrac12$, and we apply \eqref{eq:mmr-clean} with $\varepsilon/2$ in place of $\varepsilon$. Fix $m\le L^{1/2-\delta}$ with $(m,d_g)=1$, write $d=d_g$, and fix a class $a$ modulo $m$. By Lemma \ref{lem:tail}, the primes with $g(p)$ outside the window $|k-\mu_gL|\le\sqrt L\log L$ number $O(\pi(x)e^{-c_1(\log L)^{2}})$. For $k$ inside the window we sum \eqref{eq:mmr-clean} over $k\equiv a\pmod m$. Since $(m,d)=1$, the conditions $k\equiv a\pmod m$ and $(k,d)=1$ cut out $\varphi(d)$ residue classes modulo $md$, and $md\le L^{1/2-\delta/2}$ once $x$ is large. Applying Lemma \ref{lem:poisson} to each class, with $\delta/2$ for $\delta$, and reinstating the negligible part of each Gaussian sum outside the window, the main terms total
+\[
+\frac d{\varphi(d)}\,\pi(x)\left(\varphi(d)\cdot\frac1{md}+O\big(e^{-c'L^{\delta}}\big)\right)
+=\frac{\pi(x)}m+O\big(\pi(x)\,e^{-c'L^{\delta}}\big).
+\]
+The window meets the class $k\equiv a\pmod m$ in $O(\sqrt L\log L/m+1)$ integers, so the accumulated error from \eqref{eq:mmr-clean} is
+\[
+\ll \pi(x)L^{-1+\varepsilon/2}\left(\frac{\sqrt L\log L}{m}+1\right).
+\]
+Both displays are uniform in $a$. Summing over $m\le L^{1/2-\delta}$ against $B^{\omega(m)}$ and using
+\[
+\sum_{m\le Q}\frac{B^{\omega(m)}}m\ll_B(\log Q)^{B},
+\qquad
+\sum_{m\le Q}B^{\omega(m)}\ll_B Q(\log Q)^{B-1},
+\]
+we obtain the bound $\ll\pi(x)\big(L^{-1/2+\varepsilon/2}(\log L)^{B+1}+L^{-1/2-\delta+\varepsilon/2}(\log L)^{B-1}\big)$, and the powers of $\log L$ are absorbed by the remaining $L^{\varepsilon/2}$. The tail and Poisson errors, summed over the at most $L^{1/2}$ values of $m$, are smaller still.
+\end{proof}
+
+\begin{proof}[Proof of Corollary \ref{cor:p3}]
+Let $\delta>0$ be small, to be fixed shortly, and set $D=L^{1/2-\delta}$. Our sieve sequence is the multiset
+\[
+\mathcal A=\{g(p):\ p\le x,\ 0<g(p)\le \mu_gL+\sqrt L\log L\};
+\]
+by Lemma \ref{lem:tail} and $\mu_g>0$ it has $|\mathcal A|=(1+o(1))\pi(x)$ elements, each of size at most $2\mu_gL\le D^{2+5\delta}$ for large $x$. For squarefree $m$ with $(m,d_g)=1$ write
+\[
+\Card\{a\in\mathcal A:\ m\mid a\}=\frac{|\mathcal A|}m+r_m .
+\]
+Then $r_m$ differs from $\Delta_g(x;m,0)$ by the windowing, which by Lemma \ref{lem:tail} changes each of the two counts by $O(\pi(x)e^{-c_1(\log L)^2})$, so Theorem \ref{thm:level} gives, for any fixed $B$,
+\begin{equation}\label{eq:remainders}
+\sum_{\substack{m\le D\ \text{squarefree}\\ (m,d_g)=1}}B^{\omega(m)}|r_m|\ \ll\ \pi(x)\,L^{-1/2+\varepsilon}+\pi(x)\,L^{1/2}e^{-c_1(\log L)^2}\ \ll\ |\mathcal A|\,L^{-1/3}.
+\end{equation}
+The primes $\ell\mid d_g$ need not be sifted: by \eqref{eq:congruence} and $(g(1),d_g)=1$, such an $\ell$ divides $g(p)$ only for $p=\ell$. The sequence $\mathcal A$ is therefore a one-dimensional sieve problem with sifting density $1/m$, level $D$, remainders \eqref{eq:remainders}, and entries of size at most $D^{2+5\delta}$. These are exactly the hypotheses under which Richert's weighted sieve produces $P_3$'s in the expected density: the model case, the sequence $(p+2)_{p\le x}$ with the level $x^{1/2-\delta}$ furnished by the Bombieri--Vinogradov theorem, where the entries likewise have size the $(2+O(\delta))$th power of the level, is classical. See Richert \cite{richert}, the account in Halberstam and Richert \cite[Chapter 9]{halberstamrichert}, and, for a recent treatment of such weights, Matom\"aki and Z\'u\~niga Alterman \cite{matomakizuniga}. Taking $\delta$ small enough, the weighted sieve yields
+\[
+\Card\{a\in\mathcal A:\ \Omega(a)\le3\}\ \gg\ \frac{|\mathcal A|}{\log D}\ \gg\ \frac{\pi(x)}{\log L},
+\]
+and $\log L\sim\log_2x$.
+\end{proof}
+
+\begin{proof}[Proof of Corollary \ref{cor:p2}]
+Here $d_g=1$, so \eqref{eq:mmr-clean} reads $\Card\{p\le x: g(p)=k\}=\pi(x)\Gamma_k(L)+O(\pi(x)L^{-1+\varepsilon})$ for every integer $k$, with no congruence condition. Put $y=\mu_gL$ and $H=\sigma_g\sqrt L$. By the theorem of Halberstam, Heath-Brown and Richert \cite{hhbr}, there are $\theta<\tfrac12$ and $c>0$ ($\theta=0.455$ is admissible) such that every interval $(z-z^{\theta},z]$ with $z$ large contains at least $cz^{\theta}/\log z$ integers that are $P_2$'s; Wu \cite{wu} has reduced the exponent to $\theta=101/232$, and for us any $\theta<\tfrac12$ serves. Starting from $z=y+H/2$ and iterating $z\mapsto z-z^{\theta}$ until $z<y$, partition $(y,y+H/2]$ into consecutive intervals of this shape, discarding the lowest; throughout, $z\asymp y\asymp L$, so the partition produces
+\[
+\ \gg\ \frac{H}{y^{\theta}}\cdot\frac{y^{\theta}}{\log y}\ =\ \frac{H}{\log y}
+\]
+values $k\in(y,y+H/2]$ that are $P_2$'s, distinct targets coming from distinct intervals. Every such $k$ has $(k-y)^{2}/(2\sigma_g^{2}L)\le\tfrac18$, so $\Gamma_k(L)\gg1/H$, and the targets being distinct,
+\[
+\Card\{p\le x:\ g(p)\ \text{is a}\ P_2\}\ \ge\ \sum_{k}\Card\{p\le x:\ g(p)=k\}
+\ \gg\ \frac{H}{\log y}\cdot\frac{\pi(x)}H+O\big(H\cdot\pi(x)L^{-1+\varepsilon}\big).
+\]
+With $\varepsilon<\tfrac12$ the error is $o(\pi(x)/\log L)$, and $\log y\sim\log L\sim\log_2x$.
+\end{proof}
+
+\begin{remark}
+Both corollaries count primes $p$, not values: distinct $p$ with the same almost prime value $g(p)$ are counted separately, as the proofs make clear. For the record, the unweighted linear sieve at level $L^{1/2-\delta}$ already gives $P_4$'s, by sifting $\mathcal A$ by the primes below $L^{1/5+\eta}$ for a small fixed $\eta>0$; Richert's weights recover the third factor, and the parity obstruction bars the first. Whether a switching argument in the manner of Chen can reach $P_2$ when $d_g>1$ we do not know; when $d_g=1$ the second factor was obtained above by targeting rather than sifting.
+\end{remark}
+\section{Mean zero: proofs of Theorems \ref{thm:zeromean} and \ref{thm:iterates}}\label{sec:zeromean}
+
+Everything in this section rests on the behaviour of half-Gaussian sums over primes, which we record in the three forms needed: over all primes, over primes in progressions and with a bounded shift, and over sparser sets of primes with a regular counting function. In each, $V\to\infty$ is a real parameter; in the applications $V=\sigma_g^{2}L$.
+
+\begin{lemma}\label{lem:halfgauss}
+As $V\to\infty$,
+\[
+\frac1{\sqrt{2\pi V}}\sum_{q}e^{-q^{2}/(2V)}\ \sim\ \frac1{\log V},
+\]
+the sum being over all primes $q$. The same holds after restricting to $q\le\sqrt V\log V$, or after deleting any finite set of primes.
+\end{lemma}
+
+\begin{proof}
+Partial summation gives $\sum_qe^{-q^{2}/(2V)}=\int_2^\infty\pi(t)\,(t/V)\,e^{-t^{2}/(2V)}\,dt$, and inserting the prime number theorem in the form $\pi(t)=\int_2^tds/\log s+O(t(\log t)^{-3})$ and integrating by parts once more shows that the sum is
+\[
+\int_2^\infty e^{-t^{2}/(2V)}\,\frac{dt}{\log t}+O\big(\sqrt V(\log V)^{-3}\big).
+\]
+It suffices to evaluate the integral. Substitute $t=\sqrt V\,u$. The range $u\le V^{-1/4}$ contributes $\ll V^{1/4}$, since $\log t\ge\log2$ there. For $u>V^{-1/4}$ one has $\log t=\tfrac12(\log V)(1+O(\log_2V/\log V)+O(|\log u|/\log V))$, and since $\int_0^\infty e^{-u^{2}/2}(1+|\log u|)\,du<\infty$,
+\[
+\int_{V^{-1/4}}^{\infty}e^{-t^{2}/(2V)}\frac{dt}{\log t}
+=\frac{2\sqrt V}{\log V}\Big(\int_0^\infty e^{-u^{2}/2}du+o(1)\Big)
+=\frac{2\sqrt V}{\log V}\Big(\sqrt{\tfrac\pi2}+o(1)\Big).
+\]
+Dividing by $\sqrt{2\pi V}$ leaves $(1+o(1))/\log V$, the range $u\le V^{-1/4}$ having contributed $O(V^{-1/4})$ to the normalised sum. Truncation at $\sqrt V\log V$ removes a tail that is $O(e^{-(\log V)^{2}/3})$ after normalisation, and a finite set of primes contributes $O(V^{-1/2})$.
+\end{proof}
+
+\begin{lemma}\label{lem:halfgauss-ap}
+Fix $D\ge1$, a set $\mathcal R$ of reduced residue classes modulo $D$, and $C>0$. Uniformly for $|\beta|\le C$, as $V\to\infty$,
+\[
+\frac1{\sqrt{2\pi V}}\sum_{\substack{q\ (\mathrm{mod}\ D)\,\in\,\mathcal R}}e^{-(q-\beta)^{2}/(2V)}
+=\frac{|\mathcal R|}{\varphi(D)}\cdot\frac1{\log V}
++O_{D,C}\!\left(\frac{\log_2V}{(\log V)^{2}}\right),
+\]
+and the same after truncation at $q\le\sqrt V\log V$.
+\end{lemma}
+
+\begin{proof}
+The shift $\beta$ moves each summand by a factor $e^{O(|q|/V)}=1+O(q/V)$ in the range $q\le\sqrt V\log V$; after normalisation this contributes $O(\log V/\sqrt V)$, negligible here. For $\beta=0$, run the proof of Lemma \ref{lem:halfgauss} with the prime number theorem for the progressions in $\mathcal R$ to the fixed modulus $D$, whose error term is smaller than any power of $1/\log V$, and keep the secondary term this time: on $u>V^{-1/4}$,
+\[
+\frac1{\log(\sqrt Vu)}=\frac2{\log V}+O\!\left(\frac{\log_2V+|\log u|}{(\log V)^{2}}\right)
+\]
+uniformly, and the error integrates to the stated size.
+\end{proof}
+
+\begin{lemma}\label{lem:sparse}
+Fix $r\ge1$ and let $\mathcal Q$ be a set of primes with
+\[
+\Card\{q\le Y:\ q\in\mathcal Q\}\ \sim\ C\,\frac{Y}{\log Y\,\log_2Y\cdots\log_rY}
+\qquad(Y\to\infty)
+\]
+for some $C>0$. Then, as $V\to\infty$,
+\[
+\frac1{\sqrt{2\pi V}}\sum_{q\in\mathcal Q}e^{-q^{2}/(2V)}
+\ \sim\ \frac{C}{\log V\,\log_2V\cdots\log_rV},
+\]
+and the same after truncation at $q\le\sqrt V\log V$.
+\end{lemma}
+
+\begin{proof}
+Write $Q(t)$ for the counting function of $\mathcal Q$. Partial summation gives
+\[
+\sum_{q\in\mathcal Q}e^{-q^{2}/(2V)}=\int_{2}^{\infty}Q(t)\,\frac tV\,e^{-t^{2}/(2V)}\,dt ,
+\]
+and the range $t\le T_0$, on which the hypothesis has not yet taken hold, contributes $O(T_0^{2}/V)$; letting $T_0\to\infty$ slowly, we may insert $Q(t)=(1+o(1))\,Ct/(\log t\cdots\log_rt)$ throughout with a total relative error $o(1)$. Substituting $t=\sqrt Vu$ and using $\int_0^\infty u^{2}e^{-u^{2}/2}\,du=\sqrt{\pi/2}$, the factor $1/\log t$ contributes $2/\log V$ as in Lemma \ref{lem:halfgauss}, while for $2\le i\le r$, uniformly on $V^{-1/4}\le u\le e^{\sqrt{\log_2 V}}$ say,
+\[
+\log_i(\sqrt V u)=\big(1+o(1)\big)\log_iV ,
+\]
+and the complementary ranges contribute $o(1)$ after normalisation, by the same tail estimates as before together with $\int u^{2}e^{-u^2/2}(1+|\log u|)^{r}\,du<\infty$. The factor $2$ is cancelled by $\int_0^\infty u^{2}e^{-u^{2}/2}\,du\,/\sqrt{2\pi}=\tfrac12$, and the truncation and the finitely many small primes are disposed of as in Lemma \ref{lem:halfgauss}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:zeromean}]
+Put $V=\sigma_g^{2}L$; here $\mu_g=0$, so the window of Lemma \ref{lem:tail} is $|k|\le\sqrt L\log L$. Fix $\varepsilon\in(0,\tfrac12)$. Discarding the primes $p$ with $g(p)$ outside the window and summing \eqref{eq:mmr-clean} over the prime targets $q\le\sqrt L\log L$, of which there are $O(\sqrt L\log L)$,
+\[
+\Card\{p\le x:\ g(p)\ \text{prime}\}
+=c_g\,\pi(x)\sum_{\substack{q\le\sqrt L\log L\\ q\nmid d_g}}\Gamma_q(L)
++O\big(\pi(x)L^{-1/2+\varepsilon}\log L\big),
+\]
+where $c_g=d_g/\varphi(d_g)$, the finitely many primes dividing $d_g$ being excluded by the factor $\mathbf 1_{(q,d_g)=1}$. By Lemma \ref{lem:halfgauss}, the sum is $(1+o(1))/\log V$, and $\log V\sim\log L\sim\log_2x$; with $\varepsilon<\tfrac12$ the error is $o(\pi(x)/\log L)$. This proves the counting statement, and the reciprocal statement follows by partial summation:
+\[
+\sum_{\substack{p\le x\\ g(p)\ \text{prime}}}\frac1p
+=O(1)+\int_{16}^{x}\Card\{p\le t: g(p)\ \text{prime}\}\,\frac{dt}{t^{2}}
+=O(1)+\big(c_g+o(1)\big)\int_{16}^{x}\frac{dt}{t\,\log t\,\log_3t},
+\]
+where we used $\pi(t)/t^{2}=(1+o(1))/(t\log t)$ and replaced $\log_2(\log_bt)$ by $\log_3t$, an error absorbed in the $o(1)$; the last integral is $(1+o(1))\log_3x$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:iterates}]
+Induction on $j$, the case $j=1$ being Theorem \ref{thm:zeromean}. Let $j\ge2$ and suppose the counting statement of \eqref{eq:iterates} holds at $j-1$. The set $\mathcal Q=\mathcal P^{(j-1)}$ is a fixed set of primes with
+\[
+\Card\{q\le Y: q\in\mathcal Q\}\ \sim\ c_g^{\,j-1}\,\frac{Y}{\log Y\,\log_2Y\cdots\log_jY},
+\]
+by the induction hypothesis and the prime number theorem, $\pi(Y)\sim Y/\log Y$ converting the count against $\pi$ into a count against $Y$. A prime $p$ lies in $\mathcal P^{(j)}$ exactly when $g(p)\in\mathcal Q$. Repeating the proof of Theorem \ref{thm:zeromean} with the targets $q\in\mathcal Q$, $q\le\sqrt L\log L$, and applying Lemma \ref{lem:sparse} with $r=j$ and $V=\sigma_g^2L$,
+\[
+\Card\{p\le x:\ p\in\mathcal P^{(j)}\}
+=c_g\,\pi(x)\,\frac{(1+o(1))\,c_g^{\,j-1}}{\log V\,\log_2V\cdots\log_jV}
++O\big(\pi(x)L^{-1/2+\varepsilon}\log L\big),
+\]
+and $\log_iV\sim\log_{i+1}x$ for each fixed $i$. The error is again $o$ of the main term, every factor $\log_iV$ being subpolynomial in $L$. The reciprocal statement follows by partial summation as before.
+\end{proof}
+
+\begin{remark}
+In the base $4$ example of the introduction, with weights $(0,1,2,-3)$ and $d_g=\gcd(0,-6,3)=3$, the factor $c_g=\tfrac32$ has a concrete reading: the values $g(p)$ avoid the multiples of $3$, and the primes that remain are met half again as often. In the opposite direction, at mean zero the coprimality hypothesis \eqref{eq:gcd} can be relaxed as in \cite[Section 6.2]{vibefrtz}: if $\delta=\gcd(g(1),\dots,g(b-1))$ is a prime, prime values of $g$ mean $g(p)=\delta$, and $g/\delta$ is again strongly additive of mean zero with \eqref{eq:gcd}.
+\end{remark}
+
+\section{Weights that see the length: proofs of Theorem \ref{thm:weights} and its companions}\label{sec:weights}
+
+Throughout this section $\mathbf w=(w_0,\dots,w_{b-1})$ is a tuple of integers, $g=g_{\mathbf w}$ is the strongly additive function with $g(a)=w_a-w_0$, assumed to satisfy \eqref{eq:gcd}, $d=d_{g}$, $A=w_0$, and $F=F_{\mathbf w}$ as in \eqref{eq:Fw}, so that $F(n)=A\,\ell_b(n)+g(n)$ and $\overline w=A+\mu_{g}$. On the shell $b^{m-1}\le p<b^m$ one has $\ell_b(p)=m$, and the equation $F(p)=r$ reads $g(p)=r-Am$.
+
+\subsection{Exact values}
+We begin with the counting statement on a single shell, which contains Corollary \ref{cor:zeros} and isolates the local obstruction. Here $\rad(d)$ denotes the product of the primes dividing $d$.
+
+\begin{theorem}\label{thm:exact}
+Assume $\lambda:=A+\mu_g>0$, and put
+\[
+d_A=\prod_{\substack{\ell\mid d\\ \ell\mid A}}\ell .
+\]
+Every sufficiently large integer $r$ with $(r,d_A)=1$ is a value of $F$ at a prime. More precisely, for such $r$ there is an integer $m=r/\lambda+O(1)$ with $(r-Am,d)=1$, and for any such $m$,
+\begin{equation}\label{eq:exactcount}
+\Card\{p:\ b^{m-1}\le p<b^{m},\ F(p)=r\}
+\ \sim\ \Big(1-\frac1b\Big)\,\frac{d}{\varphi(d)}\,\frac{\pi(b^{m})}{\sqrt{2\pi\sigma_g^{2}m}}
+\qquad(r\to\infty).
+\end{equation}
+Conversely, if $\ell\mid(r,d_A)$ then $F(p)=r$ has no solution with $p\ne\ell$.
+\end{theorem}
+
+\begin{proof}
+Necessity first: if $\ell\mid d$ and $\ell\mid A$, then by \eqref{eq:congruence} $F(p)=A\ell_b(p)+g(p)\equiv g(1)p\pmod\ell$, and $(g(1),d)=1$, so $\ell\mid F(p)$ forces $\ell\mid p$.
+
+For the existence of $m$: for each prime $\ell\mid d$ with $\ell\mid A$, the condition $(r-Am,d)=1$ at $\ell$ reads $\ell\nmid r$, which is our hypothesis; for $\ell\mid d$ with $\ell\nmid A$ it excludes the single class $m\equiv A^{-1}r\pmod\ell$. The Chinese remainder theorem leaves an admissible class of $m$ modulo $\rad(d)$, and we take for $m$ the integer nearest $r/\lambda$ in that class, so that $m=r/\lambda+O(\rad(d))$.
+
+Now put $k=r-Am$. Then $(k,d)=1$ and
+\[
+k-\mu_g m=r-(A+\mu_g)m=r-\lambda m=O(1),
+\]
+so $k$ sits within a bounded distance of the centre of the window at both $x=b^m$ and $x=b^{m-1}$, and $\Gamma_k(m)=(1+o(1))\,(2\pi\sigma_g^{2}m)^{-1/2}$, likewise with $m-1$ for $m$. Two applications of \eqref{eq:mmr-clean}, with any fixed $\varepsilon<\tfrac12$, give
+\[
+\Card\{b^{m-1}\le p<b^{m}:\ g(p)=k\}
+=\frac{d}{\varphi(d)}\big(\pi(b^{m})-\pi(b^{m-1})\big)\frac{1+o(1)}{\sqrt{2\pi\sigma_g^{2}m}}
++O\big(\pi(b^{m})\,m^{-1+\varepsilon}\big),
+\]
+and $\pi(b^{m-1})=\big(\tfrac1b+o(1)\big)\pi(b^m)$ by the prime number theorem. The main term has order $\pi(b^m)m^{-1/2}$ and dominates.
+\end{proof}
+
+\begin{proof}[Proof of Corollary \ref{cor:zeros}, counting statement]
+Take $\mathbf w=(1,0,\dots,0)$, so that $F=Z_b$, $g(a)=-1$ for $1\le a<b$, and $A=1$. Then \eqref{eq:gcd} holds,
+\[
+\mu_g=-\frac{b-1}b,\qquad \sigma_g^{2}=\frac1b\Big(\frac{b-1}b\Big)^{2}+\frac{b-1}b\Big(\frac1b\Big)^{2}=\frac{b-1}{b^{2}},
+\]
+and $d=1$: for $b\ge3$ the list \eqref{eq:dg} contains $g(2)-2g(1)=1$, and for $b=2$ the modulus is $1$ by convention. So $d_A=1$, there is no obstruction, and $\lambda=1+\mu_g=1/b$, so the admissible shell for the target $r$ is $m=br$ exactly, where $k=r-m=-(b-1)r$ satisfies $k-\mu_gm=0$: dead centre. Theorem \ref{thm:exact} and $\sigma_g^{2}\,br=(b-1)r/b$ give the display of Corollary \ref{cor:zeros}.
+\end{proof}
+
+\subsection{The Mertens formula}
+We now prove Theorem \ref{thm:weights}. Two lemmas carry the bookkeeping: the first converts the count on a shell into an integral, the second evaluates, for a given prime target $q$, the sum of these integrals over the shells. Recall $\Gamma_k(L)$ from \eqref{eq:mmr-clean}, and put $c_g=d/\varphi(d)$.
+
+\begin{lemma}\label{lem:shell}
+Fix $\varepsilon\in(0,\tfrac12)$ and $C>0$. Uniformly in $m\ge2$ and in sets $\mathcal K_m$ of integers contained in $\{k:|k-\mu_gm|\le C\sqrt m\log m\}$ with $\Card\mathcal K_m\ll\sqrt m\log m$,
+\begin{equation}\label{eq:shell}
+\sum_{k\in\mathcal K_m}\ \sum_{\substack{b^{m-1}<p\le b^{m}\\ g(p)=k}}\frac1p
+=c_g\int_{m-1}^{m}\frac1{L}\sum_{\substack{k\in\mathcal K_m\\ (k,d)=1}}\Gamma_k(L)\,dL
++O\big(m^{-3/2+2\varepsilon}\big).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Fix $k$ and write $N_k(t)=\Card\{p\le t:\ g(p)=k\}$. By partial summation,
+\[
+\sum_{\substack{b^{m-1}<p\le b^{m}\\ g(p)=k}}\frac1p
+=\frac{N_k(b^{m})}{b^{m}}-\frac{N_k(b^{m-1})}{b^{m-1}}+\int_{b^{m-1}}^{b^{m}}\frac{N_k(t)}{t^{2}}\,dt .
+\]
+Insert \eqref{eq:mmr-clean} for $N_k$ throughout. The error term of \eqref{eq:mmr-clean} contributes $\ll m^{-1+\varepsilon}\big(b^{-m}\pi(b^m)+\int_{b^{m-1}}^{b^m}\pi(t)t^{-2}dt\big)\ll m^{-2+\varepsilon}$, by Chebyshev's bound $\pi(t)\ll t/\log t$. Turn to the main term, and write $t=b^{L}$. In the integral, $\pi(t)/t^{2}\,dt=(1+O(1/L))\,dL/L$, which produces the integral in \eqref{eq:shell} for the single $k$ together with a correction $\ll m^{-1}\int_{m-1}^m\Gamma_k(L)\,dL$. The two boundary terms combine to the increment over one step of a function that agrees with $L\mapsto c_g\Gamma_k(L)/(L\log b)$ up to a relative error $O(1/L)$; since the logarithmic derivative of $\Gamma_k(L)/L$ is $O((1+|z_k|)/\sqrt m)$ on the shell, where $z_k=(k-\mu_gm)/(\sigma_g\sqrt m)$, that increment is $\ll m^{-2}(1+z_k^{2})e^{-z_k^{2}/4}$. Now sum over $k\in\mathcal K_m$: the terms $m^{-2+\varepsilon}$ over the $\ll\sqrt m\log m$ values of $k$, and the Gaussian-weighted corrections over all $k$, give a total error $\ll m^{-3/2+\varepsilon}\log m\ll m^{-3/2+2\varepsilon}$.
+\end{proof}
+
+\begin{lemma}\label{lem:saddle}
+Assume $\lambda=A+\mu_g>0$ and let $\kappa(\mathbf w)$ be as in Theorem \ref{thm:weights}. For primes $q\to\infty$ with $q\nmid d$,
+\begin{equation}\label{eq:saddle}
+c_g\sum_{m\ge1}\mathbf 1_{(q-Am,\,d)=1}
+\int_{m-1}^{m}\frac{\Gamma_{q-Am}(L)}{L}\,dL
+=\frac{\kappa(\mathbf w)}q+O\big(q^{-3/2}(\log q)^{3}\big).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write $I_m$ for the integral in \eqref{eq:saddle}. Since $Am+\mu_gL=\lambda L+A(m-L)$ and $0\le m-L\le1$ on the domain, the exponent satisfies
+\[
+\frac{(q-Am-\mu_gL)^{2}}{2\sigma_g^{2}L}=\frac{(q-\lambda L)^{2}}{2\sigma_g^{2}L}+O\Big(\frac{1+|q-\lambda L|}{L}\Big),
+\]
+and only $L=q/\lambda+O(\sqrt q\log q)$ matters, the remaining $m$ contributing $O(q^{-3})$ in total, by the Gaussian tail. On that range the displayed correction multiplies the integrand by $1+O(\log q/\sqrt q)$, so
+\[
+\sum_{m\ge1}\mathbf 1_{(q-Am,d)=1}\,I_m
+=\sum_{m}\mathbf 1_{(q-Am,d)=1}\,J_m+O\big(q^{-3/2}(\log q)^{2}\big),
+\qquad
+J_m:=\int_{m-1}^{m}\frac{\Gamma^{*}(L)}{L}\,dL,
+\]
+where $\Gamma^{*}(L)=(2\pi\sigma_g^{2}L)^{-1/2}\exp(-(q-\lambda L)^{2}/2\sigma_g^{2}L)$.
+
+The indicator is periodic in $m$ with period dividing $\rad(d)$, and its mean over a period is $\prod_{\ell\mid d,\,\ell\nmid A}(1-1/\ell)$: for $\ell\mid A$ the condition at $\ell$ reads $\ell\nmid q$, true since $q\nmid d$ is prime and large; for $\ell\nmid A$ exactly one class of $m$ is excluded. The numbers $J_m$ are nonnegative with $\sum_m J_m<\infty$ and total variation $\sum_m|J_{m+1}-J_m|\ll q^{-3/2}\log q$: the logarithmic derivative of $L\mapsto\Gamma^{*}(L)/L$ is $O(\log q/\sqrt q)$ on the central range $|L-q/\lambda|\le\sqrt q\log q$, so that $\sum_m|J_{m+1}-J_m|\ll(\log q/\sqrt q)\sum_mJ_m$ there, while the tails are exponentially small. Hence, by summation by parts against the periodic indicator, whose partial sums deviate from the mean value times the length by $O(\rad(d))$,
+\[
+\sum_{m}\mathbf 1_{(q-Am,d)=1}\,J_m
+=\prod_{\substack{\ell\mid d\\ \ell\nmid A}}\Big(1-\frac1\ell\Big)\sum_{m\ge1}J_m
++O\big(q^{-3/2}(\log q)^{3}\big).
+\]
+Finally $\sum_{m\ge1}J_m=\int_{0}^{\infty}\Gamma^{*}(L)\,dL/L$, and this integral is exactly $1/q$: expanding the square in the exponent,
+\[
+\int_0^\infty\frac{e^{-(q-\lambda L)^{2}/(2\sigma_g^{2}L)}}{L\sqrt{2\pi\sigma_g^{2}L}}\,dL
+=\frac{e^{q\lambda/\sigma_g^{2}}}{\sqrt{2\pi\sigma_g^{2}}}
+\int_0^\infty L^{-3/2}\exp\Big(-\frac{q^{2}}{2\sigma_g^{2}L}-\frac{\lambda^{2}L}{2\sigma_g^{2}}\Big)dL
+=\frac1q,
+\]
+by the classical identity $\int_0^\infty u^{-3/2}e^{-a/u-cu}\,du=\sqrt{\pi/a}\,e^{-2\sqrt{ac}}$ with $a=q^{2}/2\sigma_g^{2}$ and $c=\lambda^{2}/2\sigma_g^{2}$. Multiplying by $c_g=\prod_{\ell\mid d}\ell/(\ell-1)$ and cancelling the factors at $\ell\nmid A$ leaves exactly $\kappa(\mathbf w)/q$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:weights}]
+Fix $\varepsilon\in(0,\tfrac14)$. Decompose the primes $p<x$ into the shells $b^{m-1}<p\le b^{m}$ with $m\le M:=\lceil\log_bx\rceil$; the part of the last shell beyond $x$ affects the sum by less than the whole shell's contribution, which the estimates below show is $o(1)$, so we may sum over complete shells. On the $m$th shell, $F(p)$ is prime exactly when $g(p)=q-Am$ for some prime $q$. By Lemma \ref{lem:tail}, the primes with $|g(p)-\mu_gm|>\sqrt m\log m$ contribute to the $m$th shell's reciprocal sum at most $b\,e^{-c_1(\log m)^{2}}$, which converges over $m$: a constant plus $o(1)$. On each shell apply Lemma \ref{lem:shell} with
+\[
+\mathcal K_m=\{q-Am:\ q\ \text{prime},\ |q-Am-\mu_gm|\le\sqrt m\log m\};
+\]
+here $q$ ranges over an interval of length $2\sqrt m\log m$ about $\lambda m$, so $q\asymp m$ and $\Card\mathcal K_m\ll\sqrt m\log m$ by Chebyshev's bound. Summing \eqref{eq:shell} over $m\le M$, the errors $O(m^{-3/2+2\varepsilon})$ converge, giving a constant plus $o(1)$, and it remains to treat
+\[
+c_g\sum_{m\le M}\int_{m-1}^{m}\frac1L\sum_{\substack{q\ \text{prime},\ q\nmid d\\ (q-Am,d)=1,\ |q-\lambda m|\le\sqrt m\log m}}\Gamma_{q-Am}(L)\,dL .
+\]
+We reverse the sums. A prime $q$ appears for the shells $m=q/\lambda+O(\sqrt q\log q)$; extending, for each $q\le\lambda M-\sqrt M(\log M)^2$, the sum over these $m$ to all $m\ge1$ changes the total by the Gaussian tails already estimated, and Lemma \ref{lem:saddle} evaluates the completed sum as $\kappa(\mathbf w)/q+O(q^{-3/2}(\log q)^{3})$. The primes $\lambda M-\sqrt M(\log M)^{2}<q\le\lambda M+\sqrt M(\log M)^{2}$, whose saddle is cut by the boundary $m\le M$, number $\ll\sqrt M\log M$ and contribute $\ll1/M$ each, in total $o(1)$; and each of the finitely many primes $q\mid d$ contributes a sum over shells that converges, hence a constant plus $o(1)$. Altogether, with $Q=\lambda M$,
+\[
+\sum_{\substack{p<x\\ F(p)\ \text{prime}}}\frac1p
+=\kappa(\mathbf w)\sum_{q\le Q}\frac1q+C'+o(1)
+=\kappa(\mathbf w)\log_2Q+C''+o(1),
+\]
+by Mertens' theorem for primes, and $\log_2Q=\log_2(\lambda M)=\log_3x+o(1)$.
+\end{proof}
+
+\begin{proof}[Proof of Corollary \ref{cor:zeros}, Mertens statement]
+As computed in the proof of the counting statement, for $F=Z_b$ we have $A=1$ and $d=1$, so $\kappa(\mathbf w)$ is an empty product. Theorem \ref{thm:weights} applies with $\overline w=1/b>0$.
+\end{proof}
+
+\subsection{Mean zero on shells: periodicity}
+When $\overline w=0$ the picture changes. The target $F(p)=q$ on the $m$th shell asks for $g(p)=q-Am$, and now $q-Am-\mu_gm=q$: the target sits a bounded distance from the centre of the window for \emph{every} shell, rather than on one shell per target. All small primes $q$ are simultaneously available, as in Section \ref{sec:zeromean}, but the admissibility condition $(q-Am,d)=1$ retains the shell index $m$, and produces densities that genuinely oscillate.
+
+\begin{theorem}\label{thm:zeroweights}
+Assume $g=g_{\mathbf w}$ satisfies \eqref{eq:gcd} and $\overline w=0$, and put, for $m\ge1$,
+\begin{equation}\label{eq:kappam}
+\kappa_m(A,d)=\frac{d}{\varphi(d)^{2}}\,
+\Card\{a\ (\mathrm{mod}\ d):\ (a,d)=1,\ (a-Am,d)=1\}
+=\prod_{\substack{\ell\mid d\\ \ell\mid Am}}\frac{\ell}{\ell-1}
+\prod_{\substack{\ell\mid d\\ \ell\nmid Am}}\frac{\ell(\ell-2)}{(\ell-1)^{2}} .
+\end{equation}
+Then, as $m\to\infty$,
+\begin{equation}\label{eq:zeroshell}
+\Card\{b^{m-1}<p\le b^{m}:\ F(p)\ \text{prime}\}
+=\big(\kappa_m(A,d)+o(1)\big)\,\frac{\pi(b^{m})-\pi(b^{m-1})}{\log m}.
+\end{equation}
+The coefficient $\kappa_m(A,d)$ is periodic in $m$, its mean over a period is $\kappa(\mathbf w)$, and there is a constant $C_{\mathbf w}$ with
+\begin{equation}\label{eq:zeromertens}
+\sum_{\substack{p<x\\ F(p)\ \text{prime}}}\frac1p=\kappa(\mathbf w)\log_3x+C_{\mathbf w}+o(1).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The two expressions in \eqref{eq:kappam} agree. By the Chinese remainder theorem, both the count and the factor $d/\varphi(d)^{2}=\prod_{\ell^{e}\|d}\ell^{2-e}(\ell-1)^{-2}$ factor over the prime powers $\ell^{e}\,\|\,d$, so it suffices to compare local factors. At $\ell^{e}$, the residues $a$ modulo $\ell^{e}$ with $\ell\nmid a$ and $\ell\nmid a-Am$ number $\ell^{e-1}(\ell-1)$ if $\ell\mid Am$, the two conditions then coinciding, and $\ell^{e-1}(\ell-2)$ otherwise, the class $a\equiv Am$ being reduced and excluded; multiplying by $\ell^{2-e}(\ell-1)^{-2}$ gives $\ell/(\ell-1)$ and $\ell(\ell-2)/(\ell-1)^{2}$ respectively, as displayed. Periodicity in $m$ with period $\rad(d)$ is clear. For the mean, average each local factor: at $\ell\mid A$ the factor is constantly $\ell/(\ell-1)$; at $\ell\nmid A$ the class of $m$ is uniform, so the mean is
+\[
+\frac1\ell\cdot\frac{\ell}{\ell-1}+\frac{\ell-1}{\ell}\cdot\frac{\ell(\ell-2)}{(\ell-1)^{2}}=\frac{1}{\ell-1}+\frac{\ell-2}{\ell-1}=1 ,
+\]
+and the means multiply, by the Chinese remainder theorem again. This gives $\overline{\kappa_m}=\kappa(\mathbf w)$.
+
+For \eqref{eq:zeroshell}: on the $m$th shell, the target $F(p)=q$ means $g(p)=q-Am$, and since $\mu_g=-A$, the displacement from the centre is $q-Am-\mu_g L=q-A(m-L)$ for $b^{L}=t\in[b^{m-1},b^m]$: a bounded shift $\beta=A(m-L)\in[0,A]$ or $[A,0]$. Apart from the finitely many primes dividing $d$, a target $q$ is realisable precisely when $(q,d)=1$ and $(q-Am,d)=1$; let $\mathcal R_m$ be this set of reduced classes modulo $d$, so that $\Card\mathcal R_m=\varphi(d)^{2}\kappa_m(A,d)/d$. Summing \eqref{eq:mmr-clean} over the admissible prime targets $q\le\sqrt m\log m$ at $x=b^{m}$ and applying Lemma \ref{lem:halfgauss-ap} with $D=d$, $\mathcal R=\mathcal R_m$, $V=\sigma_g^{2}m$ and shift $\beta=O(1)$,
+\[
+\Card\{p\le b^{m}:\ g(p)+Am\ \text{prime}\}
+=\Big(c_g\,\frac{\Card\mathcal R_m}{\varphi(d)}+o(1)\Big)\frac{\pi(b^{m})}{\log m}
+=\big(\kappa_m(A,d)+o(1)\big)\frac{\pi(b^{m})}{\log m},
+\]
+the accumulated error $O(\pi(b^m)m^{-1/2+\varepsilon}\log m)$ being $o(\pi(b^m)/\log m)$; here the $o(1)$ is uniform in the residue data, there being only finitely many possible sets $\mathcal R_m$. The same formula holds at $b^{m-1}$, with the same $\mathcal R_m$ and the shifted centre still $O(1)$; subtracting, and using $\pi(b^{m-1})\sim\pi(b^m)/b$, gives \eqref{eq:zeroshell}.
+
+For \eqref{eq:zeromertens}, apply Lemma \ref{lem:shell} on the $m$th shell with targets $\mathcal K_m=\{q-Am: q\ \text{prime},\ q\le\sqrt m\log m,\ q\in\mathcal R_m\ (\mathrm{mod}\ d)\}$; inside the integral \eqref{eq:shell}, Lemma \ref{lem:halfgauss-ap} evaluates the Gaussian sum with the bounded shift, giving
+\[
+\sum_{\substack{b^{m-1}<p\le b^{m}\\ F(p)\ \text{prime}}}\frac1p
+=\frac{\kappa_m(A,d)}{m\log m}
++O\!\left(\frac{\log_2m}{m(\log m)^{2}}\right)
++O\big(m^{-3/2+2\varepsilon}\big),
+\]
+where the middle term also absorbs the variation of $\log V$ across the shell. Both error series converge, so they contribute a constant plus $o(1)$ on summing over $m\le\log_bx+O(1)$. Finally, $\kappa_m$ being periodic with mean $\kappa(\mathbf w)$ and $1/(m\log m)$ decreasing, summation by parts gives
+\[
+\sum_{m\le M}\frac{\kappa_m(A,d)}{m\log m}=\kappa(\mathbf w)\log_2M+C+o(1),
+\]
+and $\log_2M=\log_3x+o(1)$ for $M=\log_bx+O(1)$.
+\end{proof}
+
+\begin{example}\label{ex:base3}
+In base $3$ take $\mathbf w=(1,2,-3)$, so that $g=(0,1,-4)$, $\mu_g=-1$, $\overline w=0$, and, from \eqref{eq:dg}, $d=\gcd(-6,2)=2$, with $A=w_0=1$. Formula \eqref{eq:kappam} gives
+\[
+\kappa_m(1,2)=\begin{cases}2,&m\ \text{even},\\ 0,&m\ \text{odd}.\end{cases}
+\]
+The vanishing can be seen directly: $g(p)\equiv p\equiv1\pmod2$ for $p>2$, so on an odd shell $F(p)=m+g(p)$ is even, and the only prime it can be is $2$. The theorem says more, namely that on even shells nothing is lost: the density doubles. The reciprocal sum \eqref{eq:zeromertens}, with $\kappa(\mathbf w)=1$, is blind to the oscillation. The exceptional even target does occur: $F(p)=2$ means $g(p)=2-m$, a single value at bounded distance from the centre, attained by $\asymp\pi(3^m)/\sqrt m$ primes on the shell, which is $o(\pi(3^m)/\log m)$, consistent with \eqref{eq:zeroshell}, but not zero. Section \ref{sec:numerics} displays the phenomenon numerically: through $3^{16}$, every prime $p$ on an odd shell with $F(p)$ prime has $F(p)=2$, without exception.
+\end{example}
+
+\begin{remark}\label{rem:factor}
+The factor $\kappa(\mathbf w)$ in Theorem \ref{thm:weights} has the same explanation. On the $m$th shell a prime target $q$ is admissible when $(q-Am,d)=1$; for $\overline w>0$ each target is served by the $\asymp\sqrt q\log q$ shells in its saddle window rather than by all shells, and averaging the admissibility over those $m$ produces $\prod_{\ell\mid d,\ell\nmid A}(1-1/\ell)$, which against the global factor $c_g$ leaves $\kappa(\mathbf w)$. For $A=0$ nothing depends on $m$ and one recovers $c_g$; this is the case treated in \cite{vibefrtz}, and the consistency is reassuring rather than surprising, $F$ then being $g$ itself.
+\end{remark}
+\subsection{Numerical remarks}\label{sec:numerics}
+Two computations, both against the results of this section; the scripts that produced them accompany the paper.
+
+First the zero count in base ten. Among the $5761455$ primes $p\le10^{8}$, exactly $629304$ have $Z_{10}(p)$ prime, that is, a prime number of zero digits. The main term of Corollary \ref{cor:zeros} has not yet begun to move at this height: $\log_3x$ is $1.07$ at $x=10^{8}$, the reciprocal sum $\sum 1/p$ over these primes has reached only $0.051$, and the difference $\sum1/p-\log_3x$ still drifts ($-0.99$ at $10^{7}$, $-1.02$ at $10^{8}$) towards a limit $C_{10}$ that these heights do not determine to two digits. What is visible is the window. On the shell of $8$-digit primes, the proportion with a prime number of zeros is $0.11336$; the model in which the seven digits after the leading one are independent and uniform, so that $Z_{10}$ is binomial with parameters $(7,\tfrac1{10})$, predicts $\Pr(Z\in\{2,3,5,7\})=0.11305$. On the $7$- and $6$-digit shells the agreement is $0.08126$ against $0.08101$ and $0.05294$ against $0.05220$. The data displays the local theorem; the asymptotic regime it implies lies far beyond such heights, as already observed in the computations of \cite[Section 6.5]{vibefrtz}.
+
+Second, the oscillation of Example \ref{ex:base3}. Among the primes up to $3^{16}=43046721$, sorted into shells by their number of ternary digits, the counts of $p$ with $F(p)=\ell_3(p)+g(p)$ prime are, for $m=10,\dots,16$:
+\[
+\begin{array}{c|ccccccc}
+m&10&11&12&13&14&15&16\\
+\hline
+\Card\{p:\ F(p)\ \text{prime}\}&1220&696&7943&9118&64566&51468&527820\\
+\Card\{p:\ F(p)=2\}&0&696&0&9118&0&51468&0
+\end{array}
+\]
+On every odd shell, each of the $696$, $9118$ and $51468$ primes counted has $F(p)=2$ exactly, as the congruence argument of Example \ref{ex:base3} forces; the exceptional target $2$ is far from negligible at these heights, its count $\asymp\pi(3^m)/\sqrt m$ being comparable to $\pi(3^m)/\log m$ until $m$ is large. The even shells show the doubled density. The two rows together are the finite-height portrait of \eqref{eq:zeroshell}.
+
+\section{The arithmetic of the value}\label{sec:arithmetic}
+
+In this section $\mu_g>0$, and
+\[
+y=\mu_gL,\qquad H=\sigma_g\sqrt L,\qquad d=d_g .
+\]
+The local theorem \eqref{eq:mmr-clean} says that, up to the congruence condition modulo $d$ and an error $o(1/H)$ per target, the value $g(p)$ of a random prime $p\le x$ is an integer drawn from the Gaussian weight of mean $y$ and width $H$ on the integers coprime to $d$. Windows of length $\asymp\sqrt y$ about $y$ are long enough for the standard machinery of multiplicative number theory, and the machinery transfers to $g(p)$ wholesale. We give the two instances announced in the introduction: the Erd\H{o}s--Kac theorem, in a joint form, and mean values of arithmetic functions.
+
+\subsection{A joint Erd\H{o}s--Kac theorem}
+For a real valued strongly additive arithmetic function $f$ (in the ordinary sense: $f(n)=\sum_{\ell\mid n}f(\ell)$) put
+\[
+A_f(y)=\sum_{\ell\le y}\frac{f(\ell)}\ell,\qquad
+B_f(y)^{2}=\sum_{\ell\le y}\frac{f(\ell)^{2}}\ell .
+\]
+We write $\Phi$ for the standard Gaussian law and $\Longrightarrow$ for convergence in distribution as $x\to\infty$, the prime $p$ being drawn uniformly from the primes at most $x$.
+
+\begin{theorem}\label{thm:ek}
+Let $g\in\mathcal F_b$ with $\mu_g>0$. Let $f$ be strongly additive with $\sup_\ell|f(\ell)|<\infty$ and $B_f(y)\to\infty$. Then
+\[
+\left(\frac{g(p)-\mu_gL}{\sigma_g\sqrt L},\ \frac{f(|g(p)|)-A_f(y)}{B_f(y)}\right)
+\ \Longrightarrow\ \Phi\otimes\Phi ,
+\]
+the two limit coordinates being independent standard Gaussians; on the null set $|g(p)|<1$ the second coordinate may be given any fixed value.
+\end{theorem}
+
+\begin{corollary}\label{cor:omega}
+Let $g\in\mathcal F_b$ with $\mu_g>0$. Then
+\[
+\left(\frac{g(p)-\mu_g\log_bx}{\sigma_g\sqrt{\log_bx}},\ \frac{\omega(|g(p)|)-\log_3x}{\sqrt{\log_3x}}\right)
+\Longrightarrow \Phi\otimes\Phi,
+\]
+and the same with $\Omega$ in place of $\omega$.
+\end{corollary}
+
+The marginal of the second coordinate recovers the normal order $\log_3p$ of $\omega(g(p))$ from \cite[Theorem 1.9]{vibefrtz}, in Erd\H{o}s--Kac form. The content of the joint statement is the independence: where in its window $g(p)$ landed says nothing about how $g(p)$ factors. This is what one expects, the window being of length $y^{1/2}$ while the divisibility of an integer near $y$ by the primes $\ell\le y^{1/4}$, which is what governs $\omega$ up to $O(1)$, equidistributes on much shorter scales; the proof is a matter of running the Erd\H{o}s--Kac moment computation with an extra weight attached to the window position.
+
+Here is the weighted form of the moment computation. Recall that a function $W\colon\R\to\R$ of compact support has bounded variation if $\sup\sum_i|W(u_{i+1})-W(u_i)|<\infty$, the supremum over finite increasing sequences; we write $\int W$ for $\int_\R W(u)\,du$.
+
+\begin{lemma}\label{lem:ek}
+Fix $D\ge1$ and $c,C>0$. Let $f$ be as in Theorem \ref{thm:ek}, let $y\to\infty$, and let $c\sqrt y\le H\le C\sqrt y$. Let $W\ge0$ be a fixed compactly supported function of bounded variation with $\int W>0$. Then, for every bounded continuous $F\colon\R\to\R$,
+\begin{equation}\label{eq:ekweighted}
+\frac{\displaystyle\sum_{(n,D)=1}W\Big(\frac{n-y}H\Big)F\Big(\frac{f(n)-A_f(y)}{B_f(y)}\Big)}
+{\displaystyle\sum_{(n,D)=1}W\Big(\frac{n-y}H\Big)}
+\ \longrightarrow\ \int_\R F\,d\Phi
+\qquad(y\to\infty).
+\end{equation}
+Moreover, for any compactly supported $W$ of bounded variation, without sign or normalisation conditions,
+\begin{equation}\label{eq:eksigned}
+\frac1H\sum_{(n,D)=1}W\Big(\frac{n-y}H\Big)F\Big(\frac{f(n)-A_f(y)}{B_f(y)}\Big)
+\ \longrightarrow\ \frac{\varphi(D)}D\Big(\int W\Big)\Big(\int_\R F\,d\Phi\Big).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The second statement follows from the first and its case $F=1$ by decomposing $W$ as a difference of two nonnegative functions of bounded variation (add a large multiple of the indicator of a containing interval) and by linearity, provided we prove the first statement together with
+\begin{equation}\label{eq:ekdenominator}
+\sum_{(n,D)=1}W\Big(\frac{n-y}H\Big)=\frac{\varphi(D)}DH\int W+O_{D,W}(1).
+\end{equation}
+For \eqref{eq:ekdenominator}, split $n$ into the $\varphi(D)$ reduced classes modulo $D$; on each, the sum of a bounded variation weight sampled at an arithmetic progression of step $D$ is $(H/D)\int W+O(\mathrm{Var}\,W)$, by comparing with the integral interval by interval on a monotone decomposition. The same argument gives, for squarefree $d\le y^{1/4}$ with $(d,D)=1$,
+\begin{equation}\label{eq:ekmultiples}
+\sum_{\substack{(n,D)=1\\ d\mid n}}W\Big(\frac{n-y}H\Big)=\frac{\varphi(D)}D\cdot\frac Hd\int W+O_{D,W}(1),
+\end{equation}
+the classes now running modulo $dD$.
+
+Now the moments. Fix $r\ge1$ and put $z=y^{1/(4r)}$ and $f_z(n)=\sum_{\ell\le z,\,\ell\mid n}f(\ell)$. An integer $n\asymp y$ has at most $4r+O(1)$ prime factors exceeding $z$, so $|f(n)-f_z(n)|\ll_r1$ by the boundedness of $f$ on primes; likewise $A_f(y)-A_f(z)\ll_r1$ and $B_f(y)^{2}-B_f(z)^{2}\ll_r1$, by Mertens. Since $B_f(y)\to\infty$, it therefore suffices to prove \eqref{eq:ekweighted} with $f_z,A_f(z),B_f(z)$ in place of $f,A_f(y),B_f(y)$. Expand
+\[
+\sum_{(n,D)=1}W\Big(\frac{n-y}H\Big)\Big(f_z(n)-A_f(z)\Big)^{r}
+=\sum_{\ell_1,\dots,\ell_r\le z}\prod\nolimits^{*}
+\sum_{\substack{(n,D)=1\\ [\ell_1,\dots,\ell_r]\mid n}}W\Big(\frac{n-y}H\Big)+\cdots,
+\]
+where the expansion is the usual one from the binomial theorem, with $\prod^*$ abbreviating the product of the $f(\ell_i)$ and of the centring terms; every divisibility sum that occurs has modulus $[\ell_{i_1},\dots,\ell_{i_s}]\le z^{r}=y^{1/4}$, so \eqref{eq:ekmultiples} applies to each, and the accumulated error is $O_{r}(\pi(z)^{r})=O(y^{1/4})=o(H)$. What remains after dividing by \eqref{eq:ekdenominator} is exactly the $r$th centred moment of the random variable $\sum_{\ell\le z}f(\ell)(\mathbf B_\ell-1/\ell)$, where the $\mathbf B_\ell$ are independent Bernoulli variables with $\Pr(\mathbf B_\ell=1)=1/\ell$, up to $o(1)$: the same expansion computes both. That variable has bounded summands and variance $B_f(z)^{2}+O(1)\to\infty$, so its moments, normalised by $B_f(z)$, converge to the Gaussian moments, by the central limit theorem for such arrays together with uniform integrability, or by the direct moment computation of Erd\H{o}s and Kac in the version with bounded weights. The Gaussian law being determined by its moments, \eqref{eq:ekweighted} follows.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:ek}]
+Write $U(p)$ and $T(p)$ for the two coordinates. Let $F_1,F_2$ be bounded continuous functions; we must show $\mathbf E\,F_1(U(p))F_2(T(p))\to\int F_1d\Phi\int F_2d\Phi$, the expectation over $p\le x$ uniform. By Lemma \ref{lem:tail} and tightness of the Gaussian we may assume $F_1$ supported in $[-R,R]$, at the cost of an error $o_R(1)$ uniform in $x$, where $o_R(1)\to0$ as $R\to\infty$. On $|k-y|\le RH$, summing \eqref{eq:mmr-clean},
+\[
+\mathbf E\,F_1(U(p))F_2(T(p))
+=\frac{c_g}{H}\sum_{(k,d)=1}W\Big(\frac{k-y}H\Big)F_2\Big(\frac{f(|k|)-A_f(y)}{B_f(y)}\Big)+o(1),
+\]
+with $W(u)=(2\pi)^{-1/2}e^{-u^{2}/2}F_1(u)$, the accumulated local error being $O(RH\cdot L^{-1+\varepsilon})=o(1)$ for $\varepsilon<\tfrac12$. If $F_1$ has bounded variation, \eqref{eq:eksigned} with $D=d$ evaluates the display: the factor $c_g\cdot\varphi(d)/d=1$, and the limit is $\int W\cdot\int F_2\,d\Phi=\int F_1d\Phi\int F_2d\Phi$, as required; here $f(|k|)$ for $k>0$ is $f(k)$, and $k\le0$ does not occur for large $x$ since $y-RH\to\infty$. A continuous $F_1$ of compact support is a uniform limit of such, and the error in the display is at most the uniform distance times a bounded mass. Finally $A_f(y+O(H))=A_f(y)+O(1)$ and $B_f(y+O(H))^2=B_f(y)^2+O(1)$, so centring at $y$ rather than at $|k|$'s own scale is immaterial, as in the previous proof.
+\end{proof}
+
+\begin{proof}[Proof of Corollary \ref{cor:omega}]
+Take $f(\ell)=1$, so that $f=\omega$, $A_f(y)=\log_2y+O(1)$ and $B_f(y)^{2}=\log_2y+O(1)$, by Mertens; and $\log_2y=\log_3x+O(1/\log_2x)$. Replacing the centring $A_f(y)$ by $\log_3x$ and the scaling $B_f(y)$ by $\sqrt{\log_3x}$ perturbs the second coordinate by $o(1)$ uniformly on bounded sets, which does not affect a distributional limit. For $\Omega$: with $I=[y-RH,y+RH]$,
+\[
+\sum_{n\in I}\big(\Omega(n)-\omega(n)\big)
+\le\sum_{\substack{\ell^{a}\le2y,\ a\ge2}}\Big(\frac{2RH}{\ell^{a}}+1\Big)
+\ll_R\sqrt y,
+\]
+the number of prime powers $\ell^a\le2y$ with $a\ge2$ being $O(\sqrt y)$. Hence, arguing as in the proof of Theorem \ref{thm:ek} with the bounded weight $W=e^{-u^2/2}$ and the bounded truncations of $\Omega-\omega$, or directly from \eqref{eq:mmr-clean} and the display, the expectation of $\Omega(|g(p)|)-\omega(|g(p)|)$ over $p\le x$ is $O_R(1)+o_R(1)$, so $(\Omega-\omega)(|g(p)|)/\sqrt{\log_3x}\to0$ in probability, by Markov's inequality, and Slutsky's theorem transfers the limit law from $\omega$ to $\Omega$.
+\end{proof}
+
+\begin{remark}\label{rem:multiek}
+The moment computation is insensitive to the number of coordinates. Let $f_1,\dots,f_s$ be bounded strongly additive functions and put $B_{ij}(y)=\sum_{\ell\le y}f_i(\ell)f_j(\ell)/\ell$. If each ratio $B_{ij}(y)/(B_{f_i}(y)B_{f_j}(y))$ converges, the vector of normalised values $f_i(|g(p)|)$ converges to the corresponding Gaussian vector, jointly with, and independently of, the window coordinate $U(p)$.
+\end{remark}
+
+\subsection{Mean values along the window}
+The next proposition transfers mean value theorems. We state it with the quality of error term that the applications possess.
+
+\begin{proposition}\label{prop:transfer}
+Let $g\in\mathcal F_b$ with $\mu_g>0$ and $d=d_g$. Let $a$ be a nonnegative function on the integers, vanishing on the nonpositive ones, with $a(n)\ll n^{\eta}$ for every $\eta>0$. Suppose that there is a nonnegative function $\mathfrak m$ with
+\begin{equation}\label{eq:meanvalue}
+\sum_{\substack{n\le Y\\ (n,d)=1}}a(n)=\int_{2}^{Y}\mathfrak m(t)\,dt+o\big(\sqrt Y\big)
+\qquad(Y\to\infty),
+\end{equation}
+such that $\mathfrak m(t)=(1+o(1))\,\mathfrak M(t)$ for a function $\mathfrak M$ satisfying $\mathfrak M(t)\gg t^{-\eta}$ for every $\eta>0$ and slowly varying in the sense that $\mathfrak M(t+O(\sqrt t\log t))=(1+o(1))\mathfrak M(t)$. Then
+\[
+\frac1{\pi(x)}\sum_{p\le x}a\big(g(p)\big)=\big(1+o(1)\big)\,\frac d{\varphi(d)}\,\mathfrak M(y),
+\qquad y=\mu_gL .
+\]
+\end{proposition}
+
+\begin{proof}
+By Lemma \ref{lem:tail} and $a(k)\ll k^{\eta}\ll L^{\eta}$ on the relevant range, the primes with $|g(p)-y|>H\log L$ contribute $o(1)$ after division by $\pi(x)$, and so does the part $k\le0$. Summing \eqref{eq:mmr-clean} against $a(k)$ over the window, the accumulated error is $\ll L^{-1+\varepsilon}\cdot H\log L\cdot L^{\eta}=o(\mathfrak M(y))$ for $\varepsilon,\eta$ small, since $\mathfrak M(y)\gg y^{-\eta'}$ for all $\eta'$. It remains to evaluate
+\[
+\frac d{\varphi(d)}\sum_{\substack{|k-y|\le H\log L\\ (k,d)=1}}a(k)\,\Gamma_k(L).
+\]
+Write $A(Y)=\int_2^Y\mathfrak m(t)\,dt+E(Y)$, with $E(Y)=o(\sqrt Y)$, for the left side of \eqref{eq:meanvalue}. The sum to evaluate is the Stieltjes integral $\int_I\Gamma_t(L)\,dA(t)$ over the window $I=\{|t-y|\le H\log L\}$. The absolutely continuous part contributes
+\[
+\int_I\Gamma_t(L)\,\mathfrak m(t)\,dt=\big(1+o(1)\big)\mathfrak M(y),
+\]
+by the slow variation of $\mathfrak M$ and the concentration of the Gaussian mass on $I$. For the part involving $E$, integrate by parts: the boundary terms are $o(\sqrt y)\,\Gamma_t(L)$ at the edges of $I$, where $\Gamma_t(L)\ll H^{-1}e^{-(\log L)^{2}/2}$, and
+\[
+\int_I|E(t)|\,\Big|\frac{\partial}{\partial t}\Gamma_t(L)\Big|\,dt
+\ \le\ \sup_{t\in I}|E(t)|\int_I\frac{|t-y|}{\sigma_g^{2}L}\,\Gamma_t(L)\,dt
+\ \ll\ o(\sqrt y)\cdot\frac1H\ =\ o(1),
+\]
+and $o(1)=o(\mathfrak M(y))$ since $\mathfrak M(y)\gg y^{-\eta}$ for every $\eta>0$.
+\end{proof}
+
+Recall that an integer is $r$-free if it is divisible by no $r$th power of a prime.
+
+\begin{corollary}\label{cor:rfree}
+Let $g\in\mathcal F_b$ with $\mu_g>0$, and fix $r\ge2$. Then
+\[
+\frac1{\pi(x)}\Card\{p\le x:\ |g(p)|\ \text{is $r$-free}\}
+\ \longrightarrow\ \frac1{\zeta(r)}\prod_{\ell\mid d_g}\big(1-\ell^{-r}\big)^{-1}
+=\prod_{\ell\nmid d_g}\big(1-\ell^{-r}\big).
+\]
+\end{corollary}
+
+\begin{proof}
+Take $a$ the indicator of the $r$-free integers. For $Y\ge2$, M\"obius inversion in the form $\sum_{e^{r}\mid n}\mu(e)$ gives
+\[
+\sum_{\substack{n\le Y\\ (n,d)=1}}a(n)
+=\sum_{\substack{e\le Y^{1/r}\\ (e,d)=1}}\mu(e)\Big(\frac{\varphi(d)}d\cdot\frac Y{e^{r}}+O(d)\Big)
+=\delta\,Y+O\big(Y^{1/r}\big),
+\qquad
+\delta=\frac{\varphi(d)}d\,\frac1{\zeta(r)}\prod_{\ell\mid d}\big(1-\ell^{-r}\big)^{-1},
+\]
+for $r\ge3$; for $r=2$ the error $O(\sqrt Y)$ obtained this way just fails, and we use instead the estimate of Walfisz \cite[Chapter 5]{walfisz} for the count of squarefree integers, whose error term $O(\sqrt Y\exp(-c(\log Y)^{3/5}(\log_2Y)^{-1/5}))$ is $o(\sqrt Y)$ and survives the deletion of the finitely many Euler factors at $\ell\mid d$ intact. In either case \eqref{eq:meanvalue} holds with $\mathfrak m=\mathfrak M=\delta$ constant. Proposition \ref{prop:transfer} multiplies $\delta$ by $d/\varphi(d)$ and gives the limit stated; the complementary product formula is immediate.
+\end{proof}
+
+Power-free values of strongly additive digital functions along primes were studied by Aloui, Mkaouar and Wannes \cite{aloui}, whose theorem concerns the binary case $g\in\mathcal F_2$; Corollary \ref{cor:rfree} treats every $g\in\mathcal F_b$ with $\mu_g>0$ and makes the factor at the primes dividing $d_g$ explicit: those primes never divide $g(p)$, by \eqref{eq:congruence}, and the density rises accordingly. The proof also illustrates the threshold in Proposition \ref{prop:transfer}: an error term $o(\sqrt Y)$ on ordinary intervals is what transfer to the digital window requires, and for squarefree numbers this is available but not trivial.
+
+\begin{corollary}\label{cor:tau}
+Let $g\in\mathcal F_b$ with $\mu_g>0$, let $d=d_g$, and let $\gamma$ denote Euler's constant. Then
+\[
+\frac1{\pi(x)}\sum_{p\le x}\tau\big(|g(p)|\big)
+=\frac{\varphi(d)}d\left(\log(\mu_g\log_bx)+2\gamma+2\sum_{\ell\mid d}\frac{\log\ell}{\ell-1}\right)+o(1).
+\]
+\end{corollary}
+
+\begin{proof}
+The Dirichlet series of $\tau(n)\mathbf 1_{(n,d)=1}$ is $\zeta(s)^{2}\prod_{\ell\mid d}(1-\ell^{-s})^{2}$, so $\tau\,\mathbf 1_{(\cdot,d)=1}=h*\tau$ with $h$ supported on the divisors of $\rad(d)^{2}$, and Huxley's estimate for the divisor problem \cite{huxley}, applied at each $Y/e$, gives
+\[
+\sum_{\substack{n\le Y\\ (n,d)=1}}\tau(n)
+=\Big(\frac{\varphi(d)}d\Big)^{2}Y\Big(\log Y+2\gamma-1+2\sum_{\ell\mid d}\frac{\log\ell}{\ell-1}\Big)
++O_d\big(Y^{131/416+\varepsilon}\big),
+\]
+where the coefficients arise from $H(s)=\prod_{\ell\mid d}(1-\ell^{-s})^{2}=\sum_eh(e)e^{-s}$ through $H(1)=(\varphi(d)/d)^{2}$ and $\sum_eh(e)(-\log e)/e=H'(1)=H(1)\cdot2\sum_{\ell\mid d}\log\ell/(\ell-1)$. Since $131/416<\tfrac12$, hypothesis \eqref{eq:meanvalue} holds with $\mathfrak m(t)=(\varphi(d)/d)^{2}(\log t+2\gamma+2\sum_{\ell\mid d}\log\ell/(\ell-1))$, the derivative of the main term, and $\mathfrak M=\mathfrak m$, which is slowly varying. Proposition \ref{prop:transfer} multiplies by $d/\varphi(d)$ and evaluates at $y=\mu_gL$.
+\end{proof}
+\section{Squares with prescribed digit sum, and sparse polynomial sequences}\label{sec:squares}
+
+Nothing in this section involves primes as inputs or the local theorem; the arguments are elementary and self-contained.
+
+\subsection{The construction}
+A set $S$ of integers is a \emph{Sidon set} if the pairwise sums $r+s$ with $r,s\in S$, $r\le s$, are distinct. We need Sidon sets of even integers avoiding their own sumset, and the classical constructions provide them with room to spare.
+
+\begin{lemma}\label{lem:sidon}
+There is an absolute $c_0>0$ such that for every large $M$ there is a Sidon set $S$ of even integers with
+\[
+S\subseteq[M,2M],\qquad S\cap(S+S)=\varnothing,\qquad \Card S\ge c_0\sqrt M .
+\]
+\end{lemma}
+
+\begin{proof}
+By the construction of Bose and Chowla \cite{bosechowla} together with Bertrand's postulate, every interval $[1,N]$ with $N$ large contains a Sidon set of cardinality $\ge\tfrac12\sqrt N$. Take such a set in $[1,M/8]$, translate it into $[M/2,5M/8]$, and double every element. Translations and dilations preserve the Sidon property; the resulting set $S$ consists of even integers of $[M,5M/4]$, its sumset $S+S$ lies in $[2M,5M/2]$, and $5M/4<2M$.
+\end{proof}
+
+For a finite set $T$ of positive integers put
+\begin{equation}\label{eq:aT}
+a_T=1+\sum_{r\in T}b^{r}.
+\end{equation}
+
+\begin{lemma}\label{lem:carryfree}
+Let $S$ be as in Lemma \ref{lem:sidon}, let $T\subseteq S$ with $\Card T=t$, and let $k$ satisfy $b^{k}>a_T^{2}+2a_T$. Then $(a_Tb^{k}-1,\,b)=1$ and
+\[
+s_b\big((a_Tb^{k}-1)^{2}\big)=
+\begin{cases}
+(b-1)k+t^{2},& b\ge3,\\[2pt]
+k+\tfrac12t(t+1),& b=2 .
+\end{cases}
+\]
+\end{lemma}
+
+\begin{proof}
+Write $a=a_T$ and $B=b^{k}$. Since $B>a^{2}+2a$, the three numbers $a^{2}-1$, $B-2a$, $1$ lie in $[0,B)$, and
+\[
+(aB-1)^{2}=(a^{2}-1)B^{2}+(B-2a)B+1
+\]
+is a base $B$ expansion. Digit sums add along it:
+\begin{equation}\label{eq:threeblocks}
+s_b\big((aB-1)^{2}\big)=s_b(a^{2}-1)+s_b(B-2a)+1 .
+\end{equation}
+For the middle block, the digits of $b^{k}-c$, for $1\le c\le b^{k}$, are the complements with respect to $b-1$ of the digits of $c-1$, padded to length $k$; there are no borrows in $(b^k-1)-(c-1)$. Hence
+\begin{equation}\label{eq:complement}
+s_b(B-2a)=k(b-1)-s_b(2a-1).
+\end{equation}
+
+Let first $b\ge3$. Then
+\[
+a^{2}-1=2\sum_{r\in T}b^{r}+\sum_{r\in T}b^{2r}+2\sum_{\substack{r,s\in T\\ r<s}}b^{r+s},
+\]
+and the exponents are pairwise distinct: the $r+s$ with $r\le s$ are distinct because $S$ is Sidon, and none of them equals an element $r'\in T$ because $S\cap(S+S)=\varnothing$. All coefficients are $\le2\le b-1$, so this is the base $b$ expansion and
+\[
+s_b(a^{2}-1)=2t+t+2\binom t2=t^{2}+2t .
+\]
+Also $2a-1=1+2\sum_{r\in T}b^{r}$, whose digits are one $1$ and $t$ twos, so $s_b(2a-1)=2t+1$. Combining with \eqref{eq:threeblocks} and \eqref{eq:complement} gives $(b-1)k+t^{2}$.
+
+Now let $b=2$, where the elements of $S$ are even. Here
+\[
+a^{2}-1=\sum_{r\in T}2^{r+1}+\sum_{r\in T}2^{2r}+\sum_{\substack{r,s\in T\\ r<s}}2^{r+s+1}.
+\]
+The middle exponents are even; the outer ones are odd, and $r+1=r'+s'+1$ would put $r\in S+S$; the Sidon property separates the rest. So
+\[
+s_2(a^{2}-1)=t+t+\binom t2=\frac{t^{2}+3t}2,
+\qquad
+s_2(2a-1)=s_2\Big(1+\sum_{r\in T}2^{r+1}\Big)=t+1,
+\]
+and \eqref{eq:threeblocks}, \eqref{eq:complement} give $k+\tfrac12 t(t+1)$.
+
+Finally $a\equiv1\pmod b$ makes $a b^{k}-1\equiv-1\pmod{\ell}$ for every prime $\ell\mid b$, so $(ab^{k}-1,b)=1$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:squares}]
+Let $q$ be large and admissible. Put $M=\lfloor\eta q\rfloor$ with $\eta=\eta_b>0$ small and fixed, take $S$ as in Lemma \ref{lem:sidon}, and discard elements if necessary so that $m:=\Card S$ satisfies $c_0\sqrt M\le m\le2c_0\sqrt M$.
+
+Suppose first $b\ge3$. Choose $t_0$ with $t_0^{2}\equiv q\pmod{b-1}$, possible by admissibility, and then an integer $t\equiv t_0\pmod{b-1}$ with $m/3\le t\le2m/3$, possible once $m\ge3(b-1)$. Then $t^{2}\le4c_0^{2}\eta q\le q/2$ for $\eta$ small, and
+\[
+k=\frac{q-t^{2}}{b-1}
+\]
+is a positive integer, of size at least $q/(2(b-1))$, hence larger than $4M+3$ for $\eta$ small; since $a_T\le b^{2M+1}$ for every $T\subseteq S$, this gives $b^{k}>a_T^{2}+2a_T$. For each of the $\binom mt$ subsets $T\subseteq S$ with $\Card T=t$, Lemma \ref{lem:carryfree} now produces $n=a_Tb^{k}-1$ with $(n,b)=1$ and
+\[
+s_b(n^{2})=(b-1)k+t^{2}=q .
+\]
+Distinct $T$ give distinct $a_T$, hence distinct $n$; and
+\[
+\binom mt\ge\binom m{\lceil m/3\rceil}\ge2^{m/3}\ge\exp\big(c_b\sqrt q\,\big)
+\]
+for a suitable $c_b>0$. As for the size, $n\le b^{2M+2+k}\le b^{C_b'q}$, so $n^{2}\le b^{C_bq}$.
+
+For $b=2$ no congruence intervenes. Choose any $t$ with $m/3\le t\le2m/3$ and put $k=q-\tfrac12t(t+1)$, which for $\eta$ small is again an integer exceeding $4M+3$, and conclude exactly as before from the binary case of Lemma \ref{lem:carryfree}.
+\end{proof}
+
+\begin{proof}[Proof of Corollary \ref{cor:squarescount}]
+Let $C_b$ be as in Theorem \ref{thm:squares} and $Y=\log_bX/(2C_b)$. The class $1$ modulo $b-1$ is admissible, and by the prime number theorem for progressions there is, once $Y$ is large, a prime $q\in[Y,2Y]$ with $q\equiv1\pmod{b-1}$. Theorem \ref{thm:squares} provides at least $\exp(c_b\sqrt q)\ge\exp(c_b\sqrt Y)$ integers $n$ with $(n,b)=1$, $s_b(n^{2})=q$ prime, and $n^{2}\le b^{C_bq}\le b^{2C_bY}=X$.
+\end{proof}
+
+\begin{remark}\label{rem:singleton}
+The case $\Card T=1$ is worth displaying: whenever $b^{k}>4$,
+\[
+s_b\big((2b^{k}-1)^{2}\big)=(b-1)k+1,
+\]
+as one checks from $(2b^k-1)^2=3\cdot b^{2k}+(b^{k}-4)b^{k}+1$. Already this one-parameter family, together with Dirichlet's theorem in the progression $1$ modulo $b-1$, gives $\gg\log X/\log_2X$ squares below $X$ with prime digit sum, though of a single shape and with one root per value. The subsets of the Sidon set are what turn one representation into $\exp(c\sqrt q)$.
+\end{remark}
+
+\begin{remark}\label{rem:generalg}
+The same construction applies to any strongly $b$-additive $g$: for $T\subseteq S$ and $k$ as in Lemma \ref{lem:carryfree}, the expansion computed there shows that $g((a_Tb^{k}-1)^{2})$ depends on $T$ only through $t=\Card T$, namely
+\[
+g\big((a_Tb^{k}-1)^{2}\big)=k\,g(b-1)+\psi_g(t)
+\]
+for an explicit quadratic polynomial $\psi_g$, when $b\ge3$; the values thus sweep an affine progression in $k$ with exponential multiplicity. We do not pursue a general statement, since the analogue of admissibility depends on the pair $(g(b-1),\psi_g)$ and need not be satisfiable by a convenient $t$.
+\end{remark}
+
+\subsection{Sparse polynomial sequences}\label{sec:blocking}
+For comparison with Section \ref{sec:transfer} we record how far elementary carry bookkeeping reaches for polynomial arguments. Call $G\colon\N\to\Z$ \emph{block additive of width $w$} if there is a function $F_0$ of $w$-tuples of digits, vanishing on the zero tuple, with
+\[
+G(n)=\sum_{j\ge0}F_0\big(\varepsilon_{j+w-1}(n),\dots,\varepsilon_j(n)\big);
+\]
+width $1$ recovers the strongly additive functions, and width $2$ includes such counts as the number of occurrences of a fixed two-digit word.
+
+\begin{lemma}\label{lem:carry}
+Let $Q\in\Z[X]$ have positive leading coefficient. For every sufficiently large integer $B$, each base $B$ digit of $Q(B)$ is either a fixed nonnegative integer or of the form $B-c$ for a fixed positive integer $c$, the finitely many values $c$ and the digit positions independent of $B$.
+\end{lemma}
+
+\begin{proof}
+Write $Q(X)=\sum_{j\le D}a_jX^{j}$ and normalise from the bottom: set $c_0=0$ and, given the carry $c_j\in\Z$, write $t_j=a_j+c_j$ and
+\[
+t_j=d_j+Bc_{j+1},\qquad 0\le d_j<B .
+\]
+By induction each $c_j$ is independent of $B$ once $B>2\max_j(|a_j|+1)$, since then $|t_j|<B$ forces $(d_j,c_{j+1})=(t_j,0)$ for $t_j\ge0$ and $(B+t_j,-1)$ for $t_j<0$. The leading coefficient being positive, $t_D=a_D+c_D\ge0$ and the expansion terminates, a zero leading digit being discarded.
+\end{proof}
+
+\begin{proposition}\label{prop:affine}
+Let $Q\in\Z[X]$ have positive leading coefficient, and let $G$ be integer valued and block additive of some width $w\ge1$. Then there are $A,C\in\Z$ with
+\[
+G\big(Q(b^{k})\big)=Ak+C\qquad\text{for all sufficiently large }k .
+\]
+\end{proposition}
+
+\begin{proof}
+By Lemma \ref{lem:carry} with $B=b^{k}$, the base $b$ expansion of $Q(b^k)$ is, for large $k$, a concatenation of blocks of length $k$: fixed words padded on the left with zeros, and, for the digits $B-c$, the complement pattern, a fixed word preceded by a run of digits $b-1$ of length $k+O(1)$, by the complement rule \eqref{eq:complement}. A window of width $w$ lying inside a constant run contributes a value depending only on the repeated digit, and the number of such positions is $k+O(1)$ per run; the $O(1)$ windows straddling each seam contribute patterns that stabilise for large $k$. Summing over the fixed number of blocks gives an affine function of $k$.
+\end{proof}
+
+\begin{theorem}\label{thm:blocking}
+Let $P\in\Z[T]$ with $\deg P=D\ge1$, let $u\ge1$ and $v\in\Z$, and suppose $P(ub^{k}+v)>0$ for all large $k$. Let $G$ be integer valued and block additive of some width. Define $A,C$ by Proposition \ref{prop:affine} applied to $Q(X)=P(uX+v)$. If $A>0$ and $(A,C)=1$, then
+\[
+\Card\{k:\ P(ub^{k}+v)\le X,\ G\big(P(ub^{k}+v)\big)\ \text{prime}\}
+\ \sim\ \frac{A}{D\,\varphi(A)\log b}\cdot\frac{\log X}{\log_2X}
+\qquad(X\to\infty).
+\]
+\end{theorem}
+
+\begin{proof}
+The condition $P(ub^{k}+v)\le X$ reads $k\le\log X/(D\log b)+O(1)$, and by Proposition \ref{prop:affine} the count is, up to $O(1)$, the number of $k\le K:=\log X/(D\log b)$ with $Ak+C$ prime. By the prime number theorem for the progression $C$ modulo $A$, this is $\sim(A/\varphi(A))\,K/\log K$.
+\end{proof}
+
+The theorem is stated for its contrast with what is not known. The sequences $b^k$ are the sparsest digital inputs, and along them prime values of $G(P(\cdot))$ reduce to Dirichlet; along the full polynomial sequence $(P(n))_{n\le x}$, even the central limit theorem for $g(P(n))$ lies deep, by Bassily and K\'atai \cite{bassilykatai}, and equidistribution of $s_b(P(n))$ in progressions is the theorem of Drmota, Mauduit and Rivat \cite{dmr-polynomial}; the corresponding results for blocks, that is for occurrences of words, along the primes are due to Hanna \cite{hanna}. Local limit theorems at the single-value scale, which prime values in the manner of this paper would require, are known in none of these settings.
+
+\section{The transfer, axiomatised, and a Fourier criterion}\label{sec:transfer}
+
+The proofs along primes in this paper used exactly two properties of the pair $(\mathbb P,g)$: the single-value local theorem with a power-of-$\log$ error, and the Gaussian tail bound. It seems worth recording the implications at that level of generality, both to package the arguments and to make precise what is missing in the settings, squares above all, where fixed-modulus equidistribution is known but a local theorem is not.
+
+Let $\mathcal A$ be either $\N$ or the set $\mathbb P$ of primes, with counting function
+\[
+W_{\mathcal A}(x)=\begin{cases}x,&\mathcal A=\N,\\ \pi(x),&\mathcal A=\mathbb P,\end{cases}
+\]
+and let $h\colon\mathcal A\to\Z$. Let $\mu\ge0$, $\sigma>0$, and let $\rho\ge0$ be a function on $\Z$, periodic with some period $D\ge1$ and of mean $1$ over a period. Say that $h$ satisfies LLT$(b,\mu,\sigma,\rho)$ if, for every fixed $\varepsilon\in(0,\tfrac12)$, uniformly in $k\in\Z$,
+\begin{equation}\label{eq:llt}
+\Card\{a\in\mathcal A:\ a\le x,\ h(a)=k\}
+=\rho(k)\,W_{\mathcal A}(x)\,\frac{e^{-(k-\mu L)^{2}/(2\sigma^{2}L)}}{\sqrt{2\pi\sigma^{2}L}}
++O\big(W_{\mathcal A}(x)L^{-1+\varepsilon}\big),
+\end{equation}
+with $L=\log_bx$, and if moreover, for some $c,C>0$,
+\begin{equation}\label{eq:llttail}
+\Card\{a\in\mathcal A:\ a\le x,\ |h(a)-\mu L|>C\sqrt L\log L\}\ \ll\ W_{\mathcal A}(x)\,e^{-c(\log L)^{2}}.
+\end{equation}
+Thus \eqref{eq:mmr-clean} and Lemma \ref{lem:tail} say that $g\in\mathcal F_b$ satisfies LLT$(b,\mu_g,\sigma_g,\rho)$ on $\mathcal A=\mathbb P$ with $\rho(k)=c_g\mathbf 1_{(k,d_g)=1}$. Put
+\[
+\kappa_\rho=\frac1{\varphi(D)}\sum_{\substack{a\ (\mathrm{mod}\ D)\\ (a,D)=1}}\rho(a),
+\]
+the mean of $\rho$ along the reduced classes, which is what prime targets see.
+
+\begin{proposition}\label{prop:harman}
+Assume $h$ satisfies LLT$(b,\mu,\sigma,\rho)$ with $\mu>0$.
+
+(i) If $\mathcal A=\N$, then
+\[
+\sum_{\substack{n\le X\\ h(n)\ \text{prime}}}\frac1n\ \sim\ \kappa_\rho\,\frac{\log X}{\log_2X}.
+\]
+
+(ii) If $\mathcal A=\mathbb P$, then
+\[
+\sum_{\substack{p\le X\\ h(p)\ \text{prime}}}\frac1p=\kappa_\rho\log_3X+O(1).
+\]
+\end{proposition}
+
+\begin{proof}
+Both parts run the proof of Theorem \ref{thm:weights} in the case $F=g$, that is, with the weight $w_0=0$ there, and we indicate only the shape. Here $\Gamma_k(L)$ denotes the Gaussian of \eqref{eq:llt} with the parameters $\mu,\sigma$. For a prime target $q$, partial summation and \eqref{eq:llt} produce the integral $\int\Gamma_q(L)\,\nu_{\mathcal A}(L)\,dL$ over $L\le\log_bX$, with $\nu_{\N}(L)=\log b$ and $\nu_{\mathbb P}(L)=(1+o(1))/L$; the tail \eqref{eq:llttail} and the accumulated errors from \eqref{eq:llt} are handled as before, the count of targets in the window at scale $L$ being $O(\sqrt L\log L)$. Laplace evaluation of the integrals gives, for the targets whose saddle $q/\mu$ is inside the range,
+\[
+\int\Gamma_q(L)\,dL=\frac1\mu+O(q^{-1/2}),
+\qquad
+\int\Gamma_q(L)\,\frac{dL}L=\frac1q+O(q^{-3/2}),
+\]
+the second being the exact identity of Lemma \ref{lem:saddle} up to its error term. Summing $\rho(q)$ times these evaluations over $q\le\mu\log_bX$ and using the prime number theorem, respectively Mertens' theorem, in the progressions modulo $D$, which produce the factor $\kappa_\rho$, gives (i) and (ii).
+\end{proof}
+
+\begin{proposition}\label{prop:zerotransfer}
+Assume $h$ satisfies LLT$(b,0,\sigma,\rho)$. Then
+\[
+\Card\{a\in\mathcal A:\ a\le x,\ h(a)\ \text{prime}\}\ \sim\ \kappa_\rho\,\frac{W_{\mathcal A}(x)}{\log_2x},
+\]
+and consequently
+\[
+\sum_{\substack{n\le X\\ h(n)\ \text{prime}}}\frac1n\sim\kappa_\rho\frac{\log X}{\log_2X}
+\quad(\mathcal A=\N),
+\qquad
+\sum_{\substack{p\le X\\ h(p)\ \text{prime}}}\frac1p\sim\kappa_\rho\log_3X
+\quad(\mathcal A=\mathbb P).
+\]
+\end{proposition}
+
+\begin{proof}
+Sum \eqref{eq:llt} over the prime targets $q\le\sqrt L\log L$ and argue as for Theorem \ref{thm:zeromean}, using Lemma \ref{lem:halfgauss-ap} with the periodic weight $\rho$ restricted to reduced classes; the mean that emerges is $\kappa_\rho/\log V$ with $V=\sigma^{2}L$. The reciprocal statements follow by partial summation.
+\end{proof}
+
+The dichotomy is now visible in the hypotheses alone. With $\mu>0$, an asymptotic count of $\{a\le x: h(a)\ \text{prime}\}$ at a single $x$ would require the primes in a window of length $\asymp\sqrt{\mu L}$ about $\mu L$, and \eqref{eq:llt} is silent about which integers of its window are prime; with $\mu=0$ the window is an initial segment and the question does not arise. Harman's reversal, part (ii) above, is precisely the observation that the reciprocal sum averages the window over a long range of scales, and that the average is computable.
+
+\subsection{A Fourier criterion}
+Where might \eqref{eq:llt} come from? For $g$ on the primes it comes from \cite{mmr2019}, whose proof estimates the characteristic function of $g(p)$. The reduction from characteristic function to local theorem is soft, and we record it as a criterion, stated so that each hypothesis names a known quantity in the digital literature. For $h\colon\mathcal A\to\Z$ put
+\[
+\Phi_x(\theta)=\frac1{W_{\mathcal A}(x)}\sum_{\substack{a\in\mathcal A\\ a\le x}}e^{i\theta h(a)},
+\qquad \theta\in[-\pi,\pi].
+\]
+
+\begin{proposition}\label{prop:fourier}
+Let $D\ge1$ and $\theta_j=2\pi j/D$ for $0\le j<D$. Suppose there are $\mu\ge0$, $\sigma>0$, complex numbers $\eta_0,\dots,\eta_{D-1}$, and a function $T=T(L)$ with $T/\sqrt{\log L}\to\infty$ and $T=o(L^{1/6})$, such that the following two estimates hold for every fixed $\varepsilon>0$.
+
+(a) Uniformly for $0\le j<D$ and $|u|\le T/\sqrt L$,
+\[
+\Phi_x(\theta_j+u)=\eta_j\,\exp\Big(i\mu Lu-\tfrac12\sigma^{2}Lu^{2}\Big)+R_j(u),
+\qquad
+\sum_{j<D}\int_{|u|\le T/\sqrt L}|R_j(u)|\,du\ll L^{-1+\varepsilon}.
+\]
+
+(b) Outside the union of the arcs $|\theta-\theta_j|\le T/\sqrt L$,
+\[
+\int_{\theta\in[-\pi,\pi]:\ \min_j|\theta-\theta_j|>T/\sqrt L}|\Phi_x(\theta)|\,d\theta\ll L^{-1+\varepsilon}.
+\]
+
+Then, uniformly in $k\in\Z$, estimate \eqref{eq:llt} holds with
+\[
+\rho(k)=\sum_{j<D}\eta_j\,e^{-ik\theta_j},
+\]
+a function periodic modulo $D$; if in addition $\rho\ge0$ and the tail bound \eqref{eq:llttail} holds, then $h$ satisfies LLT$(b,\mu,\sigma,\rho)$.
+\end{proposition}
+
+\begin{proof}
+Fourier inversion on $\Z$ gives
+\[
+\frac{\Card\{a\le x:\ h(a)=k\}}{W_{\mathcal A}(x)}
+=\frac1{2\pi}\int_{-\pi}^{\pi}\Phi_x(\theta)e^{-ik\theta}\,d\theta .
+\]
+The minor arcs contribute $O(L^{-1+\varepsilon})$ by (b), and the remainders $R_j$ the same by (a). On the $j$th major arc, substitute $\theta=\theta_j+u$; the main term contributes
+\[
+\frac{\eta_je^{-ik\theta_j}}{2\pi}\int_{|u|\le T/\sqrt L}e^{-\sigma^{2}Lu^{2}/2}\,e^{-i(k-\mu L)u}\,du,
+\]
+and extending to $u\in\R$ costs $O(e^{-\sigma^{2}T^{2}/2}L^{-1/2})$, which is $O(L^{-A})$ for every $A$ since $T^{2}/\log L\to\infty$. The completed integral is the Fourier transform of a Gaussian:
+\[
+\frac1{2\pi}\int_{\R}e^{-\sigma^{2}Lu^{2}/2}e^{-i(k-\mu L)u}\,du
+=\frac{e^{-(k-\mu L)^{2}/(2\sigma^{2}L)}}{\sqrt{2\pi\sigma^{2}L}} .
+\]
+Summing over $j$ assembles $\rho(k)$.
+\end{proof}
+
+The hypotheses are calibrated to the digital results that exist. The values of $\Phi_x$ at the points $\theta_j$ themselves, that is, the equidistribution of $h$ in residue classes, identify the $\eta_j$ and hence the local factor $\rho$; a central limit theorem for $h$ is the case $j=0$ of (a) for $|u|\le c/\sqrt L$ with an error $o(1)$ rather than integrably small. Hypothesis (a) asks for more, Gaussian behaviour with a power-of-$\log$ saving on shrinking neighbourhoods of every rational frequency $\theta_j$, and (b) for an integrated bound in between; the upper restriction $T=o(L^{1/6})$ costs nothing, since enlarging $T$ weakens (a), and is where cumulant expansions naturally stop. For the digit sum of squares, equidistribution in residue classes is the theorem of Mauduit and Rivat \cite{mauduitrivat-squares}, following \cite{drsquares}, and Bassily and K\'atai \cite{bassilykatai} give the central limit theorem; for the digit sum of $p^{2}$, the recent work of Drmota and Rivat \cite{dr-primesquares} establishes the fixed-frequency estimates. In each case what is missing for \eqref{eq:llt}, hence for every theorem in this paper along the corresponding sequence, is the uniformity of (a) on shrinking arcs together with (b). We know of no conceptual obstruction, only the absence of an estimate.
+
+\subsection{Local factors for polynomial arguments}
+If a local theorem does become available for $h(n)=g(P(n))$ or $h(p)=g(P(p))$, with $g\in\mathcal F_b$ and $P\in\Z[T]$, the periodic factor $\rho$ is forced by \eqref{eq:congruence}: modulo $d=d_g$ one has $g(P(n))\equiv g(1)P(n)$, and $P(n)$ modulo $d$ depends only on $n$ modulo $d$. Thus the natural factors are
+\[
+\rho_P(k)=\Card\{r\ (\mathrm{mod}\ d):\ g(1)P(r)\equiv k\ (\mathrm{mod}\ d)\}
+\]
+for $\mathcal A=\N$, and
+\[
+\rho_{P,\mathbb P}(k)=\frac d{\varphi(d)}\Card\{r\in(\Z/d\Z)^{\times}:\ g(1)P(r)\equiv k\ (\mathrm{mod}\ d)\}
+\]
+for $\mathcal A=\mathbb P$, each of mean $1$, with
+\[
+\kappa_{\rho_P}=\frac1{\varphi(d)}\Card\{r\ (\mathrm{mod}\ d):\ (P(r),d)=1\},
+\qquad
+\kappa_{\rho_{P,\mathbb P}}=\frac d{\varphi(d)^{2}}\Card\{r\in(\Z/d\Z)^{\times}:\ (P(r),d)=1\}.
+\]
+For $P(T)=T^{2}$ the square of a reduced residue is reduced, so
+\[
+\kappa_{\rho_{T^{2}}}=1,\qquad \kappa_{\rho_{T^{2},\mathbb P}}=\frac{d}{\varphi(d)} .
+\]
+An LLT for $g(n^{2})$ of the strength \eqref{eq:llt} would therefore give, by Proposition \ref{prop:harman}(i),
+\begin{equation}\label{eq:squaresmertens}
+\sum_{\substack{n\le X\\ g(n^{2})\ \text{prime}}}\frac1n\ \sim\ \frac{\log X}{\log_2X},
+\end{equation}
+with the constant $1$ independent of $g$, and the prime-input analogue would carry $d_g/\varphi(d_g)\,\log_3X$ instead. For the decimal digit sum, where $d_{s_{10}}=9$, one exact identity is worth recording: writing $S(X)$ for the left side of \eqref{eq:squaresmertens} with $g=s_{10}$ and $S_0(X)$ for the same sum restricted to $10\nmid n$, the relation $s_{10}((10n)^{2})=s_{10}(n^{2})$ gives
+\[
+S_0(X)=S(X)-\tfrac1{10}S(X/10),
+\]
+so that \eqref{eq:squaresmertens}, if proved, comes with the version $S_0(X)\sim\tfrac9{10}\log X/\log_2X$ for roots prime to the base free of charge. Theorem \ref{thm:squares} supplies, unconditionally, $\exp(c\sqrt{\log X})$ roots $n\le\sqrt X$ with $s_b(n^{2})$ prime, where \eqref{eq:squaresmertens} predicts $X^{1/2+o(1)}$ of them; closing that gap is the local limit theorem for $s_b(n^{2})$, and nothing less.
+
+\section*{Use of automated tools}
+
+Most of this manuscript was written by large language models, principally Opus 5,
+Fable 5 and Sol, working under the author's direction; the exposition was afterwards
+revised by the author and the same models. The numerical values quoted in
+\S\ref{sec:numerics} were computed by machine, and the scripts that produce them
+accompany the paper.
+
+Responsibility for the mathematics rests with the author.
+
+\begin{thebibliography}{99}
+
+\bibitem{aloui} K. Aloui, M. Mkaouar, and W. Wannes, \emph{Power-free values of strongly $q$-additive functions}, Taiwanese J. Math. \textbf{23} (2019), 777--798.
+
+\bibitem{bassilykatai} N. L. Bassily and I. K\'atai, \emph{Distribution of the values of $q$-additive functions on polynomial sequences}, Acta Math. Hungar. \textbf{68} (1995), 353--361.
+
+\bibitem{bosechowla} R. C. Bose and S. Chowla, \emph{Theorems in the additive theory of numbers}, Comment. Math. Helv. \textbf{37} (1962/63), 141--147.
+
+\bibitem{dmr2009} M. Drmota, C. Mauduit, and J. Rivat, \emph{Primes with an average sum of digits}, Compos. Math. \textbf{145} (2009), 271--292.
+
+\bibitem{dmr-polynomial} M. Drmota, C. Mauduit, and J. Rivat, \emph{The sum-of-digits function of polynomial sequences}, J. London Math. Soc. (2) \textbf{84} (2011), 81--102.
+
+\bibitem{drsquares} M. Drmota and J. Rivat, \emph{The sum-of-digits function of squares}, J. London Math. Soc. (2) \textbf{72} (2005), 273--292.
+
+\bibitem{dr-primesquares} M. Drmota and J. Rivat, \emph{Digital functions along squares of prime numbers}, preprint, 2025, \texttt{arXiv:2509.17474}.
+
+\bibitem{fouvrymauduit-sieve} \'E. Fouvry and C. Mauduit, \emph{M\'ethodes de crible et fonctions sommes des chiffres}, Acta Arith. \textbf{77} (1996), 339--351.
+
+\bibitem{fouvrymauduit-almost} \'E. Fouvry and C. Mauduit, \emph{Sommes des chiffres et nombres presque premiers}, Math. Ann. \textbf{305} (1996), 571--599.
+
+\bibitem{gelfond} A. O. Gel'fond, \emph{Sur les nombres qui ont des propri\'et\'es additives et multiplicatives donn\'ees}, Acta Arith. \textbf{13} (1967/68), 259--265.
+
+\bibitem{halberstamrichert} H. Halberstam and H.-E. Richert, \emph{Sieve methods}, London Mathematical Society Monographs, No.~4, Academic Press, London--New York, 1974.
+
+\bibitem{hhbr} H. Halberstam, D. R. Heath-Brown, and H.-E. Richert, \emph{Almost-primes in short intervals}, in \emph{Recent progress in analytic number theory}, Vol.~1 (Durham, 1979), 69--101, Academic Press, London--New York, 1981.
+
+\bibitem{hanna} G. Hanna, \emph{Sur les occurrences des mots dans les nombres premiers}, Acta Arith. \textbf{178} (2017), 15--42.
+
+\bibitem{harelaishramstoll} K. G. Hare, S. Laishram, and T. Stoll, \emph{The sum of digits of $n$ and $n^2$}, Int. J. Number Theory \textbf{7} (2011), 1737--1752.
+
+\bibitem{harman} G. Harman, \emph{Counting primes whose sum of digits is prime}, J. Integer Seq. \textbf{15} (2012), Article 12.2.2.
+
+\bibitem{hoeffding} W. Hoeffding, \emph{Probability inequalities for sums of bounded random variables}, J. Amer. Statist. Assoc. \textbf{58} (1963), 13--30.
+
+\bibitem{huxley} M. N. Huxley, \emph{Exponential sums and lattice points III}, Proc. London Math. Soc. (3) \textbf{87} (2003), 591--609.
+
+\bibitem{lehmann} J. Lehmann, \emph{An explicit surjectivity threshold for digit sums of primes}, preprint, 2026, \texttt{arXiv:2606.04677}.
+
+\bibitem{mmr2014} B. Martin, C. Mauduit, and J. Rivat, \emph{Th\'eor\`eme des nombres premiers pour les fonctions digitales}, Acta Arith. \textbf{165} (2014), 11--45.
+
+\bibitem{mmr2015} B. Martin, C. Mauduit, and J. Rivat, \emph{Fonctions digitales le long des nombres premiers}, Acta Arith. \textbf{170} (2015), 175--197.
+
+\bibitem{mmr2019} B. Martin, C. Mauduit, and J. Rivat, \emph{Propri\'et\'es locales des chiffres des nombres premiers}, J. Inst. Math. Jussieu \textbf{18} (2019), 189--224.
+
+\bibitem{mmr-multiple} B. Martin, C. Mauduit, and J. Rivat, \emph{Nombres premiers avec contraintes digitales multiples}, Bull. Soc. Math. France \textbf{147} (2019), 259--287.
+
+\bibitem{matomakizuniga} K. Matom\"aki and S. Z\'u\~niga Alterman, \emph{Weighted sieves with switching}, Math. Proc. Cambridge Philos. Soc. \textbf{179} (2025), 351--372.
+
+\bibitem{mauduitrivat} C. Mauduit and J. Rivat, \emph{Sur un probl\`eme de Gel'fond: la somme des chiffres des nombres premiers}, Ann. of Math. (2) \textbf{171} (2010), 1591--1646.
+
+\bibitem{mauduitrivat-squares} C. Mauduit and J. Rivat, \emph{La somme des chiffres des carr\'es}, Acta Math. \textbf{203} (2009), 107--148.
+
+\bibitem{murthyashbacher} A. Murthy and C. Ashbacher, \emph{Generalized partitions and new ideas on number theory and Smarandache sequences}, Hexis, Phoenix, 2005; ``Fabricating perfect squares with a given valid digit sum,'' pp.~154--156.
+
+\bibitem{richert} H.-E. Richert, \emph{Selberg's sieve with weights}, Mathematika \textbf{16} (1969), 1--22.
+
+\bibitem{vibefrtz} vibefrtz, \emph{Prime values of digital functions along the primes}, preprint, 2026, DOI \href{https://doi.org/10.5281/zenodo.22093372}{\texttt{10.5281/zenodo.22093372}}.
+
+\bibitem{walfisz} A. Walfisz, \emph{Weylsche Exponentialsummen in der neueren Zahlentheorie}, Mathematische Forschungsberichte, XV, VEB Deutscher Verlag der Wissenschaften, Berlin, 1963.
+
+\bibitem{wu} J. Wu, \emph{Almost primes in short intervals}, Sci. China Math. \textbf{53} (2010), 2511--2524.
+
+\end{thebibliography}
+
+\end{document}
