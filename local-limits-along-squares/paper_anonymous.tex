@@ -2454,7 +2454,78 @@ Most of this manuscript was written by large language models, principally Opus 5
 Fable 5 and Sol, working under the author's direction; the exposition was afterwards
 revised by the author and the same models. The numerical values quoted in
 \S\ref{sec:numerics} were computed by machine, and the scripts that produce them
-accompany the paper.
+are distributed with the paper in the companion repository
+\begin{center}
+  \url{https://github.com/vibefrtz/vibemath}\\[2pt]
+  (folder \texttt{local-limits-along-squares}, archived at
+  \href{https://doi.org/10.5281/zenodo.22164902}{\texttt{doi:10.5281/zenodo.22164902}}).
+\end{center}
+
+The deductive content of a substantial part of this paper has been verified
+with the Lean~4 proof assistant (Lean~4.33.0 with Mathlib), in the repository
+above. The entire content of Section~\ref{sec:squares}.1 is machine-checked
+\emph{unconditionally}, with no axioms beyond Lean's built-in ones: the digit
+identities \eqref{eq:digit-split} and \eqref{eq:complement-digit-sum},
+Lemmas~\ref{lem:sidon} and \ref{lem:sidon-square} in both cases,
+Theorem~\ref{thm:prescribed-squares} in both cases (with explicit constants:
+$2^{\sqrt q/(36b)}$ representations of size $n^2\le b^{3q}$ once
+$q\ge 2304\,b^4$), Corollary~\ref{thm:squares-intro} in bases $2$ and $3$,
+and Remark~\ref{rem:simple-square} together with its consequence that for
+every base infinitely many $n$ prime to $b$ have $s_b(n^2)$ prime; the
+theorem of Bose and Chowla underlying Lemma~\ref{lem:sidon} is \emph{proved}
+inside Lean, in the field with $p^2$ elements, rather than assumed. Of the
+new local theory, the two-digit spectral gap Lemma~\ref{lem:square-gap} is
+machine-checked unconditionally in full, in every base --- the gcd identity
+\eqref{eq:square-bezout-gcd}, the lattice direction of the equality clause,
+and the quantitative bound, with the explicit constant $c_g=2/5$ when $b=2$
+--- as is the arithmetic of the binary-endpoint audit in
+Remark~\ref{rem:binary-square}; and the Fourier-inversion assembly of
+Section~\ref{sec:square-llt} is machine-checked \emph{as an implication}:
+Corollary~\ref{cor:square-minor} and Proposition~\ref{prop:square-major} are
+transcribed as definitions --- never as axioms --- and the derivation of
+Theorem~\ref{thm:square-llt-intro} from them, Fourier inversion, the
+Gaussian transform and its tails, and the coefficient identity
+\eqref{eq:square-rho-fourier} included, is certified by the kernel, so that
+the unverified surface of Theorem~\ref{thm:square-llt-intro} is exactly
+Propositions~\ref{prop:square-transfer} and \ref{prop:square-major} together
+with the tail Proposition~\ref{prop:square-tail}. Verified unconditionally
+as well are the lattice density \eqref{eq:rho-square-intro} with its
+normalisation and the value $\kappa_{\rho}=1$ of
+Corollary~\ref{cor:square-prime-values};
+Theorem~\ref{thm:square-output-level-intro} in its unweighted form, again as
+an implication from the transcribed statement of
+Theorem~\ref{thm:square-llt-intro}, with the Gaussian progression
+Lemma~\ref{lem:gaussian-progression} proved from Mathlib's Jacobi theta
+transformation; the scaling reduction of Theorem~\ref{thm:square-llt-general}
+to Theorem~\ref{thm:square-llt-intro}; the complete local-factor theory of
+Theorem~\ref{thm:digitweights-zero} --- the product formula
+\eqref{eq:kappa-m-product} for an arbitrary modulus and the mean formula
+\eqref{eq:kappa-average}; Lemma~\ref{lem:complement} for arbitrary digit
+weights together with the degree-one case of Proposition~\ref{prop:affine}
+and the infinitude part of Theorem~\ref{thm:polynomial-intro} in degree one;
+and the exact reciprocal identity for $S_0$ in Section~\ref{sec:transfer}.
+The almost-prime theorem on squares,
+Corollary~\ref{cor:square-almost-primes-intro} ($P_2$ part), is
+machine-checked as an implication whose deduction consumes exactly one
+result quoted from the literature, the short-interval theorem of Halberstam,
+Heath-Brown and Richert \cite{hhbr}. Along the primes, Corollary~\ref{cor:p2}
+is machine-checked from exactly two quoted results ---
+Theorem~\ref{thm:mmr} and \cite{hhbr} --- declared as axioms in the form in
+which they are used here, together with the elementary content of
+Sections~\ref{sec:local} and \ref{sec:length} (the split
+\eqref{eq:length-decomp}, the parameters in the proof of
+Corollary~\ref{cor:zeros-intro}, and the congruence forcing of
+Example~\ref{ex:alternating-shells}). An axiom audit included in the
+repository lists, for every one of the $107$ audited statements, the exact
+axioms its proof consumes --- $102$ consume none --- and this discipline is
+enforced at build time. The two shrinking-frequency estimates behind
+Theorem~\ref{thm:square-llt-intro} and the weighted and asymptotic results
+of Sections~\ref{sec:sieve}--\ref{sec:transfer} beyond those listed are not
+formalised; the repository's verification report records the correspondence
+between the formal statements and the paper's, the places where the formal
+proof deviates from the argument given here, and an inventory of what is not
+machine-checked. The numerical values of Section~\ref{sec:numerics} are
+reproduced exactly by the distributed scripts.
 
 Responsibility for the mathematics rests with the author.
 
